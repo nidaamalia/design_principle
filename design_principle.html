@@ -1815,10 +1815,224 @@
 
         <div class="rule"><strong>Never use <code>body1</code> in Tubestream.</strong> MUI's <code>body1</code> is 16px — too large for a data-dense enterprise app. Use <code>body2</code> (14px) as the default body text everywhere.</div>
         <div class="rule rule-warn"><strong>Don't hardcode <code>fontSize</code> in <code>sx</code></strong> to compensate for wrong variant choice. Pick the right variant first; only use <code>sx</code> for genuine one-off overrides.</div>
+
+        <h3>Text Overflow & Truncation</h3>
+        <p>When text content exceeds its container width, use <strong>ellipsis truncation</strong> with tooltips for full content access. This pattern is essential for maintaining layout integrity in data-dense interfaces like tables and cards.</p>
+
+        <h4>When to Use Text Truncation</h4>
+        <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden;margin-bottom:16px">
+          <div style="display:grid;grid-template-columns:1fr 2fr;border-bottom:2px solid var(--ts-gray-200)">
+            <div style="padding:10px 14px;background:var(--ts-gray-50);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600)">Context</div>
+            <div style="padding:10px 14px;background:var(--ts-gray-50);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600)">Approach</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 2fr;border-bottom:1px solid var(--ts-gray-100)">
+            <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--ts-gray-700)">Table Cells</div>
+            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600)">Always truncate with ellipsis + tooltip. Prevents row height inconsistency.</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 2fr;border-bottom:1px solid var(--ts-gray-100)">
+            <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--ts-gray-700)">Card Titles</div>
+            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600)">Truncate after 2-3 lines max. Use tooltip for full title.</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 2fr;border-bottom:1px solid var(--ts-gray-100)">
+            <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--ts-gray-700)">Navigation Items</div>
+            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600)">Single-line truncation with ellipsis. Tooltip shows full label.</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 2fr;border-bottom:1px solid var(--ts-gray-100)">
+            <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--ts-gray-700)">Form Fields</div>
+            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600)">Allow natural wrapping for labels. Truncate placeholder text only.</div>
+          </div>
+        </div>
+
+        <h4>Implementation Patterns</h4>
+        <div class="card" style="background:var(--ts-gray-900);border-color:var(--ts-gray-700)">
+          <div style="font-size:11px;font-weight:600;color:var(--ts-gray-400);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">MUI v7 Examples</div>
+          <pre style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#93C5FD;line-height:1.9;margin:0;white-space:pre-wrap"><span style="color:#6EE7B7">// Table cell with ellipsis + tooltip</span>
+&lt;TableCell&gt;
+  &lt;Tooltip title={fullText} placement=<span style="color:#FCD34D">"top"</span>&gt;
+    &lt;Typography 
+      variant=<span style="color:#FCD34D">"body2"</span>
+      sx={{
+        overflow: <span style="color:#FCD34D">'hidden'</span>,
+        textOverflow: <span style="color:#FCD34D">'ellipsis'</span>,
+        whiteSpace: <span style="color:#FCD34D">'nowrap'</span>,
+        maxWidth: <span style="color:#FCD34D">'200px'</span> <span style="color:#6EE7B7">// or use flex: 1 in parent</span>
+      }}
+    &gt;
+      {fullText}
+    &lt;/Typography&gt;
+  &lt;/Tooltip&gt;
+&lt;/TableCell&gt;
+
+<span style="color:#6EE7B7">// Multi-line truncation (2 lines max)</span>
+&lt;Typography
+  variant=<span style="color:#FCD34D">"subtitle2"</span>
+  sx={{
+    display: <span style="color:#FCD34D">'-webkit-box'</span>,
+    WebkitLineClamp: <span style="color:#FCD34D">2</span>,
+    WebkitBoxOrient: <span style="color:#FCD34D">'vertical'</span>,
+    overflow: <span style="color:#FCD34D">'hidden'</span>,
+    textOverflow: <span style="color:#FCD34D">'ellipsis'</span>
+  }}
+&gt;
+  {longCardTitle}
+&lt;/Typography&gt;
+
+<span style="color:#6EE7B7">// Reusable truncation component</span>
+<span style="color:#F9A8D4">const</span> TruncatedText = ({ children, maxWidth = <span style="color:#FCD34D">'100%'</span>, lines = <span style="color:#FCD34D">1</span>, ...props }) =&gt; (
+  &lt;Tooltip title={children} placement=<span style="color:#FCD34D">"top"</span>&gt;
+    &lt;Typography
+      {...props}
+      sx={{
+        overflow: <span style="color:#FCD34D">'hidden'</span>,
+        textOverflow: <span style="color:#FCD34D">'ellipsis'</span>,
+        maxWidth,
+        ...(lines === <span style="color:#FCD34D">1</span> ? {
+          whiteSpace: <span style="color:#FCD34D">'nowrap'</span>
+        } : {
+          display: <span style="color:#FCD34D">'-webkit-box'</span>,
+          WebkitLineClamp: lines,
+          WebkitBoxOrient: <span style="color:#FCD34D">'vertical'</span>
+        }),
+        ...props.sx
+      }}
+    &gt;
+      {children}
+    &lt;/Typography&gt;
+  &lt;/Tooltip&gt;
+);
+
+<span style="color:#6EE7B7">// Usage examples</span>
+&lt;TruncatedText variant=<span style="color:#FCD34D">"body2"</span> maxWidth=<span style="color:#FCD34D">"180px"</span>&gt;
+  Very long NCR title that needs truncation
+&lt;/TruncatedText&gt;
+
+&lt;TruncatedText variant=<span style="color:#FCD34D">"subtitle2"</span> lines={<span style="color:#FCD34D">2</span>}&gt;
+  Multi-line card description that should wrap to 2 lines maximum
+&lt;/TruncatedText&gt;</pre>
+        </div>
+
+        <h4>Visual Examples</h4>
+        <p>Here are practical demonstrations of text truncation in common UI scenarios:</p>
+
+        <!-- Table Example -->
+        <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden;margin-bottom:16px">
+          <div style="padding:12px 16px;background:var(--ts-gray-50);border-bottom:1px solid var(--ts-gray-200)">
+            <div style="font-size:12px;font-weight:600;color:var(--ts-gray-700)">Table Cell Truncation</div>
+          </div>
+          <div style="padding:0">
+            <table style="width:100%;border-collapse:collapse;font-size:13px">
+              <thead>
+                <tr style="background:var(--ts-gray-50)">
+                  <th style="padding:8px 12px;text-align:left;font-size:11px;font-weight:600;color:var(--ts-gray-600);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--ts-gray-200);width:120px">NCR No.</th>
+                  <th style="padding:8px 12px;text-align:left;font-size:11px;font-weight:600;color:var(--ts-gray-600);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--ts-gray-200);width:200px">Title</th>
+                  <th style="padding:8px 12px;text-align:left;font-size:11px;font-weight:600;color:var(--ts-gray-600);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--ts-gray-200);width:150px">Description</th>
+                  <th style="padding:8px 12px;text-align:left;font-size:11px;font-weight:600;color:var(--ts-gray-600);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--ts-gray-200);width:100px">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding:10px 12px;border-bottom:1px solid var(--ts-gray-100);color:var(--ts-gray-700)">NCR-2024-001</td>
+                  <td style="padding:10px 12px;border-bottom:1px solid var(--ts-gray-100);color:var(--ts-gray-700);position:relative" title="Pipe Dimension Defect Found During Final Inspection Process">
+                    <div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:180px">Pipe Dimension Defect Found During Final Inspection Process</div>
+                  </td>
+                  <td style="padding:10px 12px;border-bottom:1px solid var(--ts-gray-100);color:var(--ts-gray-600);position:relative" title="Critical dimensional variance detected in batch PD-2024-Q1-045 requiring immediate corrective action">
+                    <div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:130px">Critical dimensional variance detected in batch PD-2024-Q1-045 requiring immediate corrective action</div>
+                  </td>
+                  <td style="padding:10px 12px;border-bottom:1px solid var(--ts-gray-100)">
+                    <span style="background:var(--ts-orange-light);color:var(--ts-orange);padding:2px 8px;border-radius:12px;font-size:11px;font-weight:600">Open</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding:10px 12px;color:var(--ts-gray-700)">NCR-2024-002</td>
+                  <td style="padding:10px 12px;color:var(--ts-gray-700);position:relative" title="Coating Quality Issue">
+                    <div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:180px">Coating Quality Issue</div>
+                  </td>
+                  <td style="padding:10px 12px;color:var(--ts-gray-600);position:relative" title="Surface coating shows uneven application pattern">
+                    <div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:130px">Surface coating shows uneven application pattern</div>
+                  </td>
+                  <td style="padding:10px 12px">
+                    <span style="background:var(--ts-green-light);color:var(--ts-green);padding:2px 8px;border-radius:12px;font-size:11px;font-weight:600">Resolved</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div style="padding:8px 12px;background:var(--ts-gray-50);font-size:11px;color:var(--ts-gray-500)">
+            Hover over truncated text to see full content via tooltip
+          </div>
+        </div>
+
+        <!-- Card Example -->
+        <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden;margin-bottom:16px">
+          <div style="padding:12px 16px;background:var(--ts-gray-50);border-bottom:1px solid var(--ts-gray-200)">
+            <div style="font-size:12px;font-weight:600;color:var(--ts-gray-700)">Card Title Truncation</div>
+          </div>
+          <div style="padding:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+            <!-- Card 1: Single line truncation -->
+            <div style="border:1px solid var(--ts-gray-200);border-radius:var(--radius);padding:12px">
+              <div style="font-size:14px;font-weight:500;color:var(--ts-gray-800);margin-bottom:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="Very Long Project Name That Exceeds Container Width">
+                Very Long Project Name That Exceeds Container Width
+              </div>
+              <div style="font-size:12px;color:var(--ts-gray-600)">Status: Active</div>
+              <div style="font-size:12px;color:var(--ts-gray-600)">Due: Dec 31, 2024</div>
+            </div>
+            <!-- Card 2: Multi-line truncation -->
+            <div style="border:1px solid var(--ts-gray-200);border-radius:var(--radius);padding:12px">
+              <div style="font-size:14px;font-weight:500;color:var(--ts-gray-800);margin-bottom:6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis" title="Complex Multi-Phase Infrastructure Development Project with Extended Timeline and Multiple Stakeholders">
+                Complex Multi-Phase Infrastructure Development Project with Extended Timeline and Multiple Stakeholders
+              </div>
+              <div style="font-size:12px;color:var(--ts-gray-600)">Status: In Progress</div>
+              <div style="font-size:12px;color:var(--ts-gray-600)">Due: Mar 15, 2025</div>
+            </div>
+            <!-- Card 3: Normal text (no truncation needed) -->
+            <div style="border:1px solid var(--ts-gray-200);border-radius:var(--radius);padding:12px">
+              <div style="font-size:14px;font-weight:500;color:var(--ts-gray-800);margin-bottom:6px">
+                Quality Audit
+              </div>
+              <div style="font-size:12px;color:var(--ts-gray-600)">Status: Completed</div>
+              <div style="font-size:12px;color:var(--ts-gray-600)">Due: Nov 30, 2024</div>
+            </div>
+          </div>
+          <div style="padding:8px 12px;background:var(--ts-gray-50);font-size:11px;color:var(--ts-gray-500)">
+            Left: Single-line truncation • Center: 2-line truncation • Right: Normal (no truncation)
+          </div>
+        </div>
+
+        <!-- Navigation Example -->
+        <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden;margin-bottom:16px">
+          <div style="padding:12px 16px;background:var(--ts-gray-50);border-bottom:1px solid var(--ts-gray-200)">
+            <div style="font-size:12px;font-weight:600;color:var(--ts-gray-700)">Navigation Item Truncation</div>
+          </div>
+          <div style="padding:16px;display:flex;gap:16px">
+            <!-- Sidebar nav simulation -->
+            <div style="width:200px;background:var(--ts-gray-900);border-radius:var(--radius);padding:12px">
+              <div style="color:white;font-size:12px;font-weight:600;margin-bottom:8px">Navigation</div>
+              <div style="display:flex;flex-direction:column;gap:2px">
+                <div style="color:#94A3B8;font-size:13px;padding:6px 8px;border-radius:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="Dashboard">Dashboard</div>
+                <div style="color:#94A3B8;font-size:13px;padding:6px 8px;border-radius:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="Non-Conformance Reports Management System">Non-Conformance Reports Management System</div>
+                <div style="color:#94A3B8;font-size:13px;padding:6px 8px;border-radius:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="Quality Inspection and Audit Tracking">Quality Inspection and Audit Tracking</div>
+                <div style="color:#94A3B8;font-size:13px;padding:6px 8px;border-radius:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="Settings">Settings</div>
+              </div>
+            </div>
+            <!-- Breadcrumb simulation -->
+            <div style="flex:1">
+              <div style="font-size:12px;color:var(--ts-gray-600);margin-bottom:8px">Breadcrumb Truncation</div>
+              <div style="display:flex;align-items:center;gap:6px;font-size:13px">
+                <span style="color:var(--ts-blue);cursor:pointer">Dashboard</span>
+                <span style="color:var(--ts-gray-400)">›</span>
+                <span style="color:var(--ts-blue);cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:150px" title="Non-Conformance Reports Management">Non-Conformance Reports Management</span>
+                <span style="color:var(--ts-gray-400)">›</span>
+                <span style="color:var(--ts-gray-700);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:200px" title="Quality Control Inspection Report NCR-2024-Q4-Advanced-Pipe-Dimension-Analysis">Quality Control Inspection Report NCR-2024-Q4-Advanced-Pipe-Dimension-Analysis</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rule"><strong>Always provide tooltips</strong> when truncating text. Users must be able to access the full content without navigating elsewhere.</div>
+        <div class="rule"><strong>Set consistent max widths</strong> for truncated columns in tables. Use <code>maxWidth</code> in <code>sx</code> or define column widths in the table header.</div>
+        <div class="rule rule-warn"><strong>Don't truncate critical identifiers</strong> like NCR numbers, lot codes, or user names unless absolutely necessary. These should be given priority in layout.</div>
       </section>
 
-      <!-- ================================ -->
-      <!-- S13: FILTERS -->
       <!-- ================================ -->
       <section id="s13">
         <div class="section-header">
