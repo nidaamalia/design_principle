@@ -3232,37 +3232,8 @@
 
         <!-- IDs & References -->
         <h3>IDs & Reference Numbers</h3>
-        <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden;margin-bottom:16px">
-          <div style="display:grid;grid-template-columns:140px 1fr 1fr;border-bottom:2px solid var(--ts-gray-200)">
-            <div style="padding:10px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600);background:var(--ts-gray-50)">Record type</div>
-            <div style="padding:10px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600);background:var(--ts-gray-50)">Format</div>
-            <div style="padding:10px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600);background:var(--ts-gray-50)">Example</div>
-          </div>
-          <div style="display:grid;grid-template-columns:140px 1fr 1fr;border-bottom:1px solid var(--ts-gray-100);align-items:center">
-            <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--ts-gray-700);border-right:1px solid var(--ts-gray-100)">NCR / SPR</div>
-            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)"><code>PREFIX-YYYY-NNNN</code></div>
-            <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--ts-blue)"><a class="ts-link" href="#">NCR-2025-0042</a></div>
-          </div>
-          <div style="display:grid;grid-template-columns:140px 1fr 1fr;border-bottom:1px solid var(--ts-gray-100);align-items:center">
-            <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--ts-gray-700);border-right:1px solid var(--ts-gray-100)">Transfer</div>
-            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)"><code>PREFIX-YYYY-NNNN</code></div>
-            <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--ts-blue)"><a class="ts-link" href="#">TR-2025-0188</a></div>
-          </div>
-          <div style="display:grid;grid-template-columns:140px 1fr 1fr;border-bottom:1px solid var(--ts-gray-100);align-items:center">
-            <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--ts-gray-700);border-right:1px solid var(--ts-gray-100)">Call Off</div>
-            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)"><code>PREFIX-YYYY-NNNN</code></div>
-            <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--ts-blue)"><a class="ts-link" href="#">CO-2025-0031</a></div>
-          </div>
-          <div style="display:grid;grid-template-columns:140px 1fr 1fr;align-items:center">
-            <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--ts-gray-700);border-right:1px solid var(--ts-gray-100)">Lot Number</div>
-            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)"><code>LOT-YYYY-NNNN</code></div>
-            <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--ts-blue)"><a class="ts-link" href="#">LOT-2025-0042</a></div>
-          </div>
-        </div>
-
         <div class="rule"><strong>IDs are always monospace font in table cells</strong> — use <code>font-family: 'IBM Plex Mono'</code> or MUI's <code>sx={{ fontFamily: 'monospace' }}</code>. This makes them scannable and distinguishable from regular text at a glance.</div>
         <div class="rule"><strong>IDs are always a navigation link</strong> (blue, underline on hover). They are the primary identifier of a record — they should always be clickable to open the detail page.</div>
-        <div class="rule rule-warn"><strong>Zero-pad sequence numbers to 4 digits.</strong> Write <code>NCR-2025-0042</code> not <code>NCR-2025-42</code>. This ensures correct alphabetical sorting and consistent visual width in tables.</div>
 
         <h3>MUI v7 — Formatting Utilities</h3>
         <div class="card" style="background:var(--ts-gray-900);border-color:var(--ts-gray-700)">
@@ -3469,6 +3440,266 @@
         <div class="rule"><strong>Upload zone stays open while files are uploading.</strong> Users should be able to add more files while previous ones are still processing — don't disable the zone.</div>
         <div class="rule"><strong>Error rows stay visible</strong> until the user explicitly removes them. Don't auto-dismiss failed uploads — the user needs to decide whether to retry or remove.</div>
         <div class="rule rule-warn"><strong>Invalid file type errors are shown inline, not as a toast.</strong> Toast notifications are easy to miss. File errors need to be persistent and adjacent to the upload zone.</div>
+
+        <!-- Upload States Examples -->
+        <h3>Upload States — Visual Examples</h3>
+        <p>The upload component cycles through 6 distinct states. Each state requires specific visual treatment and user interaction patterns.</p>
+
+        <style>
+          .upload-zone-demo {
+            border: 2px dashed var(--ts-gray-300);
+            border-radius: var(--radius);
+            padding: 32px 20px;
+            text-align: center;
+            background: var(--ts-gray-50);
+            transition: all 0.2s ease;
+            margin-bottom: 12px;
+          }
+          .upload-zone-demo.drag-over {
+            border-color: var(--ts-blue);
+            background: var(--ts-blue-light);
+          }
+          .upload-zone-demo.invalid {
+            border-color: var(--ts-red);
+            background: var(--ts-red-light);
+          }
+          .upload-icon-demo {
+            font-size: 28px;
+            margin-bottom: 8px;
+            opacity: 0.5;
+          }
+          .upload-text-demo {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--ts-gray-700);
+            margin-bottom: 4px;
+          }
+          .upload-or-demo {
+            font-size: 12px;
+            color: var(--ts-gray-400);
+            margin-bottom: 12px;
+          }
+          .upload-limits-demo {
+            font-size: 11px;
+            color: var(--ts-gray-400);
+            margin-top: 10px;
+          }
+          .error-message-demo {
+            color: var(--ts-red);
+            font-size: 12px;
+            margin-top: 8px;
+            font-weight: 500;
+          }
+          .file-list-demo {
+            border: 1px solid var(--ts-gray-200);
+            border-radius: var(--radius);
+            overflow: hidden;
+            margin-top: 12px;
+          }
+          .file-list-header-demo {
+            background: var(--ts-gray-50);
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--ts-gray-200);
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--ts-gray-600);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+          }
+          .file-row-demo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--ts-gray-100);
+          }
+          .file-row-demo:last-child {
+            border-bottom: none;
+          }
+          .file-icon-demo {
+            font-size: 20px;
+            flex-shrink: 0;
+          }
+          .file-info-demo {
+            flex: 1;
+            min-width: 0;
+          }
+          .file-name-demo {
+            font-size: 13px;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 2px;
+          }
+          .file-name-demo.success {
+            color: var(--ts-blue);
+            cursor: pointer;
+          }
+          .file-name-demo.error {
+            color: var(--ts-red);
+          }
+          .file-meta-demo {
+            font-size: 11px;
+            color: var(--ts-gray-400);
+          }
+          .file-actions-demo {
+            display: flex;
+            gap: 4px;
+            flex-shrink: 0;
+          }
+          .progress-bar-demo {
+            width: 100%;
+            height: 4px;
+            background: var(--ts-gray-200);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 4px;
+          }
+          .progress-fill-demo {
+            height: 100%;
+            background: var(--ts-blue);
+            width: 65%;
+          }
+          .progress-text-demo {
+            font-size: 11px;
+            color: var(--ts-gray-500);
+            margin-top: 2px;
+          }
+          .retry-btn-demo {
+            background: var(--ts-red);
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            cursor: pointer;
+            margin-left: 8px;
+          }
+        </style>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+          <!-- Idle State -->
+          <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);padding:16px;">
+            <div style="font-size:12px;font-weight:600;color:var(--ts-gray-600);margin-bottom:12px;text-transform:uppercase;letter-spacing:0.05em;">1. Idle State</div>
+            <div class="upload-zone-demo">
+              <div class="upload-icon-demo">📎</div>
+              <div class="upload-text-demo">Drag & drop files here</div>
+              <div class="upload-or-demo">or</div>
+              <button class="btn btn-outlined btn-sm">Browse Files</button>
+              <div class="upload-limits-demo">Accepted: PDF, JPG, PNG, XLSX, DOCX · Max 10 MB per file</div>
+            </div>
+          </div>
+
+          <!-- Drag Over State -->
+          <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);padding:16px;">
+            <div style="font-size:12px;font-weight:600;color:var(--ts-gray-600);margin-bottom:12px;text-transform:uppercase;letter-spacing:0.05em;">2. Drag Over State</div>
+            <div class="upload-zone-demo drag-over">
+              <div class="upload-icon-demo">📎</div>
+              <div class="upload-text-demo">Drop files to upload</div>
+              <div class="upload-or-demo">or</div>
+              <button class="btn btn-outlined btn-sm">Browse Files</button>
+              <div class="upload-limits-demo">Accepted: PDF, JPG, PNG, XLSX, DOCX · Max 10 MB per file</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);padding:16px;margin-bottom:16px;">
+          <div style="font-size:12px;font-weight:600;color:var(--ts-gray-600);margin-bottom:12px;text-transform:uppercase;letter-spacing:0.05em;">3. Uploading State</div>
+          <div class="upload-zone-demo">
+            <div class="upload-icon-demo">📎</div>
+            <div class="upload-text-demo">Drag & drop files here</div>
+            <div class="upload-or-demo">or</div>
+            <button class="btn btn-outlined btn-sm">Browse Files</button>
+            <div class="upload-limits-demo">Accepted: PDF, JPG, PNG, XLSX, DOCX · Max 10 MB per file</div>
+          </div>
+          <div class="file-list-demo">
+            <div class="file-list-header-demo">Uploading Files (1)</div>
+            <div class="file-row-demo">
+              <div class="file-icon-demo">📄</div>
+              <div class="file-info-demo">
+                <div class="file-name-demo">inspection_report.pdf</div>
+                <div class="file-meta-demo">PDF · 2.4 MB</div>
+                <div class="progress-bar-demo">
+                  <div class="progress-fill-demo"></div>
+                </div>
+                <div class="progress-text-demo">Uploading... 65%</div>
+              </div>
+              <div class="file-actions-demo">
+                <button class="btn btn-icon btn-sm" title="Cancel">✕</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);padding:16px;margin-bottom:16px;">
+          <div style="font-size:12px;font-weight:600;color:var(--ts-gray-600);margin-bottom:12px;text-transform:uppercase;letter-spacing:0.05em;">4. Uploaded State</div>
+          <div class="file-list-demo">
+            <div class="file-list-header-demo">Attached Files (2)</div>
+            <div class="file-row-demo">
+              <div class="file-icon-demo">📄</div>
+              <div class="file-info-demo">
+                <div class="file-name-demo success">NCR-2025-001_Inspection_Report.pdf</div>
+                <div class="file-meta-demo">PDF · 2.4 MB · Uploaded by John Smith · 14 Dec 2025, 09:22</div>
+              </div>
+              <div class="file-actions-demo">
+                <button class="btn btn-icon btn-sm" title="Preview">👁</button>
+                <button class="btn btn-icon btn-sm" title="Download">⬇</button>
+                <button class="btn btn-icon btn-sm" title="Remove">✕</button>
+              </div>
+            </div>
+            <div class="file-row-demo">
+              <div class="file-icon-demo">🖼</div>
+              <div class="file-info-demo">
+                <div class="file-name-demo success">evidence_photo.jpg</div>
+                <div class="file-meta-demo">JPG · 1.2 MB · Uploaded by Jane Doe · 14 Dec 2025, 09:25</div>
+              </div>
+              <div class="file-actions-demo">
+                <button class="btn btn-icon btn-sm" title="Preview">👁</button>
+                <button class="btn btn-icon btn-sm" title="Download">⬇</button>
+                <button class="btn btn-icon btn-sm" title="Remove">✕</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+          <!-- Upload Error State -->
+          <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);padding:16px;">
+            <div style="font-size:12px;font-weight:600;color:var(--ts-gray-600);margin-bottom:12px;text-transform:uppercase;letter-spacing:0.05em;">5. Upload Error</div>
+            <div class="file-list-demo">
+              <div class="file-list-header-demo">Files (1)</div>
+              <div class="file-row-demo">
+                <div class="file-icon-demo">📄</div>
+                <div class="file-info-demo">
+                  <div class="file-name-demo error">large_scan.pdf</div>
+                  <div class="file-meta-demo" style="color: var(--ts-red);">
+                    Upload failed — file exceeds 10 MB limit (14.2 MB)
+                    <button class="retry-btn-demo">Retry</button>
+                  </div>
+                </div>
+                <div class="file-actions-demo">
+                  <button class="btn btn-icon btn-sm" title="Remove">✕</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Invalid File State -->
+          <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);padding:16px;">
+            <div style="font-size:12px;font-weight:600;color:var(--ts-gray-600);margin-bottom:12px;text-transform:uppercase;letter-spacing:0.05em;">6. Invalid File</div>
+            <div class="upload-zone-demo invalid">
+              <div class="upload-icon-demo">⛔</div>
+              <div class="upload-text-demo">Drag & drop files here</div>
+              <div class="upload-or-demo">or</div>
+              <button class="btn btn-outlined btn-sm">Browse Files</button>
+              <div class="upload-limits-demo">Accepted: PDF, JPG, PNG, XLSX, DOCX · Max 10 MB per file</div>
+              <div class="error-message-demo">
+                ⛔ video_evidence.mp4 - File type not supported. Accepted: PDF, JPG, PNG, XLSX, DOCX
+              </div>
+            </div>
+          </div>
+        </div>
 
         <!-- Compact variant -->
         <h3>Compact Variant — Expandable Row Context</h3>
