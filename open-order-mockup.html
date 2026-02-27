@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Open Order — Tubestream Central</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:        #0D2137;
+    --navy-mid:    #122840;
+    --navy-light:  #1A3A5C;
+    --teal:        #1A7A6A;
+    --teal-light:  #E6F4F1;
+    --teal-mid:    #2A9D8A;
+    --white:       #FFFFFF;
+    --gray-50:     #F8FAFC;
+    --gray-100:    #F1F5F9;
+    --gray-200:    #E2E8F0;
+    --gray-300:    #CBD5E1;
+    --gray-400:    #94A3B8;
+    --gray-500:    #64748B;
+    --gray-600:    #475569;
+    --gray-700:    #334155;
+    --gray-800:    #1E293B;
+    --gray-900:    #0F172A;
+    --blue:        #1D6FB8;
+    --blue-light:  #EFF6FF;
+    --orange:      #D97706;
+    --orange-light:#FFF7ED;
+    --green:       #15803D;
+    --green-light: #F0FDF4;
+    --red:         #DC2626;
+    --red-light:   #FEF2F2;
+    --radius:      6px;
+    --sidebar-w:   36px;
+    --sidebar-expanded: 200px;
+  }
+
+  body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 13px;
+    color: var(--gray-800);
+    background: var(--gray-50);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    height: 44px;
+    background: var(--navy);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px 0 0;
+    flex-shrink: 0;
+    z-index: 50;
+  }
+  .topbar-left {
+    display: flex;
+    align-items: center;
+    width: var(--sidebar-w);
+    height: 100%;
+    justify-content: center;
+    border-right: 1px solid rgba(255,255,255,.06);
+  }
+  .logo {
+    width: 26px; height: 26px;
+    background: var(--teal);
+    border-radius: 5px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 700; color: white;
+    letter-spacing: .04em;
+  }
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .topbar-icon {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.08);
+    border: none;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gray-300);
+    font-size: 14px;
+    transition: background .15s;
+  }
+  .topbar-icon:hover { background: rgba(255,255,255,.14); }
+  .avatar {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: var(--teal);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; color: white;
+    cursor: pointer;
+  }
+
+  /* ── SHELL ── */
+  .shell {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    width: var(--sidebar-w);
+    background: var(--navy);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 0;
+    gap: 2px;
+    flex-shrink: 0;
+    border-right: 1px solid rgba(255,255,255,.06);
+    overflow: hidden;
+    transition: width .2s ease;
+    position: relative;
+    z-index: 40;
+  }
+  .sidebar:hover {
+    width: var(--sidebar-expanded);
+    box-shadow: 4px 0 20px rgba(0,0,0,.3);
+  }
+  .sidebar-group-label {
+    display: none;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: rgba(255,255,255,.25);
+    padding: 10px 14px 4px;
+    width: 100%;
+    white-space: nowrap;
+  }
+  .sidebar:hover .sidebar-group-label { display: block; }
+  .sidebar-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 6px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    color: rgba(255,255,255,.5);
+    transition: background .1s, color .1s;
+    white-space: nowrap;
+    overflow: hidden;
+    position: relative;
+  }
+  .sidebar:not(:hover) .sidebar-item { justify-content: center; padding: 7px 0; }
+  .sidebar-item:hover { background: rgba(255,255,255,.07); color: rgba(255,255,255,.85); }
+  .sidebar-item.active { background: rgba(26,122,106,.2); color: white; border-left: 2px solid var(--teal); }
+  .sidebar-item.active .nav-icon { color: var(--teal-mid); }
+  .nav-icon {
+    font-size: 15px;
+    flex-shrink: 0;
+    width: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .nav-label {
+    font-size: 12px;
+    font-weight: 500;
+    display: none;
+    white-space: nowrap;
+  }
+  .sidebar:hover .nav-label { display: block; }
+  .sidebar-divider {
+    width: 20px;
+    height: 1px;
+    background: rgba(255,255,255,.08);
+    margin: 4px 0;
+    flex-shrink: 0;
+  }
+  .sidebar:hover .sidebar-divider { width: calc(100% - 16px); }
+
+  /* ── MAIN ── */
+  .main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-width: 0;
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    padding: 18px 28px 0;
+    background: var(--white);
+    border-bottom: 1px solid var(--gray-200);
+    flex-shrink: 0;
+  }
+  .page-header-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .page-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--gray-900);
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    color: var(--gray-400);
+  }
+  .breadcrumb-sep { color: var(--gray-300); }
+  .breadcrumb-link {
+    background: var(--teal);
+    color: white;
+    padding: 1px 9px;
+    border-radius: 100px;
+    font-size: 10px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .breadcrumb-current { color: var(--gray-600); font-weight: 500; }
+
+  /* Page-level CTAs — top right, sejajar title */
+  .page-ctas {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    padding-top: 2px;
+  }
+
+  /* ── STATUS TABS ── */
+  .status-tabs {
+    display: flex;
+    gap: 0;
+    margin-top: 0;
+  }
+  .tab {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--gray-400);
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    transition: color .15s, border-color .15s;
+    white-space: nowrap;
+  }
+  .tab:hover { color: var(--gray-700); }
+  .tab.active { color: var(--teal); border-bottom-color: var(--teal); }
+  .tab-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 100px;
+    background: var(--gray-200);
+    color: var(--gray-500);
+  }
+  .tab.active .tab-badge { background: var(--teal); color: white; }
+
+  /* ── TOOLBAR ── */
+  .toolbar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 28px;
+    background: var(--white);
+    border-bottom: 1px solid var(--gray-200);
+    flex-shrink: 0;
+  }
+  .toolbar-left { display: flex; align-items: center; gap: 8px; flex: 1; }
+  .toolbar-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+  .search-input {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    padding: 6px 10px;
+    font-size: 12px;
+    font-family: inherit;
+    color: var(--gray-600);
+    background: var(--gray-50);
+    width: 220px;
+    transition: border-color .15s, box-shadow .15s;
+    cursor: text;
+  }
+  .search-input:focus-within { border-color: var(--teal); box-shadow: 0 0 0 3px var(--teal-light); background: white; }
+  .search-input input { border: none; background: none; font-family: inherit; font-size: 12px; color: var(--gray-700); width: 100%; outline: none; }
+  .search-input input::placeholder { color: var(--gray-400); }
+
+  /* Display preferences row */
+  .display-prefs {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 6px 28px;
+    background: var(--gray-50);
+    border-bottom: 1px solid var(--gray-200);
+    flex-shrink: 0;
+    font-size: 12px;
+    color: var(--gray-500);
+  }
+  .toggle-wrap {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    cursor: pointer;
+  }
+  .toggle {
+    width: 32px; height: 17px;
+    background: var(--gray-300);
+    border-radius: 100px;
+    position: relative;
+    transition: background .2s;
+    flex-shrink: 0;
+  }
+  .toggle.on { background: var(--teal); }
+  .toggle::after {
+    content: '';
+    position: absolute;
+    width: 13px; height: 13px;
+    border-radius: 50%;
+    background: white;
+    top: 2px; left: 2px;
+    transition: left .2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,.2);
+  }
+  .toggle.on::after { left: 17px; }
+  .checkbox-wrap {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+  }
+  .checkbox-wrap input { accent-color: var(--teal); width: 13px; height: 13px; }
+
+  /* record count */
+  .record-count { font-size: 12px; color: var(--gray-400); margin-left: auto; }
+
+  /* ── BUTTONS ── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    transition: all .15s;
+    white-space: nowrap;
+  }
+  .btn-contained {
+    background: var(--teal);
+    color: white;
+    padding: 7px 14px;
+    border: 1px solid var(--teal);
+  }
+  .btn-contained:hover { background: var(--teal-mid); border-color: var(--teal-mid); }
+  .btn-outlined {
+    background: transparent;
+    color: var(--teal);
+    padding: 6px 13px;
+    border: 1px solid var(--teal);
+  }
+  .btn-outlined:hover { background: var(--teal-light); }
+  .btn-outlined.gray { color: var(--gray-600); border-color: var(--gray-300); }
+  .btn-outlined.gray:hover { background: var(--gray-100); }
+  .btn-text {
+    background: transparent;
+    color: var(--teal);
+    padding: 6px 10px;
+    border: 1px solid transparent;
+  }
+  .btn-text:hover { background: var(--teal-light); }
+  .btn-text.gray { color: var(--gray-500); }
+  .btn-text.gray:hover { background: var(--gray-100); color: var(--gray-700); }
+  .btn-icon {
+    background: transparent;
+    color: var(--gray-500);
+    padding: 6px;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    font-size: 13px;
+    line-height: 1;
+  }
+  .btn-icon:hover { background: var(--gray-100); color: var(--gray-700); }
+  .btn-sm { font-size: 12px; padding: 4px 11px; }
+  .btn-sm.btn-outlined { padding: 3px 10px; }
+  .btn-sm.btn-icon { padding: 4px 6px; font-size: 12px; }
+
+  /* with badge */
+  .btn-badge {
+    background: var(--teal);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    border-radius: 100px;
+    padding: 0 5px;
+    line-height: 16px;
+  }
+
+  /* ── TABLE AREA ── */
+  .table-area {
+    flex: 1;
+    overflow: auto;
+    padding: 0;
+    background: var(--white);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  thead { position: sticky; top: 0; z-index: 10; }
+  thead tr { background: var(--gray-800); }
+  th {
+    padding: 9px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: rgba(255,255,255,.7);
+    text-align: left;
+    white-space: nowrap;
+    border-right: 1px solid rgba(255,255,255,.06);
+    cursor: pointer;
+    user-select: none;
+  }
+  th:last-child { border-right: none; text-align: right; }
+  th .sort-icon { opacity: .4; margin-left: 4px; font-size: 10px; }
+  th.sorted .sort-icon { opacity: 1; color: var(--teal-mid); }
+  th:hover { background: rgba(255,255,255,.05); }
+
+  /* checkbox col */
+  .col-check { width: 36px; padding: 9px 10px; }
+  input[type="checkbox"] { accent-color: var(--teal); width: 13px; height: 13px; cursor: pointer; }
+
+  td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--gray-100);
+    color: var(--gray-700);
+    vertical-align: middle;
+  }
+  tr:hover td { background: var(--gray-50); }
+  tr.selected td { background: #EEF9F7; }
+
+  /* freeze first col */
+  .col-freeze {
+    position: sticky;
+    left: 0;
+    background: white;
+    z-index: 5;
+    border-right: 1px solid var(--gray-200);
+  }
+  tr:hover .col-freeze { background: var(--gray-50); }
+  tr.selected .col-freeze { background: #EEF9F7; }
+  thead .col-freeze { background: var(--gray-800); border-right-color: rgba(255,255,255,.1); z-index: 11; }
+
+  .cell-id {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--teal);
+    cursor: pointer;
+    border-bottom: 1px solid transparent;
+    transition: border-color .1s;
+  }
+  .cell-id:hover { border-bottom-color: var(--teal); }
+
+  .cell-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    text-align: right;
+    color: var(--gray-600);
+  }
+
+  /* status pill */
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+  .status::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .s-progress { background: var(--orange-light); color: var(--orange); }
+  .s-progress::before { background: var(--orange); }
+  .s-open { background: var(--blue-light); color: var(--blue); }
+  .s-open::before { background: var(--blue); }
+  .s-done { background: var(--green-light); color: var(--green); }
+  .s-done::before { background: var(--green); }
+  .s-overdue { background: var(--red-light); color: var(--red); }
+  .s-overdue::before { background: var(--red); }
+
+  /* actions cell */
+  .actions-cell {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    justify-content: flex-end;
+  }
+  td.col-actions { text-align: right; overflow: visible; }
+
+  /* overflow menu */
+  .overflow-wrap {
+    position: relative;
+    display: inline-block;
+  }
+  .overflow-menu {
+    position: absolute;
+    bottom: calc(100% + 4px);
+    right: 0;
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    box-shadow: 0 8px 24px rgba(0,0,0,.12);
+    min-width: 180px;
+    z-index: 100;
+    display: none;
+  }
+  .overflow-menu.open-down {
+    top: calc(100% + 4px);
+    bottom: auto;
+  }
+  .overflow-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 14px;
+    font-size: 13px;
+    color: var(--gray-700);
+    cursor: pointer;
+    transition: background .1s;
+    white-space: nowrap;
+  }
+  .overflow-menu-item:first-child { border-radius: var(--radius) var(--radius) 0 0; }
+  .overflow-menu-item:last-child { border-radius: 0 0 var(--radius) var(--radius); }
+  .overflow-menu-item:hover { background: var(--gray-100); }
+  .overflow-menu-item + .overflow-menu-item { border-top: 1px solid var(--gray-100); }
+  .overflow-menu-item.danger { color: var(--red); }
+  .overflow-menu-item.danger:hover { background: var(--red-light); }
+  .menu-icon { font-size: 14px; width: 18px; text-align: center; flex-shrink: 0; }
+
+  /* expand row */
+  .expand-btn {
+    width: 24px; height: 24px;
+    background: none;
+    border: 1px solid var(--gray-200);
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+    color: var(--gray-400);
+    transition: all .15s;
+    flex-shrink: 0;
+  }
+  .expand-btn:hover { background: var(--gray-100); color: var(--gray-700); border-color: var(--gray-300); }
+  .expand-btn.open { background: var(--teal-light); border-color: var(--teal); color: var(--teal); }
+
+  .expanded-row td {
+    background: var(--gray-50);
+    padding: 0;
+    border-bottom: 2px solid var(--gray-200);
+  }
+  .expanded-content {
+    padding: 16px 20px 16px 48px;
+    display: none;
+  }
+  .expanded-content.open { display: block; }
+  .expanded-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 14px;
+  }
+  .expanded-field label {
+    font-size: 11px;
+    color: var(--gray-400);
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 3px;
+  }
+  .expanded-field span {
+    font-size: 13px;
+    color: var(--gray-800);
+    font-weight: 500;
+  }
+  .expanded-actions {
+    display: flex;
+    gap: 8px;
+    padding-top: 12px;
+    border-top: 1px solid var(--gray-200);
+  }
+
+  /* ── PAGINATION ── */
+  .pagination-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 28px;
+    background: white;
+    border-top: 1px solid var(--gray-200);
+    flex-shrink: 0;
+    font-size: 12px;
+    color: var(--gray-500);
+  }
+  .pagination-left { display: flex; align-items: center; gap: 10px; }
+  .rows-select {
+    border: 1px solid var(--gray-200);
+    border-radius: 4px;
+    padding: 3px 6px;
+    font-size: 12px;
+    font-family: inherit;
+    color: var(--gray-700);
+    background: white;
+    cursor: pointer;
+  }
+  .pagination-right { display: flex; align-items: center; gap: 6px; }
+  .page-btn {
+    width: 28px; height: 28px;
+    border: 1px solid var(--gray-200);
+    border-radius: 4px;
+    background: white;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    color: var(--gray-600);
+    transition: all .15s;
+  }
+  .page-btn:hover { background: var(--gray-100); }
+  .page-btn.active { background: var(--teal); color: white; border-color: var(--teal); }
+  .page-btn:disabled { opacity: .35; cursor: not-allowed; }
+
+  /* ── TOOLTIP ── */
+  [data-tooltip] { position: relative; }
+  [data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 5px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--gray-900);
+    color: white;
+    font-size: 11px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .15s;
+    z-index: 200;
+  }
+  [data-tooltip]:hover::after { opacity: 1; }
+
+  /* ── BULK TOOLBAR (replaces toolbar when rows selected) ── */
+  .bulk-toolbar {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 28px;
+    background: #EEF9F7;
+    border-bottom: 1px solid #B2DFDB;
+    flex-shrink: 0;
+  }
+  .bulk-toolbar.active { display: flex; }
+  .bulk-count { font-size: 13px; font-weight: 600; color: var(--teal); }
+
+  /* ── EMPTY / NO RESULTS (hidden by default) ── */
+  .empty-state {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    text-align: center;
+    color: var(--gray-400);
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <div class="logo">CX</div>
+  </div>
+  <div class="topbar-right">
+    <button class="topbar-icon" data-tooltip="Settings">⚙</button>
+    <div class="avatar" data-tooltip="Haris A.">H</div>
+  </div>
+</div>
+
+<div class="shell">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+    <div class="sidebar-item" data-tooltip="Dashboard"><span class="nav-icon">⊞</span><span class="nav-label">Dashboard</span></div>
+    <div class="sidebar-item" data-tooltip="Notifications"><span class="nav-icon">🔔</span><span class="nav-label">Notifications</span></div>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-group-label">Inspection</div>
+    <div class="sidebar-item" data-tooltip="Quality & HSE"><span class="nav-icon">🛡</span><span class="nav-label">Quality & HSE</span></div>
+    <div class="sidebar-item" data-tooltip="Tally Sheet"><span class="nav-icon">📋</span><span class="nav-label">Tally Sheet</span></div>
+    <div class="sidebar-item" data-tooltip="NCR / SPR"><span class="nav-icon">⚠</span><span class="nav-label">NCR / SPR</span></div>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-group-label">Supply Chain</div>
+    <div class="sidebar-item active" data-tooltip="Open Order"><span class="nav-icon">📦</span><span class="nav-label">Open Order</span></div>
+    <div class="sidebar-item" data-tooltip="Transfer"><span class="nav-icon">🔄</span><span class="nav-label">Transfer</span></div>
+    <div class="sidebar-item" data-tooltip="Call Off"><span class="nav-icon">📞</span><span class="nav-label">Call Off</span></div>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-group-label">Reports</div>
+    <div class="sidebar-item" data-tooltip="Analytics"><span class="nav-icon">📊</span><span class="nav-label">Analytics</span></div>
+    <div class="sidebar-item" data-tooltip="KPI Reports"><span class="nav-icon">📈</span><span class="nav-label">KPI Reports</span></div>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+      <div class="page-header-top">
+        <div>
+          <div class="page-title">Open Order</div>
+          <div class="breadcrumb">
+            <span>Category</span>
+            <span class="breadcrumb-sep">›</span>
+            <span class="breadcrumb-link">Supply Chain</span>
+            <span class="breadcrumb-sep">›</span>
+            <span class="breadcrumb-current">Open Order</span>
+          </div>
+        </div>
+        <!-- Zone 1: Primary CTAs — top right, sejajar page title -->
+        <div class="page-ctas">
+          <button class="btn btn-outlined gray btn-sm" data-tooltip="Upload invoice document">
+            ⬆ Upload Invoice
+          </button>
+          <button class="btn btn-contained" onclick="alert('+ New Shipment')">
+            + Shipment
+          </button>
+        </div>
+      </div>
+
+      <!-- Status tabs -->
+      <div class="status-tabs">
+        <div class="tab active" onclick="switchTab(this)">
+          Open <span class="tab-badge">7</span>
+        </div>
+        <div class="tab" onclick="switchTab(this)">
+          Closed <span class="tab-badge">0</span>
+        </div>
+        <div class="tab" onclick="switchTab(this)">
+          Overdue <span class="tab-badge">1</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- BULK TOOLBAR (replaces normal toolbar when rows selected) -->
+    <div class="bulk-toolbar" id="bulk-toolbar">
+      <input type="checkbox" id="bulk-check-all" checked onchange="selectAll(this)">
+      <span class="bulk-count" id="bulk-count">2 rows selected</span>
+      <button class="btn btn-text btn-sm gray">Select all 7</button>
+      <div style="flex:1"></div>
+      <button class="btn btn-outlined btn-sm gray">Export Selected</button>
+      <button class="btn btn-outlined btn-sm gray">Upload Invoice</button>
+      <button class="btn btn-text btn-sm" style="color:var(--gray-400)" onclick="clearSelection()">✕ Cancel</button>
+    </div>
+
+    <!-- TOOLBAR — Zone 2: below page header, above table -->
+    <div class="toolbar" id="normal-toolbar">
+      <div class="toolbar-left">
+        <!-- Search -->
+        <div class="search-input">
+          <span style="color:var(--gray-400);font-size:13px">🔍</span>
+          <input type="text" placeholder="Search orders…">
+        </div>
+        <!-- Column toggle -->
+        <button class="btn btn-outlined gray btn-sm" onclick="alert('Column visibility')">
+          ⊞ Columns <span class="btn-badge">8/10</span>
+        </button>
+        <!-- Filter -->
+        <button class="btn btn-outlined gray btn-sm" onclick="alert('Filters')">
+          ⚡ Filter
+        </button>
+      </div>
+      <div class="toolbar-right">
+        <!-- Record count — right aligned -->
+        <span class="record-count">7 records</span>
+        <!-- Export -->
+        <button class="btn btn-icon btn-sm" data-tooltip="Export XLSX">⬇</button>
+      </div>
+    </div>
+
+    <!-- DISPLAY PREFERENCES ROW -->
+    <div class="display-prefs">
+      <label class="toggle-wrap" onclick="toggleGroup()">
+        <div class="toggle" id="group-toggle"></div>
+        <span>Group by PO No.</span>
+      </label>
+      <label class="checkbox-wrap">
+        <input type="checkbox"> Set as Default
+      </label>
+    </div>
+
+    <!-- TABLE AREA -->
+    <div class="table-area">
+      <table>
+        <thead>
+          <tr>
+            <th class="col-check col-freeze">
+              <input type="checkbox" id="header-checkbox" onchange="toggleAll(this)">
+            </th>
+            <th class="sorted">Data <span class="sort-icon">↑</span></th>
+            <th>Order Date <span class="sort-icon">↕</span></th>
+            <th>Item Description <span class="sort-icon">↕</span></th>
+            <th>Est. CRD <span class="sort-icon">↕</span></th>
+            <th>Est. Pcs <span class="sort-icon">↕</span></th>
+            <th>Est. MT <span class="sort-icon">↕</span></th>
+            <th>Del. Term <span class="sort-icon">↕</span></th>
+            <th>MDR <span class="sort-icon">↕</span></th>
+            <th>Invoice <span class="sort-icon">↕</span></th>
+            <th>Status <span class="sort-icon">↕</span></th>
+            <th style="text-align:right">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="table-body">
+
+          <!-- Row 1 -->
+          <tr onclick="handleRowClick(event, 'row1')" id="row1-tr">
+            <td class="col-check col-freeze" onclick="event.stopPropagation()">
+              <input type="checkbox" class="row-check" onchange="handleCheck(this)">
+            </td>
+            <td><span class="cell-id">CPO-1234-4321</span></td>
+            <td>13 Mar 24</td>
+            <td style="max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="1.315", 1.72 PPF, J55, PSL1, LJ R2">1.315", 1.72 PPF, J55, PSL1, LJ R2</td>
+            <td>22 Jun 25</td>
+            <td class="cell-num">22</td>
+            <td class="cell-num">22</td>
+            <td>22 Jun 25</td>
+            <td class="cell-num">2</td>
+            <td class="cell-num">2</td>
+            <td><span class="status s-progress">In Progress</span></td>
+            <td class="col-actions" onclick="event.stopPropagation()">
+              <div class="actions-cell">
+                <!-- Primary action — Outlined (not Contained) for in-row actions -->
+                <button class="btn btn-outlined btn-sm" onclick="alert('Add Delivery Details for CPO-1234-4321')">
+                  Add Del. Details
+                </button>
+                <div class="overflow-wrap">
+                  <button class="btn btn-icon btn-sm" onclick="toggleMenu(this)" data-tooltip="More actions">⋯</button>
+                  <div class="overflow-menu">
+                    <div class="overflow-menu-item" onclick="alert('View Details')"><span class="menu-icon">📄</span> View Details</div>
+                    <div class="overflow-menu-item" onclick="alert('Upload Invoice')"><span class="menu-icon">⬆</span> Upload Invoice</div>
+                    <div class="overflow-menu-item" onclick="alert('Export PDF')"><span class="menu-icon">📤</span> Export PDF</div>
+                    <div class="overflow-menu-item" onclick="alert('Duplicate')"><span class="menu-icon">📋</span> Duplicate</div>
+                    <div class="overflow-menu-item danger" onclick="alert('Cancel Order')"><span class="menu-icon">✕</span> Cancel Order</div>
+                  </div>
+                </div>
+                <button class="expand-btn" onclick="toggleExpand(this, 'exp1')" data-tooltip="Expand row">▶</button>
+              </div>
+            </td>
+          </tr>
+          <!-- Expanded row 1 -->
+          <tr class="expanded-row">
+            <td colspan="12">
+              <div class="expanded-content" id="exp1">
+                <div class="expanded-grid">
+                  <div class="expanded-field"><label>Vessel</label><span>MV Harmony</span></div>
+                  <div class="expanded-field"><label>Yard Location</label><span>Yard A — Singapore</span></div>
+                  <div class="expanded-field"><label>Customer</label><span>MITO Singapore Pte Ltd</span></div>
+                  <div class="expanded-field"><label>PO Type</label><span>Standard</span></div>
+                  <div class="expanded-field"><label>Lot Number</label><span class="cell-id">LOT-2025-0042</span></div>
+                  <div class="expanded-field"><label>Inspection Date</label><span>10 Jun 25</span></div>
+                  <div class="expanded-field"><label>Accepted Pcs</label><span>20</span></div>
+                  <div class="expanded-field"><label>Rejected Pcs</label><span>2</span></div>
+                </div>
+                <div class="expanded-actions">
+                  <button class="btn btn-outlined btn-sm">Add Del. Details</button>
+                  <button class="btn btn-text btn-sm gray">View Full Details →</button>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Rows 2–7 (condensed) -->
+          <tr onclick="handleRowClick(event, 'row2')" id="row2-tr">
+            <td class="col-check col-freeze" onclick="event.stopPropagation()"><input type="checkbox" class="row-check" onchange="handleCheck(this)"></td>
+            <td><span class="cell-id">CPO-1234-4322</span></td>
+            <td>14 Mar 24</td>
+            <td style="max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">2.375", 4.70 PPF, J55, PSL1, BTC</td>
+            <td>25 Jun 25</td>
+            <td class="cell-num">48</td>
+            <td class="cell-num">35</td>
+            <td>25 Jun 25</td>
+            <td class="cell-num">3</td>
+            <td class="cell-num">1</td>
+            <td><span class="status s-progress">In Progress</span></td>
+            <td class="col-actions" onclick="event.stopPropagation()">
+              <div class="actions-cell">
+                <button class="btn btn-outlined btn-sm" onclick="alert('Add Del. Details')">Add Del. Details</button>
+                <div class="overflow-wrap">
+                  <button class="btn btn-icon btn-sm" onclick="toggleMenu(this)" data-tooltip="More actions">⋯</button>
+                  <div class="overflow-menu">
+                    <div class="overflow-menu-item"><span class="menu-icon">📄</span> View Details</div>
+                    <div class="overflow-menu-item"><span class="menu-icon">⬆</span> Upload Invoice</div>
+                    <div class="overflow-menu-item"><span class="menu-icon">📤</span> Export PDF</div>
+                    <div class="overflow-menu-item danger"><span class="menu-icon">✕</span> Cancel Order</div>
+                  </div>
+                </div>
+                <button class="expand-btn" onclick="toggleExpand(this, 'exp2')" data-tooltip="Expand row">▶</button>
+              </div>
+            </td>
+          </tr>
+          <tr class="expanded-row"><td colspan="12"><div class="expanded-content" id="exp2"><div class="expanded-grid"><div class="expanded-field"><label>Vessel</label><span>MV Pacific Star</span></div><div class="expanded-field"><label>Yard Location</label><span>Yard B — Jakarta</span></div><div class="expanded-field"><label>Customer</label><span>MITO Jakarta</span></div><div class="expanded-field"><label>PO Type</label><span>Urgent</span></div></div><div class="expanded-actions"><button class="btn btn-outlined btn-sm">Add Del. Details</button><button class="btn btn-text btn-sm gray">View Full Details →</button></div></div></td></tr>
+
+          <tr onclick="handleRowClick(event,'row3')" id="row3-tr">
+            <td class="col-check col-freeze" onclick="event.stopPropagation()"><input type="checkbox" class="row-check" onchange="handleCheck(this)"></td>
+            <td><span class="cell-id">CPO-1234-4323</span></td>
+            <td>15 Mar 24</td>
+            <td style="max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">3.500", 9.30 PPF, N80, PSL2, LTC</td>
+            <td>30 Jun 25</td>
+            <td class="cell-num">60</td>
+            <td class="cell-num">55</td>
+            <td>30 Jun 25</td>
+            <td class="cell-num">4</td>
+            <td class="cell-num">3</td>
+            <td><span class="status s-open">Open</span></td>
+            <td class="col-actions" onclick="event.stopPropagation()">
+              <div class="actions-cell">
+                <button class="btn btn-outlined btn-sm">Add Del. Details</button>
+                <div class="overflow-wrap">
+                  <button class="btn btn-icon btn-sm" onclick="toggleMenu(this)" data-tooltip="More actions">⋯</button>
+                  <div class="overflow-menu">
+                    <div class="overflow-menu-item"><span class="menu-icon">📄</span> View Details</div>
+                    <div class="overflow-menu-item"><span class="menu-icon">⬆</span> Upload Invoice</div>
+                    <div class="overflow-menu-item"><span class="menu-icon">📤</span> Export PDF</div>
+                    <div class="overflow-menu-item danger"><span class="menu-icon">✕</span> Cancel Order</div>
+                  </div>
+                </div>
+                <button class="expand-btn" onclick="toggleExpand(this, 'exp3')" data-tooltip="Expand row">▶</button>
+              </div>
+            </td>
+          </tr>
+          <tr class="expanded-row"><td colspan="12"><div class="expanded-content" id="exp3"></div></td></tr>
+
+          <tr onclick="handleRowClick(event,'row4')" id="row4-tr">
+            <td class="col-check col-freeze" onclick="event.stopPropagation()"><input type="checkbox" class="row-check" onchange="handleCheck(this)"></td>
+            <td><span class="cell-id">CPO-1234-4324</span></td>
+            <td>16 Mar 24</td>
+            <td style="max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">4.500", 12.75 PPF, L80, PSL1, BTC</td>
+            <td>05 Jul 25</td>
+            <td class="cell-num">30</td>
+            <td class="cell-num">28</td>
+            <td>05 Jul 25</td>
+            <td class="cell-num">2</td>
+            <td class="cell-num">2</td>
+            <td><span class="status s-overdue">Overdue</span></td>
+            <td class="col-actions" onclick="event.stopPropagation()">
+              <div class="actions-cell">
+                <button class="btn btn-outlined btn-sm">Add Del. Details</button>
+                <div class="overflow-wrap">
+                  <button class="btn btn-icon btn-sm" onclick="toggleMenu(this)" data-tooltip="More actions">⋯</button>
+                  <div class="overflow-menu">
+                    <div class="overflow-menu-item"><span class="menu-icon">📄</span> View Details</div>
+                    <div class="overflow-menu-item"><span class="menu-icon">⬆</span> Upload Invoice</div>
+                    <div class="overflow-menu-item"><span class="menu-icon">📤</span> Export PDF</div>
+                    <div class="overflow-menu-item danger"><span class="menu-icon">✕</span> Cancel Order</div>
+                  </div>
+                </div>
+                <button class="expand-btn" onclick="toggleExpand(this, 'exp4')" data-tooltip="Expand row">▶</button>
+              </div>
+            </td>
+          </tr>
+          <tr class="expanded-row"><td colspan="12"><div class="expanded-content" id="exp4"></div></td></tr>
+
+          <tr onclick="handleRowClick(event,'row5')" id="row5-tr">
+            <td class="col-check col-freeze" onclick="event.stopPropagation()"><input type="checkbox" class="row-check" onchange="handleCheck(this)"></td>
+            <td><span class="cell-id">CPO-1234-4325</span></td>
+            <td>17 Mar 24</td>
+            <td style="max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">5.500", 17.00 PPF, P110, PSL2, VAM TOP</td>
+            <td>10 Jul 25</td>
+            <td class="cell-num">24</td>
+            <td class="cell-num">20</td>
+            <td>10 Jul 25</td>
+            <td class="cell-num">1</td>
+            <td class="cell-num">1</td>
+            <td><span class="status s-progress">In Progress</span></td>
+            <td class="col-actions" onclick="event.stopPropagation()">
+              <div class="actions-cell">
+                <button class="btn btn-outlined btn-sm">Add Del. Details</button>
+                <div class="overflow-wrap">
+                  <button class="btn btn-icon btn-sm" onclick="toggleMenu(this)" data-tooltip="More actions">⋯</button>
+                  <div class="overflow-menu open-down">
+                    <div class="overflow-menu-item"><span class="menu-icon">📄</span> View Details</div>
+                    <div class="overflow-menu-item"><span class="menu-icon">⬆</span> Upload Invoice</div>
+                    <div class="overflow-menu-item"><span class="menu-icon">📤</span> Export PDF</div>
+                    <div class="overflow-menu-item danger"><span class="menu-icon">✕</span> Cancel Order</div>
+                  </div>
+                </div>
+                <button class="expand-btn" onclick="toggleExpand(this, 'exp5')" data-tooltip="Expand row">▶</button>
+              </div>
+            </td>
+          </tr>
+          <tr class="expanded-row"><td colspan="12"><div class="expanded-content" id="exp5"></div></td></tr>
+
+          <tr onclick="handleRowClick(event,'row6')" id="row6-tr">
+            <td class="col-check col-freeze" onclick="event.stopPropagation()"><input type="checkbox" class="row-check" onchange="handleCheck(this)"></td>
+            <td><span class="cell-id">CPO-1234-4326</span></td>
+            <td>18 Mar 24</td>
+            <td style="max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">7.000", 23.00 PPF, C95, PSL2, BTC</td>
+            <td>15 Jul 25</td>
+            <td class="cell-num">15</td>
+            <td class="cell-num">14</td>
+            <td>15 Jul 25</td>
+            <td class="cell-num">2</td>
+            <td class="cell-num">0</td>
+            <td><span class="status s-open">Open</span></td>
+            <td class="col-actions" onclick="event.stopPropagation()">
+              <div class="actions-cell">
+                <button class="btn btn-outlined btn-sm">Add Del. Details</button>
+                <div class="overflow-wrap">
+                  <button class="btn btn-icon btn-sm" onclick="toggleMenu(this)" data-tooltip="More actions">⋯</button>
+                  <div class="overflow-menu open-down">
+                    <div class="overflow-menu-item"><span class="menu-icon">📄</span> View Details</div>
+                    <div class="overflow-menu-item"><span class="menu-icon">⬆</span> Upload Invoice</div>
+                    <div class="overflow-menu-item"><span class="menu-icon">📤</span> Export PDF</div>
+                    <div class="overflow-menu-item danger"><span class="menu-icon">✕</span> Cancel Order</div>
+                  </div>
+                </div>
+                <button class="expand-btn" onclick="toggleExpand(this, 'exp6')" data-tooltip="Expand row">▶</button>
+              </div>
+            </td>
+          </tr>
+          <tr class="expanded-row"><td colspan="12"><div class="expanded-content" id="exp6"></div></td></tr>
+
+          <tr onclick="handleRowClick(event,'row7')" id="row7-tr">
+            <td class="col-check col-freeze" onclick="event.stopPropagation()"><input type="checkbox" class="row-check" onchange="handleCheck(this)"></td>
+            <td><span class="cell-id">CPO-1234-4327</span></td>
+            <td>19 Mar 24</td>
+            <td style="max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">9.625", 53.50 PPF, Q125, PSL2, VAM 21</td>
+            <td>20 Jul 25</td>
+            <td class="cell-num">10</td>
+            <td class="cell-num">45</td>
+            <td>20 Jul 25</td>
+            <td class="cell-num">1</td>
+            <td class="cell-num">1</td>
+            <td><span class="status s-progress">In Progress</span></td>
+            <td class="col-actions" onclick="event.stopPropagation()">
+              <div class="actions-cell">
+                <button class="btn btn-outlined btn-sm">Add Del. Details</button>
+                <div class="overflow-wrap">
+                  <button class="btn btn-icon btn-sm" onclick="toggleMenu(this)" data-tooltip="More actions">⋯</button>
+                  <div class="overflow-menu open-down">
+                    <div class="overflow-menu-item"><span class="menu-icon">📄</span> View Details</div>
+                    <div class="overflow-menu-item"><span class="menu-icon">⬆</span> Upload Invoice</div>
+                    <div class="overflow-menu-item"><span class="menu-icon">📤</span> Export PDF</div>
+                    <div class="overflow-menu-item danger"><span class="menu-icon">✕</span> Cancel Order</div>
+                  </div>
+                </div>
+                <button class="expand-btn" onclick="toggleExpand(this, 'exp7')" data-tooltip="Expand row">▶</button>
+              </div>
+            </td>
+          </tr>
+          <tr class="expanded-row"><td colspan="12"><div class="expanded-content" id="exp7"></div></td></tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    <!-- PAGINATION — bottom, rows per page default 25 -->
+    <div class="pagination-bar">
+      <div class="pagination-left">
+        <span>Rows per page</span>
+        <select class="rows-select">
+          <option>25</option>
+          <option>50</option>
+          <option>100</option>
+        </select>
+        <span>1–7 of 7</span>
+      </div>
+      <div class="pagination-right">
+        <button class="page-btn" disabled>‹</button>
+        <button class="page-btn active">1</button>
+        <button class="page-btn" disabled>›</button>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  // ── Overflow menu ──
+  function toggleMenu(btn) {
+    const menu = btn.nextElementSibling;
+    const isOpen = menu.style.display === 'block';
+    closeAllMenus();
+    if (!isOpen) {
+      menu.style.display = 'block';
+      // Smart direction
+      const btnRect = btn.getBoundingClientRect();
+      const menuH = menu.offsetHeight || 160;
+      const spaceBelow = window.innerHeight - btnRect.bottom;
+      menu.classList.toggle('open-down', spaceBelow > menuH + 8);
+    }
+  }
+  function closeAllMenus() {
+    document.querySelectorAll('.overflow-menu').forEach(m => {
+      m.style.display = 'none';
+    });
+  }
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.overflow-wrap')) closeAllMenus();
+  });
+
+  // ── Expand row ──
+  function toggleExpand(btn, id) {
+    const content = document.getElementById(id);
+    const isOpen = content.classList.contains('open');
+    // collapse all
+    document.querySelectorAll('.expanded-content.open').forEach(c => c.classList.remove('open'));
+    document.querySelectorAll('.expand-btn.open').forEach(b => { b.classList.remove('open'); b.textContent = '▶'; });
+    if (!isOpen) {
+      content.classList.add('open');
+      btn.classList.add('open');
+      btn.textContent = '▼';
+    }
+  }
+
+  // ── Row click → navigate ──
+  function handleRowClick(e, id) {
+    // Don't navigate if clicking inside actions/checkbox
+    if (e.target.closest('.col-actions') || e.target.closest('.col-check')) return;
+    // Visual feedback
+    document.querySelectorAll('tr[id$="-tr"]').forEach(r => r.style.outline = '');
+    document.getElementById(id + '-tr').style.outline = '2px solid var(--teal)';
+    setTimeout(() => { document.getElementById(id + '-tr').style.outline = ''; }, 600);
+  }
+
+  // ── Checkbox / bulk selection ──
+  function handleCheck(cb) {
+    const checked = document.querySelectorAll('.row-check:checked');
+    const all = document.querySelectorAll('.row-check');
+    const bulkBar = document.getElementById('bulk-toolbar');
+    const normalBar = document.getElementById('normal-toolbar');
+    const countEl = document.getElementById('bulk-count');
+
+    // toggle selected row style
+    cb.closest('tr').classList.toggle('selected', cb.checked);
+
+    if (checked.length > 0) {
+      bulkBar.classList.add('active');
+      normalBar.style.display = 'none';
+      countEl.textContent = checked.length + ' row' + (checked.length > 1 ? 's' : '') + ' selected';
+      document.getElementById('header-checkbox').indeterminate = checked.length < all.length;
+      document.getElementById('header-checkbox').checked = checked.length === all.length;
+    } else {
+      clearSelection();
+    }
+  }
+  function toggleAll(cb) {
+    document.querySelectorAll('.row-check').forEach(c => {
+      c.checked = cb.checked;
+      c.closest('tr').classList.toggle('selected', cb.checked);
+    });
+    const count = document.querySelectorAll('.row-check:checked').length;
+    if (count > 0) {
+      document.getElementById('bulk-toolbar').classList.add('active');
+      document.getElementById('normal-toolbar').style.display = 'none';
+      document.getElementById('bulk-count').textContent = count + ' rows selected';
+    } else {
+      clearSelection();
+    }
+  }
+  function selectAll(cb) { toggleAll(cb); }
+  function clearSelection() {
+    document.querySelectorAll('.row-check').forEach(c => { c.checked = false; c.closest('tr').classList.remove('selected'); });
+    document.getElementById('header-checkbox').checked = false;
+    document.getElementById('header-checkbox').indeterminate = false;
+    document.getElementById('bulk-toolbar').classList.remove('active');
+    document.getElementById('normal-toolbar').style.display = '';
+  }
+
+  // ── Tab switch ──
+  function switchTab(el) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  // ── Group toggle ──
+  function toggleGroup() {
+    const t = document.getElementById('group-toggle');
+    t.classList.toggle('on');
+  }
+</script>
+</body>
+</html>
