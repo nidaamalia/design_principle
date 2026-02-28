@@ -741,6 +741,7 @@
     <a class="nav-item" href="#s17">17. UI States</a>
     <a class="nav-item" href="#s18">18. Data Formatting</a>
     <a class="nav-item" href="#s19">19. File Attachments</a>
+    <a class="nav-item" href="#s20">20. Charts & Widgets</a>
   </nav>
 
   <!-- MAIN -->
@@ -4491,6 +4492,162 @@
   <span style="color:#F9A8D4">return</span> &lt;AttachFileIcon /&gt;;
 };</pre>
         </div>
+      </section>
+
+      <!-- ================================ -->
+      <!-- S20: CHARTS & WIDGETS -->
+      <!-- ================================ -->
+      <section id="s20">
+        <div class="section-header">
+          <div class="section-number">20</div>
+          <h2>Charts & Widgets</h2>
+          <span class="desc">Library · KPI Cards · Bar · Line · Donut · Table Indicators</span>
+        </div>
+
+        <p>Tubestream dashboards (Insights, Analytics, KPI Reports) are data-dense and cross-module. Consistent chart styling is as important as consistent button styling — users should recognise the visual language instantly regardless of which module they're in.</p>
+
+        <!-- Library decision -->
+        <div style="background:var(--ts-gray-900);border:1px solid var(--ts-gray-700);border-radius:var(--radius);padding:20px 24px;margin-bottom:24px">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+            <div style="background:#1E6B5E;color:white;font-size:11px;font-weight:700;padding:3px 10px;border-radius:100px;text-transform:uppercase;letter-spacing:.06em">Standard Library</div>
+            <div style="font-size:16px;font-weight:600;color:white">Recharts</div>
+            <div style="font-size:12px;color:#4ADE80;margin-left:auto">MIT License · React-native · Composable</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:14px">
+            <div style="background:rgba(255,255,255,.05);border-radius:4px;padding:12px">
+              <div style="font-size:11px;font-weight:600;color:#94A3B8;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">Why Recharts</div>
+              <div style="font-size:12px;color:#CBD5E0;line-height:1.7">React-native composable API. Aligns with MUI's component model. No extra abstraction layer. Responsive by default.</div>
+            </div>
+            <div style="background:rgba(255,255,255,.05);border-radius:4px;padding:12px">
+              <div style="font-size:11px;font-weight:600;color:#94A3B8;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">Charts Covered</div>
+              <div style="font-size:12px;color:#CBD5E0;line-height:1.7">BarChart, LineChart, AreaChart, ComposedChart, PieChart, RadarChart, ScatterChart, Treemap</div>
+            </div>
+            <div style="background:rgba(255,255,255,.05);border-radius:4px;padding:12px">
+              <div style="font-size:11px;font-weight:600;color:#94A3B8;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">Install</div>
+              <div style="font-size:12px;color:#93C5FD;font-family:'IBM Plex Mono',monospace;line-height:1.7">npm install recharts</div>
+              <div style="font-size:11px;color:#64748B;margin-top:4px">Peer dep: React 16.8+</div>
+            </div>
+          </div>
+          <div style="font-size:12px;color:#64748B">KPI cards and micro-indicators are plain MUI components — no charting library needed for those.</div>
+        </div>
+
+        <!-- Colour palette -->
+        <h3>Chart Colour Palette</h3>
+        <p>Use a fixed, ordered palette for all charts. Never pick colours ad hoc — series 1 should always be the same colour whether it appears in a bar chart or a line chart on a different module.</p>
+
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+            <div style="width:48px;height:48px;border-radius:var(--radius);background:#1E6B5E"></div>
+            <div style="font-size:10px;font-family:'IBM Plex Mono',monospace;color:var(--ts-gray-500)">#1E6B5E</div>
+            <div style="font-size:10px;color:var(--ts-gray-400)">Series 1</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+            <div style="width:48px;height:48px;border-radius:var(--radius);background:#2563EB"></div>
+            <div style="font-size:10px;font-family:'IBM Plex Mono',monospace;color:var(--ts-gray-500)">#2563EB</div>
+            <div style="font-size:10px;color:var(--ts-gray-400)">Series 2</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+            <div style="width:48px;height:48px;border-radius:var(--radius);background:#D97706"></div>
+            <div style="font-size:10px;font-family:'IBM Plex Mono',monospace;color:var(--ts-gray-500)">#D97706</div>
+            <div style="font-size:10px;color:var(--ts-gray-400)">Series 3</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+            <div style="width:48px;height:48px;border-radius:var(--radius);background:#7C3AED"></div>
+            <div style="font-size:10px;font-family:'IBM Plex Mono',monospace;color:var(--ts-gray-500)">#7C3AED</div>
+            <div style="font-size:10px;color:var(--ts-gray-400)">Series 4</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+            <div style="width:48px;height:48px;border-radius:var(--radius);background:#DB2777"></div>
+            <div style="font-size:10px;font-family:'IBM Plex Mono',monospace;color:var(--ts-gray-500)">#DB2777</div>
+            <div style="font-size:10px;color:var(--ts-gray-400)">Series 5</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+            <div style="width:48px;height:48px;border-radius:var(--radius);background:#0891B2"></div>
+            <div style="font-size:10px;font-family:'IBM Plex Mono',monospace;color:var(--ts-gray-500)">#0891B2</div>
+            <div style="font-size:10px;color:var(--ts-gray-400)">Series 6</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:6px;margin-left:16px">
+            <div style="width:48px;height:48px;border-radius:var(--radius);background:#DC2626"></div>
+            <div style="font-size:10px;font-family:'IBM Plex Mono',monospace;color:var(--ts-gray-500)">#DC2626</div>
+            <div style="font-size:10px;color:var(--ts-gray-400)">Alert / Bad</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+            <div style="width:48px;height:48px;border-radius:var(--radius);background:#15803D"></div>
+            <div style="font-size:10px;font-family:'IBM Plex Mono',monospace;color:var(--ts-gray-500)">#15803D</div>
+            <div style="font-size:10px;color:var(--ts-gray-400)">Good / Target</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+            <div style="width:48px;height:48px;border-radius:var(--radius);background:#E2E8F0"></div>
+            <div style="font-size:10px;font-family:'IBM Plex Mono',monospace;color:var(--ts-gray-500)">#E2E8F0</div>
+            <div style="font-size:10px;color:var(--ts-gray-400)">Neutral / Empty</div>
+          </div>
+        </div>
+
+        <div class="rule"><strong>Always assign colours by data role, not by aesthetics.</strong> "Target" is always green (#15803D), "Alert/Overdue" is always red (#DC2626) — regardless of which module or which chart type.</div>
+        <div class="rule rule-warn"><strong>Max 6 series on a single chart.</strong> More than 6 colours creates a legend that is harder to decode than the chart itself. If you have more series, group into "Other" or use a drill-down pattern.</div>
+
+        <h3>Widget Types</h3>
+
+        <h4 style="margin:20px 0 10px;color:var(--ts-gray-700);font-size:14px">① KPI Summary Card</h4>
+        <p style="margin-bottom:12px">Use for single key metrics at the top of a dashboard. Shows value, label, unit, and optional trend vs. previous period.</p>
+
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:8px">
+          <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);padding:16px 18px">
+            <div style="font-size:11px;font-weight:600;color:var(--ts-gray-400);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Total Inventory</div>
+            <div style="font-size:26px;font-weight:700;color:var(--ts-gray-900);line-height:1;margin-bottom:6px">1,000 <span style="font-size:14px;font-weight:500;color:var(--ts-gray-400)">MT</span></div>
+            <div style="font-size:11px;color:var(--ts-green);font-weight:600">▲ 4.2% vs last month</div>
+          </div>
+          <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);padding:16px 18px">
+            <div style="font-size:11px;font-weight:600;color:var(--ts-gray-400);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Total Inventory</div>
+            <div style="font-size:26px;font-weight:700;color:var(--ts-gray-900);line-height:1;margin-bottom:6px">900 <span style="font-size:14px;font-weight:500;color:var(--ts-gray-400)">Pcs</span></div>
+            <div style="font-size:11px;color:var(--ts-red);font-weight:600">▼ 2.1% vs last month</div>
+          </div>
+          <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);padding:16px 18px">
+            <div style="font-size:11px;font-weight:600;color:var(--ts-gray-400);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Carrying Balance</div>
+            <div style="font-size:26px;font-weight:700;color:var(--ts-gray-900);line-height:1;margin-bottom:6px">750 <span style="font-size:14px;font-weight:500;color:var(--ts-gray-400)">ft</span></div>
+            <div style="font-size:11px;color:var(--ts-gray-400)">No change</div>
+          </div>
+          <div style="background:var(--ts-red-light);border:1px solid #FFCDD2;border-radius:var(--radius);padding:16px 18px">
+            <div style="font-size:11px;font-weight:600;color:var(--ts-red);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Overdue Orders</div>
+            <div style="font-size:26px;font-weight:700;color:var(--ts-red);line-height:1;margin-bottom:6px">3</div>
+            <div style="font-size:11px;color:var(--ts-red);font-weight:600">Requires attention</div>
+          </div>
+        </div>
+
+        <div class="rule"><strong>KPI card anatomy:</strong> label (overline/caption) → value (h5/h4, bold) → unit (body2, muted) → trend (caption, colored). Always in this vertical order.</div>
+        <div class="rule"><strong>Trend direction uses colour + arrow:</strong> ▲ green = good, ▼ red = bad. But "good" depends on metric — for "Overdue Count", ▼ is good. Define per-metric in your data model which direction is positive.</div>
+        <div class="rule rule-warn"><strong>Alert state KPI card</strong> — if a metric exceeds threshold, background turns red-light and text turns red. Never use this for neutral negative trends. Only for actionable threshold breaches.</div>
+
+        <h4 style="margin:0 0 10px;color:var(--ts-gray-700);font-size:14px">② Bar Chart — Grouped & Stacked</h4>
+        <p style="margin-bottom:12px">Use for comparing values across categories (months, yards, product types). Grouped = compare series side by side. Stacked = show composition of a total.</p>
+
+        <div class="rule"><strong>Grouped = comparison. Stacked = composition.</strong> Never use stacked when comparing absolute values across series — the floating baseline makes comparison impossible. Use grouped instead.</div>
+        <div class="rule"><strong>Bar radius: 2px top corners only</strong> (<code>radius={[2,2,0,0]}</code> in Recharts). Fully rounded bars feel informal for enterprise data.</div>
+
+        <h4 style="margin:0 0 10px;color:var(--ts-gray-700);font-size:14px">③ Line & Area Chart</h4>
+        <p style="margin-bottom:12px">Use for trends over time. Area chart (filled) emphasises volume. Line chart emphasises rate of change. Use area only when the filled region has meaning (e.g. total inventory level over time).</p>
+
+        <div class="rule"><strong>Forecast / projected lines use dashed stroke</strong> (<code>strokeDasharray="4 2"</code>). Actual data is solid. This makes the distinction immediately clear without relying on colour alone.</div>
+        <div class="rule"><strong>Horizontal grid lines only</strong> (<code>vertical={false}</code> on CartesianGrid). Vertical grid lines add noise without helping the reader. Axis lines and tick lines should be hidden (<code>axisLine={false} tickLine={false}</code>).</div>
+
+        <h4 style="margin:0 0 10px;color:var(--ts-gray-700);font-size:14px">④ Donut Chart</h4>
+        <p style="margin-bottom:12px">Use for part-to-whole relationships with 2–5 categories. The centre label shows the total. Never use pie chart (no hole) — the donut centre is valuable real estate for the total value.</p>
+
+        <div class="rule"><strong>Always show the legend beside the chart</strong> with value and percentage, not just a colour swatch. Users should not need to hover to get the breakdown.</div>
+        <div class="rule rule-warn"><strong>Max 5 segments.</strong> Group anything below ~5% into "Other". A donut with 8 thin slices is unreadable.</div>
+
+        <h4 style="margin:0 0 10px;color:var(--ts-gray-700);font-size:14px">⑤ Table + Micro Indicators</h4>
+        <p style="margin-bottom:12px">Combine tabular data with inline visual cues: coloured text, small badges, or mini spark bars. Use this instead of a full chart when you need sortable, scannable data with visual context.</p>
+
+        <div class="rule"><strong>Progress bar colour reflects status:</strong> green = on track, orange = watch, red = at risk. Consistent with the status pill colour in the same row.</div>
+        <div class="rule"><strong>Numbers right-aligned, monospace.</strong> All numeric columns in tables must be right-aligned and use IBM Plex Mono so digits line up vertically.</div>
+
+        <h3>Widget Anatomy — Standard</h3>
+        <p>Every chart widget on a dashboard page follows the same structure:</p>
+
+        <div class="rule"><strong>Time range selector</strong> — if a chart supports multiple time windows (1M, 3M, 6M, 1Y), use a small ButtonGroup of Text Buttons in the widget header, right-aligned. Not a Select/Dropdown.</div>
+        <div class="rule"><strong>All charts use <code>ResponsiveContainer width="100%"</code></strong> — never hardcode pixel widths. Charts must adapt to the grid column they're placed in.</div>
+        <div class="rule rule-warn"><strong>Don't mix chart libraries.</strong> Once Recharts is the standard, every chart in Tubestream uses Recharts. Mixing Recharts with Chart.js or D3 creates inconsistent visual output and doubles the bundle size.</div>
       </section>
 
       <div style="height:60px"></div>
