@@ -3929,6 +3929,164 @@
         <div class="rule"><strong>Align numbers right in table columns.</strong> Right-alignment lets users scan and compare values vertically. Left-aligned numbers in a table are a common mistake.</div>
         <div class="rule rule-warn"><strong>Use ISO currency codes, not symbols.</strong> "$" is ambiguous (USD? SGD? AUD?). Tubestream operates across multiple countries — always write USD, SGD, IDR, AUD explicitly.</div>
 
+        <!-- Decimal & Thousands Separator Rules -->
+        <h3>Decimal & Thousands Separator Standards</h3>
+        <p>Tubestream uses <strong>period (.) as decimal separator</strong> and <strong>comma (,) as thousands separator</strong> across all modules, regardless of user locale. This ensures data consistency and prevents ambiguity in international contexts.</p>
+        <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden;margin-bottom:16px">
+          <div style="display:grid;grid-template-columns:180px 1fr 1fr 1fr;border-bottom:2px solid var(--ts-gray-200)">
+            <div style="padding:10px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600);background:var(--ts-gray-50)">Scenario</div>
+            <div style="padding:10px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600);background:var(--ts-gray-50)">Format Rule</div>
+            <div style="padding:10px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600);background:var(--ts-gray-50)">Example</div>
+            <div style="padding:10px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600);background:var(--ts-gray-50)">Notes</div>
+          </div>
+          <div style="display:grid;grid-template-columns:180px 1fr 1fr 1fr;border-bottom:1px solid var(--ts-gray-100);align-items:center">
+            <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--ts-gray-700);border-right:1px solid var(--ts-gray-100)">Small numbers (&lt; 1,000)</div>
+            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">No thousands separator, period for decimal</div>
+            <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--ts-gray-800);border-right:1px solid var(--ts-gray-100)">114.30 mm</div>
+            <div style="padding:10px 14px;font-size:12px;color:var(--ts-gray-500)">Always include decimal places per type rules</div>
+          </div>
+          <div style="display:grid;grid-template-columns:180px 1fr 1fr 1fr;border-bottom:1px solid var(--ts-gray-100);align-items:center">
+            <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--ts-gray-700);border-right:1px solid var(--ts-gray-100)">Large numbers (≥ 1,000)</div>
+            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">Comma every 3 digits from right, period for decimal</div>
+            <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--ts-gray-800);border-right:1px solid var(--ts-gray-100)">1,250 joints</div>
+            <div style="padding:10px 14px;font-size:12px;color:var(--ts-gray-500)">Applies to quantities, prices, large measurements</div>
+          </div>
+          <div style="display:grid;grid-template-columns:180px 1fr 1fr 1fr;border-bottom:1px solid var(--ts-gray-100);align-items:center">
+            <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--ts-gray-700);border-right:1px solid var(--ts-gray-100)">Decimal-heavy values</div>
+            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">Period for decimal, comma for thousands, fixed decimal places</div>
+            <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--ts-gray-800);border-right:1px solid var(--ts-gray-100)">12,345.67 kg/m</div>
+            <div style="padding:10px 14px;font-size:12px;color:var(--ts-gray-500)">Never omit trailing zeros: 12,345.67 not 12,345.6</div>
+          </div>
+          <div style="display:grid;grid-template-columns:180px 1fr 1fr 1fr;align-items:center">
+            <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--ts-gray-700);border-right:1px solid var(--ts-gray-100)">Zero values</div>
+            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">Display as "0" or "0.00" per type, never omit or use dash</div>
+            <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--ts-gray-800);border-right:1px solid var(--ts-gray-100)">0.00 kg/m</div>
+            <div style="padding:10px 14px;font-size:12px;color:var(--ts-gray-500)">Dash (–) is reserved for ranges or missing data</div>
+          </div>
+        </div>
+
+        <!-- Currency Formatting -->
+        <h3>Currency Formatting Rules</h3>
+        <p>Currency values must always include the ISO 4217 currency code and be formatted with 2 decimal places. Never use currency symbols ($, €, ¥) — they are ambiguous across regions.</p>
+        <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden;margin-bottom:16px">
+          <div style="display:grid;grid-template-columns:140px 1fr 1fr 1fr;border-bottom:2px solid var(--ts-gray-200)">
+            <div style="padding:10px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600);background:var(--ts-gray-50)">Currency</div>
+            <div style="padding:10px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600);background:var(--ts-gray-50)">Code</div>
+            <div style="padding:10px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600);background:var(--ts-gray-50)">Format</div>
+            <div style="padding:10px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600);background:var(--ts-gray-50)">Example</div>
+          </div>
+          <div style="display:grid;grid-template-columns:140px 1fr 1fr 1fr;border-bottom:1px solid var(--ts-gray-100);align-items:center">
+            <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--ts-gray-700);border-right:1px solid var(--ts-gray-100)">US Dollar</div>
+            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">USD</div>
+            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">USD + space + number with comma thousands separator + 2 decimals</div>
+            <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--ts-gray-800)">USD 12,500.00</div>
+          </div>
+          <div style="display:grid;grid-template-columns:140px 1fr 1fr 1fr;border-bottom:1px solid var(--ts-gray-100);align-items:center">
+            <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--ts-gray-700);border-right:1px solid var(--ts-gray-100)">Singapore Dollar</div>
+            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">SGD</div>
+            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">SGD + space + number with comma thousands separator + 2 decimals</div>
+            <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--ts-gray-800)">SGD 8,750.50</div>
+          </div>
+          <div style="display:grid;grid-template-columns:140px 1fr 1fr 1fr;border-bottom:1px solid var(--ts-gray-100);align-items:center">
+            <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--ts-gray-700);border-right:1px solid var(--ts-gray-100)">Indonesian Rupiah</div>
+            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">IDR</div>
+            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">IDR + space + number with comma thousands separator + 0 decimals (no cents)</div>
+            <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--ts-gray-800)">IDR 187,500,000</div>
+          </div>
+          <div style="display:grid;grid-template-columns:140px 1fr 1fr 1fr;border-bottom:1px solid var(--ts-gray-100);align-items:center">
+            <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--ts-gray-700);border-right:1px solid var(--ts-gray-100)">Australian Dollar</div>
+            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">AUD</div>
+            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">AUD + space + number with comma thousands separator + 2 decimals</div>
+            <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--ts-gray-800)">AUD 15,250.75</div>
+          </div>
+        </div>
+
+        <!-- Unit Abbreviations Reference -->
+        <h3>Unit Abbreviations & Measurement Standards</h3>
+        <p>All units must be abbreviated consistently. Use standard ISO 80000 abbreviations. Never spell out units in data displays — always use the abbreviation. Units must always be adjacent to the numeric value with no space before the abbreviation.</p>
+        <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden;margin-bottom:16px">
+          <div style="display:grid;grid-template-columns:120px 1fr 1fr 1fr;border-bottom:2px solid var(--ts-gray-200)">
+            <div style="padding:10px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600);background:var(--ts-gray-50)">Represent</div>
+            <div style="padding:10px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600);background:var(--ts-gray-50)">Unit Name</div>
+            <div style="padding:10px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600);background:var(--ts-gray-50)">Example</div>
+            <div style="padding:10px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600);background:var(--ts-gray-50)">Note</div>
+          </div>
+          <!-- Length units -->
+          <div style="display:grid;grid-template-columns:120px 1fr 1fr 1fr;border-bottom:1px solid var(--ts-gray-100);align-items:center;background:var(--ts-gray-50)">
+            <div style="padding:10px 14px;font-size:12px;font-weight:600;color:var(--ts-gray-700);border-right:1px solid var(--ts-gray-100)">mm</div>
+            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">Millimeter</div>
+            <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--ts-gray-800);border-right:1px solid var(--ts-gray-100)">114.30 mm</div>
+            <div style="padding:10px 14px;font-size:12px;color:var(--ts-gray-500)">Primary unit for OD, WT, dimensions. 2 decimals.</div>
+          </div>
+          <div style="display:grid;grid-template-columns:120px 1fr 1fr 1fr;border-bottom:1px solid var(--ts-gray-100);align-items:center">
+            <div style="padding:10px 14px;font-size:12px;font-weight:600;color:var(--ts-gray-700);border-right:1px solid var(--ts-gray-100)">m</div>
+            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">Meter</div>
+            <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--ts-gray-800);border-right:1px solid var(--ts-gray-100)">67.540 m</div>
+            <div style="padding:10px 14px;font-size:12px;color:var(--ts-gray-500)">Used for length, range. 3 decimals for precision.</div>
+          </div>
+          <div style="display:grid;grid-template-columns:120px 1fr 1fr 1fr;border-bottom:1px solid var(--ts-gray-100);align-items:center;background:var(--ts-gray-50)">
+            <div style="padding:10px 14px;font-size:12px;font-weight:600;color:var(--ts-gray-700);border-right:1px solid var(--ts-gray-100)">ft</div>
+            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">Feet</div>
+            <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--ts-gray-800);border-right:1px solid var(--ts-gray-100)">45.78 ft</div>
+            <div style="padding:10px 14px;font-size:12px;color:var(--ts-gray-500)">Imperial unit for length. 2 decimals.</div>
+          </div>
+          <div style="display:grid;grid-template-columns:120px 1fr 1fr 1fr;border-bottom:1px solid var(--ts-gray-100);align-items:center">
+            <div style="padding:10px 14px;font-size:12px;font-weight:600;color:var(--ts-gray-700);border-right:1px solid var(--ts-gray-100)">in or &quot;</div>
+            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">Inch</div>
+            <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--ts-gray-800);border-right:1px solid var(--ts-gray-100)">6.625&quot;</div>
+            <div style="padding:10px 14px;font-size:12px;color:var(--ts-gray-500)">Imperial unit for small dimensions. 3 decimals.</div>
+          </div>
+          <!-- Weight units -->
+          <div style="display:grid;grid-template-columns:120px 1fr 1fr 1fr;border-bottom:1px solid var(--ts-gray-100);align-items:center;background:var(--ts-gray-50)">
+            <div style="padding:10px 14px;font-size:12px;font-weight:600;color:var(--ts-gray-700);border-right:1px solid var(--ts-gray-100)">kg/m</div>
+            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">Kilogram per Meter</div>
+            <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--ts-gray-800);border-right:1px solid var(--ts-gray-100)">12.50 kg/m</div>
+            <div style="padding:10px 14px;font-size:12px;color:var(--ts-gray-500)">Weight per unit length. 2 decimals. No space before unit.</div>
+          </div>
+          <div style="display:grid;grid-template-columns:120px 1fr 1fr 1fr;border-bottom:1px solid var(--ts-gray-100);align-items:center">
+            <div style="padding:10px 14px;font-size:12px;font-weight:600;color:var(--ts-gray-700);border-right:1px solid var(--ts-gray-100)">MT</div>
+            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">Metric Tonne</div>
+            <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--ts-gray-800);border-right:1px solid var(--ts-gray-100)">7.23 MT</div>
+            <div style="padding:10px 14px;font-size:12px;color:var(--ts-gray-500)">Total weight. 2 decimals standard; 4 for Sucker Rob items.</div>
+          </div>
+          <div style="display:grid;grid-template-columns:120px 1fr 1fr 1fr;border-bottom:1px solid var(--ts-gray-100);align-items:center;background:var(--ts-gray-50)">
+            <div style="padding:10px 14px;font-size:12px;font-weight:600;color:var(--ts-gray-700);border-right:1px solid var(--ts-gray-100)">lbs</div>
+            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">Pounds</div>
+            <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--ts-gray-800);border-right:1px solid var(--ts-gray-100)">15,950 lbs</div>
+            <div style="padding:10px 14px;font-size:12px;color:var(--ts-gray-500)">Imperial weight. Use thousands separator for large values.</div>
+          </div>
+          <!-- Quantity units -->
+          <div style="display:grid;grid-template-columns:120px 1fr 1fr 1fr;border-bottom:1px solid var(--ts-gray-100);align-items:center">
+            <div style="padding:10px 14px;font-size:12px;font-weight:600;color:var(--ts-gray-700);border-right:1px solid var(--ts-gray-100)">pcs</div>
+            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">Pieces</div>
+            <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--ts-gray-800);border-right:1px solid var(--ts-gray-100)">100 pcs</div>
+            <div style="padding:10px 14px;font-size:12px;color:var(--ts-gray-500)">Item count in Tubestream. Integer, no decimals. Thousands separator.</div>
+          </div>
+          <div style="display:grid;grid-template-columns:120px 1fr 1fr 1fr;border-bottom:1px solid var(--ts-gray-100);align-items:center;background:var(--ts-gray-50)">
+            <div style="padding:10px 14px;font-size:12px;font-weight:600;color:var(--ts-gray-700);border-right:1px solid var(--ts-gray-100)">joints</div>
+            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">Joints (pipe sections)</div>
+            <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--ts-gray-800);border-right:1px solid var(--ts-gray-100)">1,250 joints</div>
+            <div style="padding:10px 14px;font-size:12px;color:var(--ts-gray-500)">Pipe section count. Integer, no decimals. Thousands separator.</div>
+          </div>
+          <!-- Percentage & Ratio -->
+          <div style="display:grid;grid-template-columns:120px 1fr 1fr 1fr;border-bottom:1px solid var(--ts-gray-100);align-items:center">
+            <div style="padding:10px 14px;font-size:12px;font-weight:600;color:var(--ts-gray-700);border-right:1px solid var(--ts-gray-100)">%</div>
+            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">Percentage</div>
+            <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--ts-gray-800);border-right:1px solid var(--ts-gray-100)">98.5%</div>
+            <div style="padding:10px 14px;font-size:12px;color:var(--ts-gray-500)">1 decimal place. No space before %. Use for efficiency, completion rates.</div>
+          </div>
+          <div style="display:grid;grid-template-columns:120px 1fr 1fr 1fr;border-bottom:1px solid var(--ts-gray-100);align-items:center;background:var(--ts-gray-50)">
+            <div style="padding:10px 14px;font-size:12px;font-weight:600;color:var(--ts-gray-700);border-right:1px solid var(--ts-gray-100)">R1/R2/R3</div>
+            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">Range (OCTG)</div>
+            <div style="padding:10px 14px;font-size:13px;font-weight:500;color:var(--ts-gray-800);border-right:1px solid var(--ts-gray-100)">R1 / R2 / R3</div>
+            <div style="padding:10px 14px;font-size:12px;color:var(--ts-gray-500)">Oil Country Tubular Goods classification. Use forward slash with spaces.</div>
+          </div>
+        </div>
+
+        <div class="rule"><strong>Never mix decimal separators.</strong> Always use period (.) for decimals and comma (,) for thousands — never use comma for decimals or period for thousands separators, even if the user's system locale differs.</div>
+        <div class="rule"><strong>Trailing zeros are mandatory.</strong> Display 114.30 not 114.3, and 12.50 not 12.5. This prevents misreading and signals precision to the user.</div>
+        <div class="rule rule-warn"><strong>Never abbreviate units in data displays.</strong> Always use the standard abbreviation (mm, kg/m, pcs, etc.). Never spell out "millimeter" or "kilogram per meter" in a table cell — it wastes space and breaks scannability.</div>
+
         <!-- IDs & References -->
         <h3>IDs & Reference Numbers</h3>
         <div class="rule"><strong>IDs are always monospace font in table cells</strong> — use <code>font-family: 'IBM Plex Mono'</code> or MUI's <code>sx={{ fontFamily: 'monospace' }}</code>. This makes them scannable and distinguishable from regular text at a glance.</div>
