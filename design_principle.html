@@ -2911,9 +2911,9 @@
           <div style="display:grid;grid-template-columns:130px 1fr 1fr 1fr;align-items:center">
             <div style="padding:12px 14px;font-size:12px;font-weight:600;color:var(--ts-gray-700);border-right:1px solid var(--ts-gray-100)">✏️ Inline edit</div>
             <div style="padding:12px 14px;border-right:1px solid var(--ts-gray-100)">
-              <div style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--ts-gray-700);padding:4px 6px;border:1px dashed transparent;border-radius:4px" id="inline-demo-view" onclick="document.getElementById('inline-demo-view').style.display='none';document.getElementById('inline-demo-edit').style.display='flex'" style="cursor:text">
+              <div style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--ts-gray-700);padding:4px 6px;border:1px dashed transparent;border-radius:4px;transition:all 0.2s ease" id="inline-demo-view" onclick="document.getElementById('inline-demo-view').style.display='none';document.getElementById('inline-demo-edit').style.display='flex'" onmouseover="this.style.borderColor='var(--ts-blue)';this.querySelector('.edit-icon').style.color='var(--ts-blue)';this.querySelector('.edit-icon').style.opacity='1'" onmouseout="this.style.borderColor='transparent';this.querySelector('.edit-icon').style.color='var(--ts-gray-300)';this.querySelector('.edit-icon').style.opacity='0.6'" style="cursor:text">
                 <span>Q: 250 units</span>
-                <span style="color:var(--ts-gray-300);font-size:11px">✏</span>
+                <svg class="edit-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ts-gray-300);opacity:0.6;transition:all 0.2s ease;flex-shrink:0"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
               </div>
               <div style="display:none;align-items:center;gap:6px" id="inline-demo-edit">
                 <input type="text" value="250" style="width:70px;border:1px solid var(--ts-blue);border-radius:4px;padding:4px 8px;font-size:13px;font-family:inherit;box-shadow:0 0 0 2px var(--ts-blue-light)">
@@ -2964,9 +2964,9 @@
             <div style="display:flex;align-items:flex-start;gap:16px">
               <div style="width:200px;flex-shrink:0">
                 <div style="font-size:11px;color:var(--ts-gray-400);margin-bottom:4px">Inline editable value</div>
-                <span style="font-size:13px;color:var(--ts-gray-700);padding:3px 6px;border:1px dashed var(--ts-gray-300);border-radius:4px;cursor:text;display:inline-flex;align-items:center;gap:5px">LOT-2025-0042 <span style="font-size:10px;color:var(--ts-gray-300)">✏</span></span>
+                <span style="font-size:13px;color:var(--ts-gray-700);padding:3px 6px;border:1px dashed var(--ts-gray-300);border-radius:4px;cursor:text;display:inline-flex;align-items:center;gap:5px;transition:all 0.2s ease" onmouseover="this.style.borderColor='var(--ts-blue)';this.querySelector('svg').style.color='var(--ts-blue)';this.querySelector('svg').style.opacity='1'" onmouseout="this.style.borderColor='var(--ts-gray-300)';this.querySelector('svg').style.color='var(--ts-gray-300)';this.querySelector('svg').style.opacity='0.6'">LOT-2025-0042 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ts-gray-300);opacity:0.6;transition:all 0.2s ease;flex-shrink:0"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></span>
               </div>
-              <div style="font-size:12px;color:var(--ts-gray-600)">Plain text + dashed border box + ✏ icon. Hover = border becomes solid blue. Click = activates input.</div>
+              <div style="font-size:12px;color:var(--ts-gray-600)">Plain text + dashed border box + pencil icon. Hover = border becomes solid blue + icon brightens. Click = activates input.</div>
             </div>
           </div>
         </div>
@@ -2996,8 +2996,8 @@
           <div style="display:grid;grid-template-columns:100px 1fr;border-bottom:1px solid var(--ts-gray-100);align-items:center">
             <div style="padding:12px 14px;font-size:12px;font-weight:600;color:var(--ts-gray-700);border-right:1px solid var(--ts-gray-100)">Hover</div>
             <div style="padding:12px 14px;display:flex;align-items:center;gap:12px">
-              <span style="font-size:13px;color:var(--ts-gray-700);padding:3px 8px;border:1px dashed var(--ts-gray-300);border-radius:4px;display:inline-flex;align-items:center;gap:6px;cursor:text">250 units <span style="font-size:10px;color:var(--ts-gray-400)">✏</span></span>
-              <span style="font-size:11px;color:var(--ts-gray-400)">← dashed border appears + ✏ icon</span>
+              <span style="font-size:13px;color:var(--ts-gray-700);padding:3px 8px;border:1px dashed var(--ts-blue);border-radius:4px;display:inline-flex;align-items:center;gap:6px;cursor:text">250 units <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ts-blue);opacity:1;flex-shrink:0"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></span>
+              <span style="font-size:11px;color:var(--ts-gray-400)">← dashed border becomes solid blue + pencil icon brightens</span>
             </div>
           </div>
           <!-- Editing state -->
@@ -3121,7 +3121,7 @@
             </div>
             <div style="display:flex;align-items:stretch;gap:0;border:1px solid var(--ts-gray-200)">
               <div style="width:180px;flex-shrink:0;padding:10px 14px;font-size:13px;color:var(--ts-gray-700);border-right:1px solid var(--ts-gray-200);background:var(--ts-gray-50)">Change a single value quickly</div>
-              <div style="flex:1;padding:10px 14px;font-size:13px;color:var(--ts-gray-700)">Inline edit. Dashed border + ✏ on hover, activates input on click. Enter to save, Esc to cancel.</div>
+              <div style="flex:1;padding:10px 14px;font-size:13px;color:var(--ts-gray-700)">Inline edit. Dashed border + pencil icon on hover, activates input on click. Enter to save, Esc to cancel.</div>
             </div>
 
           </div>
