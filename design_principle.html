@@ -1786,6 +1786,117 @@
         <div class="rule"><strong>The modal title must describe the action</strong>, not just "Are you sure?" — Use: "Terminate Transfer TR-2025-042?" or "Delete NCR-001 permanently?"</div>
         <div class="rule"><strong>No modal on top of a modal.</strong> If a nested action is needed from within a modal, consider an inline flow or a multi-step modal instead.</div>
 
+        <h3>Confirmation Message Format & Structure</h3>
+        <p>All confirmation modals follow a standardized message structure to ensure clarity and consistency across the system.</p>
+
+        <h4>Message Template</h4>
+        <div class="card" style="background:var(--ts-gray-50);border:1px solid var(--ts-gray-200);padding:16px;margin-bottom:16px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ts-gray-700);line-height:1.8">
+            <div style="margin-bottom:12px"><strong>Title:</strong></div>
+            <div style="margin-left:16px;margin-bottom:16px;color:var(--ts-blue)">[Action Verb] [Data Name/ID]?</div>
+            
+            <div style="margin-bottom:12px"><strong>Body:</strong></div>
+            <div style="margin-left:16px;margin-bottom:16px">
+              <div>Want to <strong>[Action]</strong> <strong>[Data Name]</strong>?</div>
+              <div style="margin-top:8px;color:var(--ts-gray-600)">This action cannot be undone.</div>
+            </div>
+
+            <div style="margin-bottom:12px"><strong>Examples:</strong></div>
+            <div style="margin-left:16px;color:var(--ts-gray-600);font-size:11px">
+              <div>• Title: "Delete NCR-001 permanently?"</div>
+              <div>  Body: "Want to <strong>delete</strong> <strong>NCR-001</strong>? This action cannot be undone."</div>
+              <div style="margin-top:8px">• Title: "Terminate Transfer TR-2025-042?"</div>
+              <div>  Body: "Want to <strong>terminate</strong> <strong>Transfer TR-2025-042</strong>? This action cannot be undone."</div>
+              <div style="margin-top:8px">• Title: "Reject Order PO-2025-156?"</div>
+              <div>  Body: "Want to <strong>reject</strong> <strong>Order PO-2025-156</strong>? This action cannot be undone."</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rule"><strong>Title format: [Action Verb] [Data Name/ID]?</strong> — Be specific. "Delete NCR-001?" not "Are you sure?". Always include the data identifier so users know exactly what they're about to do.</div>
+        <div class="rule"><strong>Body format: "Want to [action] [data name]? This action cannot be undone."</strong> — Reinforce the action and data, then warn about irreversibility. Keep it concise.</div>
+        <div class="rule"><strong>For reversible actions, omit the warning.</strong> If the action can be undone (e.g., "Archive", "Pause"), remove "This action cannot be undone." and replace with context-specific guidance if needed.</div>
+
+        <h3>Modal Type Examples</h3>
+
+        <h4>1️⃣ Form Modal (Lightweight Input)</h4>
+        <div class="card" style="max-width:450px">
+          <div style="font-weight:600;font-size:14px;margin-bottom:16px;border-bottom:1px solid var(--ts-gray-200);padding-bottom:12px">Set Due Date</div>
+          <div style="margin-bottom:16px">
+            <div style="font-size:12px;font-weight:500;color:var(--ts-gray-700);margin-bottom:6px">Due Date</div>
+            <input style="width:100%;border:1px solid var(--ts-gray-300);border-radius:var(--radius);padding:8px 12px;font-size:13px;font-family:inherit;color:var(--ts-gray-700);box-sizing:border-box" type="date" value="2025-03-15">
+          </div>
+          <div style="margin-bottom:16px">
+            <div style="font-size:12px;font-weight:500;color:var(--ts-gray-700);margin-bottom:6px">Priority</div>
+            <select style="width:100%;border:1px solid var(--ts-gray-300);border-radius:var(--radius);padding:8px 12px;font-size:13px;font-family:inherit;color:var(--ts-gray-700);box-sizing:border-box">
+              <option>Normal</option>
+              <option>High</option>
+              <option>Urgent</option>
+            </select>
+          </div>
+          <div style="display:flex;justify-content:flex-end;gap:8px;border-top:1px solid var(--ts-gray-200);padding-top:12px">
+            <button class="btn btn-text">Do It Later</button>
+            <button class="btn btn-contained">Set Due Date</button>
+          </div>
+        </div>
+        <div class="annotation" style="margin-top:12px"><div class="ann-num">✓</div><div><strong>Form Modal characteristics:</strong> Lightweight input fields, no destructive action, "Do It Later" (text button) for skip option, Submit button on right (contained).</div></div>
+
+        <h4 style="margin-top:24px">2️⃣ Confirmation Modal (Destructive Action)</h4>
+        <div class="card" style="max-width:450px">
+          <div style="font-weight:600;font-size:14px;margin-bottom:12px;border-bottom:1px solid var(--ts-gray-200);padding-bottom:12px">Delete NCR-001 permanently?</div>
+          <p style="font-size:13px;margin-bottom:16px;color:var(--ts-gray-600)">Want to <strong>delete</strong> <strong>NCR-001</strong>? This action cannot be undone.</p>
+          <div style="background:var(--ts-red-50);border:1px solid var(--ts-red-200);border-radius:var(--radius);padding:12px;margin-bottom:16px;font-size:12px;color:var(--ts-red-700)">
+            ⚠️ All associated data (comments, attachments, history) will be permanently removed.
+          </div>
+          <div style="display:flex;justify-content:flex-end;gap:8px;border-top:1px solid var(--ts-gray-200);padding-top:12px">
+            <button class="btn btn-text">Cancel</button>
+            <button class="btn btn-contained danger">Delete NCR-001</button>
+          </div>
+        </div>
+        <div class="annotation" style="margin-top:12px"><div class="ann-num">✓</div><div><strong>Confirmation Modal characteristics:</strong> Specific title with data ID, action + data name in body, warning about irreversibility, optional red alert box for additional context, destructive button (red) on right, Cancel on left.</div></div>
+
+        <h4 style="margin-top:24px">3️⃣ Export/Download Modal (Filter Before Export)</h4>
+        <div class="card" style="max-width:450px">
+          <div style="font-weight:600;font-size:14px;margin-bottom:16px;border-bottom:1px solid var(--ts-gray-200);padding-bottom:12px">Export NCR List</div>
+          <div style="margin-bottom:16px">
+            <div style="font-size:12px;font-weight:500;color:var(--ts-gray-700);margin-bottom:6px">Period</div>
+            <select style="width:100%;border:1px solid var(--ts-gray-300);border-radius:var(--radius);padding:8px 12px;font-size:13px;font-family:inherit;color:var(--ts-gray-700);box-sizing:border-box">
+              <option>Last 30 days</option>
+              <option>Last 90 days</option>
+              <option>This year</option>
+              <option>All time</option>
+            </select>
+          </div>
+          <div style="margin-bottom:16px">
+            <div style="font-size:12px;font-weight:500;color:var(--ts-gray-700);margin-bottom:6px">Status</div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ts-gray-700)">
+                <input type="checkbox" checked> Open
+              </label>
+              <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ts-gray-700)">
+                <input type="checkbox" checked> In Progress
+              </label>
+              <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ts-gray-700)">
+                <input type="checkbox"> Completed
+              </label>
+            </div>
+          </div>
+          <div style="margin-bottom:16px">
+            <div style="font-size:12px;font-weight:500;color:var(--ts-gray-700);margin-bottom:6px">Type</div>
+            <select style="width:100%;border:1px solid var(--ts-gray-300);border-radius:var(--radius);padding:8px 12px;font-size:13px;font-family:inherit;color:var(--ts-gray-700);box-sizing:border-box">
+              <option>All Types</option>
+              <option>Quality</option>
+              <option>Safety</option>
+              <option>Environmental</option>
+            </select>
+          </div>
+          <div style="display:flex;justify-content:flex-end;gap:8px;border-top:1px solid var(--ts-gray-200);padding-top:12px">
+            <button class="btn btn-text">Cancel</button>
+            <button class="btn btn-contained">Export XLSX</button>
+          </div>
+        </div>
+        <div class="annotation" style="margin-top:12px"><div class="ann-num">✓</div><div><strong>Export/Download Modal characteristics:</strong> Filter controls (date range, status, type), checkboxes for multi-select, primary action button labeled with output format ("Export XLSX"), allows users to scope data before export.</div></div>
+
         <h3>Good Confirmation Example</h3>
         <div class="card" style="max-width:400px">
           <div style="font-weight:600;font-size:14px;margin-bottom:8px">Terminate Transfer TR-2025-042?</div>
