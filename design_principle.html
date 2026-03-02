@@ -742,8 +742,7 @@
     <a class="nav-item" href="#s18">18. Data Formatting</a>
     <a class="nav-item" href="#s19">19. File Attachments</a>
     <a class="nav-item" href="#s20">20. Charts & Widgets</a>
-    <div class="nav-section-label">Brand & Color</div>
-    <a class="nav-item" href="#s21">21. Brand Color</a>
+    <a class="nav-item" href="#s22">22. New Section</a>
   </nav>
 
   <!-- MAIN -->
@@ -802,6 +801,54 @@
             <p>The same patterns must apply across all modules — Inspection, NCR, Transfer, Call Off. A user who learns one module should immediately understand the next.</p>
           </div>
         </div>
+
+        <h3>🎨 Brand Colors</h3>
+        <p>The Tubestream brand palette consists of carefully selected primary and secondary colors designed for enterprise clarity and accessibility. All colors meet WCAG AA contrast standards and are optimized for both light and dark mode contexts.</p>
+
+        <h4>Primary Brand Colors</h4>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px">
+          <!-- Green -->
+          <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden">
+            <div style="display:flex;height:80px">
+              <div style="flex:1;background:#087E72"></div>
+              <div style="flex:1;background:#5DBFB8"></div>
+            </div>
+            <div style="padding:12px 14px">
+              <div style="font-size:12px;font-weight:600;color:var(--ts-gray-700);margin-bottom:6px">Green</div>
+              <div style="font-size:11px;color:var(--ts-gray-500);margin-bottom:2px">#087E72</div>
+              <div style="font-size:11px;color:var(--ts-gray-500)">Green (50%) #5DBFB8</div>
+            </div>
+          </div>
+
+          <!-- Light Blue -->
+          <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden">
+            <div style="display:flex;height:80px">
+              <div style="flex:1;background:#E4EBF8"></div>
+            </div>
+            <div style="padding:12px 14px">
+              <div style="font-size:12px;font-weight:600;color:var(--ts-gray-700);margin-bottom:6px">Light Blue</div>
+              <div style="font-size:11px;color:var(--ts-gray-500)">#E4EBF8</div>
+            </div>
+          </div>
+
+          <!-- Dark Blue -->
+          <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden">
+            <div style="display:flex;height:80px">
+              <div style="flex:1;background:#1F3A52"></div>
+            </div>
+            <div style="padding:12px 14px">
+              <div style="font-size:12px;font-weight:600;color:var(--ts-gray-700);margin-bottom:6px">Dark Blue</div>
+              <div style="font-size:11px;color:var(--ts-gray-500)">#1F3A52</div>
+            </div>
+          </div>
+        </div>
+
+        <h4>Color Usage Guidelines</h4>
+        <div class="rule"><strong>Primary Action (Neutral):</strong> Use Blue (#1976D2) for primary CTAs and functional actions like "+ New NCR", "Create", "Submit".</div>
+        <div class="rule"><strong>Primary Action (Semantic):</strong> Use Green (#2E7D32) ONLY for approval/acceptance outcomes and confirmed positive states.</div>
+        <div class="rule"><strong>Navigation & Structure:</strong> Use Dark Blue (#1F3A52) for navigation elements, headers, and primary text.</div>
+        <div class="rule rule-warn"><strong>Never use brand colors for error or warning states.</strong> Use semantic red, orange, and yellow instead.</div>
+
       </section>
 
       <!-- ================================ -->
@@ -4821,128 +4868,6 @@
         <div class="rule"><strong>Time range selector</strong> — if a chart supports multiple time windows (1M, 3M, 6M, 1Y), use a small ButtonGroup of Text Buttons in the widget header, right-aligned. Not a Select/Dropdown.</div>
         <div class="rule"><strong>All charts use <code>ResponsiveContainer width="100%"</code></strong> — never hardcode pixel widths. Charts must adapt to the grid column they're placed in.</div>
         <div class="rule rule-warn"><strong>Don't mix chart libraries.</strong> Once Recharts is the standard, every chart in Tubestream uses Recharts. Mixing Recharts with Chart.js or D3 creates inconsistent visual output and doubles the bundle size.</div>
-      </section>
-
-      <!-- ================================ -->
-      <!-- S21: BRAND COLOR -->
-      <!-- ================================ -->
-      <section id="s21">
-        <div class="section-header">
-          <div class="section-number">21</div>
-          <h2>Brand Color</h2>
-        </div>
-
-        <p>The Tubestream brand palette consists of carefully selected primary and secondary colors designed for enterprise clarity and accessibility. All colors meet WCAG AA contrast standards and are optimized for both light and dark mode contexts.</p>
-
-        <h3>Primary Brand Colors</h3>
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px">
-          <!-- Green -->
-          <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden">
-            <div style="display:flex;height:80px">
-              <div style="flex:1;background:#087E72"></div>
-              <div style="flex:1;background:#5DBFB8"></div>
-            </div>
-            <div style="padding:12px 14px">
-              <div style="font-size:12px;font-weight:600;color:var(--ts-gray-700);margin-bottom:6px">Green</div>
-              <div style="font-size:11px;color:var(--ts-gray-500);margin-bottom:2px">#087E72</div>
-              <div style="font-size:11px;color:var(--ts-gray-500)">Green (50%) #5DBFB8</div>
-            </div>
-          </div>
-
-          <!-- Light Blue -->
-          <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden">
-            <div style="display:flex;height:80px">
-              <div style="flex:1;background:#E4EBF8"></div>
-            </div>
-            <div style="padding:12px 14px">
-              <div style="font-size:12px;font-weight:600;color:var(--ts-gray-700);margin-bottom:6px">Light Blue</div>
-              <div style="font-size:11px;color:var(--ts-gray-500)">#E4EBF8</div>
-            </div>
-          </div>
-
-          <!-- Dark Blue 2 -->
-          <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden">
-            <div style="display:flex;height:80px">
-              <div style="flex:1;background:#255072"></div>
-            </div>
-            <div style="padding:12px 14px">
-              <div style="font-size:12px;font-weight:600;color:var(--ts-gray-700);margin-bottom:6px">Dark Blue 2</div>
-              <div style="font-size:11px;color:var(--ts-gray-500)">#255072</div>
-            </div>
-          </div>
-
-          <!-- Dark Blue -->
-          <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden">
-            <div style="display:flex;height:80px">
-              <div style="flex:1;background:#1F3A52"></div>
-            </div>
-            <div style="padding:12px 14px">
-              <div style="font-size:12px;font-weight:600;color:var(--ts-gray-700);margin-bottom:6px">Dark Blue</div>
-              <div style="font-size:11px;color:var(--ts-gray-500)">#1F3A52</div>
-            </div>
-          </div>
-
-          <!-- Deep Dark Blue -->
-          <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden">
-            <div style="display:flex;height:80px">
-              <div style="flex:1;background:#0F1E2E"></div>
-            </div>
-            <div style="padding:12px 14px">
-              <div style="font-size:12px;font-weight:600;color:var(--ts-gray-700);margin-bottom:6px">Deep Dark Blue</div>
-              <div style="font-size:11px;color:var(--ts-gray-500)">#0F1E2E</div>
-            </div>
-          </div>
-        </div>
-
-        <h3>Color Usage Guidelines</h3>
-        <div class="rule"><strong>Primary Action (Neutral):</strong> Use Blue (#1976D2) for primary CTAs and functional actions like "+ New NCR", "Create", "Submit". This is the default for actions without semantic meaning. Lighter variant (#E3F2FD) is used for hover states and secondary emphasis.</div>
-        <div class="rule"><strong>Primary Action (Semantic):</strong> Use Green (#2E7D32) ONLY for approval/acceptance outcomes and confirmed positive states. This semantic meaning must never be overridden for brand consistency — user safety depends on consistent color meaning.</div>
-        <div class="rule"><strong>Navigation & Structure:</strong> Use Dark Blue (#1F3A52) for navigation elements, headers, and primary text. Deep Dark Blue (#0F1E2E) is reserved for the darkest text and critical UI elements.</div>
-        <div class="rule"><strong>Information & Context:</strong> Light Blue (#E4EBF8) is used for information backgrounds, highlights, and non-critical notifications. Dark Blue 2 (#255072) provides contrast for secondary actions and borders.</div>
-        <div class="rule rule-warn"><strong>Accessibility:</strong> Always verify contrast ratios when combining colors. Blue and Green on white meet WCAG AA. Dark Blues on white meet WCAG AAA. Never use Light Blue as text color on white backgrounds.</div>
-
-        <h3>Semantic Color Mapping</h3>
-        <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden;margin-bottom:16px">
-          <div style="display:grid;grid-template-columns:150px 1fr 1fr;border-bottom:1px solid var(--ts-gray-200)">
-            <div style="padding:12px 14px;background:var(--ts-gray-50);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600)">Semantic</div>
-            <div style="padding:12px 14px;background:var(--ts-gray-50);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600)">Brand Color</div>
-            <div style="padding:12px 14px;background:var(--ts-gray-50);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600)">Usage</div>
-          </div>
-          <div style="display:grid;grid-template-columns:150px 1fr 1fr;border-bottom:1px solid var(--ts-gray-100);align-items:center">
-            <div style="padding:12px 14px;font-size:12px;font-weight:600;color:var(--ts-gray-700);border-right:1px solid var(--ts-gray-100)">Success / Positive</div>
-            <div style="padding:12px 14px;border-right:1px solid var(--ts-gray-100)">
-              <div style="display:inline-block;width:24px;height:24px;background:#087E72;border-radius:4px"></div>
-              <span style="font-size:12px;color:var(--ts-gray-600);margin-left:8px">#087E72</span>
-            </div>
-            <div style="padding:12px 14px;font-size:12px;color:var(--ts-gray-600)">Confirmed actions, positive status, success messages</div>
-          </div>
-          <div style="display:grid;grid-template-columns:150px 1fr 1fr;border-bottom:1px solid var(--ts-gray-100);align-items:center">
-            <div style="padding:12px 14px;font-size:12px;font-weight:600;color:var(--ts-gray-700);border-right:1px solid var(--ts-gray-100)">Primary</div>
-            <div style="padding:12px 14px;border-right:1px solid var(--ts-gray-100)">
-              <div style="display:inline-block;width:24px;height:24px;background:#1F3A52;border-radius:4px"></div>
-              <span style="font-size:12px;color:var(--ts-gray-600);margin-left:8px">#1F3A52</span>
-            </div>
-            <div style="padding:12px 14px;font-size:12px;color:var(--ts-gray-600)">Primary navigation, main text, headers</div>
-          </div>
-          <div style="display:grid;grid-template-columns:150px 1fr 1fr;border-bottom:1px solid var(--ts-gray-100);align-items:center">
-            <div style="padding:12px 14px;font-size:12px;font-weight:600;color:var(--ts-gray-700);border-right:1px solid var(--ts-gray-100)">Secondary</div>
-            <div style="padding:12px 14px;border-right:1px solid var(--ts-gray-100)">
-              <div style="display:inline-block;width:24px;height:24px;background:#255072;border-radius:4px"></div>
-              <span style="font-size:12px;color:var(--ts-gray-600);margin-left:8px">#255072</span>
-            </div>
-            <div style="padding:12px 14px;font-size:12px;color:var(--ts-gray-600)">Secondary actions, borders, dividers</div>
-          </div>
-          <div style="display:grid;grid-template-columns:150px 1fr 1fr;align-items:center">
-            <div style="padding:12px 14px;font-size:12px;font-weight:600;color:var(--ts-gray-700);border-right:1px solid var(--ts-gray-100)">Information</div>
-            <div style="padding:12px 14px;border-right:1px solid var(--ts-gray-100)">
-              <div style="display:inline-block;width:24px;height:24px;background:#E4EBF8;border:1px solid var(--ts-gray-300);border-radius:4px"></div>
-              <span style="font-size:12px;color:var(--ts-gray-600);margin-left:8px">#E4EBF8</span>
-            </div>
-            <div style="padding:12px 14px;font-size:12px;color:var(--ts-gray-600)">Info backgrounds, highlights, callouts</div>
-          </div>
-        </div>
-
-        <div class="rule"><strong>Never use brand colors for error or warning states.</strong> Use the semantic red, orange, and yellow from the extended palette instead. Brand colors are reserved for positive, primary, and informational contexts only.</div>
       </section>
 
       <div style="height:60px"></div>
