@@ -820,7 +820,7 @@
         <div class="demo-row">
           <span class="demo-label">Contained</span>
           <button class="btn btn-contained">+ New NCR</button>
-          <button class="btn btn-contained success">Submit Review</button>
+          <button class="btn btn-contained success">Approve Request</button>
           <button class="btn btn-contained danger">Terminate</button>
           <button class="btn btn-contained" disabled>Submit</button>
         </div>
@@ -889,7 +889,7 @@
           <pre style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#93C5FD;line-height:1.7;margin:0;white-space:pre-wrap"><span style="color:#6EE7B7">// Contained — primary CTA</span>
 &lt;Button variant=<span style="color:#FCD34D">"contained"</span> size=<span style="color:#FCD34D">"medium"</span>&gt;+ New NCR&lt;/Button&gt;
 &lt;Button variant=<span style="color:#FCD34D">"contained"</span> color=<span style="color:#FCD34D">"error"</span>&gt;Terminate&lt;/Button&gt;
-&lt;Button variant=<span style="color:#FCD34D">"contained"</span> color=<span style="color:#FCD34D">"success"</span>&gt;Submit Review&lt;/Button&gt;
+&lt;Button variant=<span style="color:#FCD34D">"contained"</span> color=<span style="color:#FCD34D">"success"</span>&gt;Approve Request&lt;/Button&gt;
 
 <span style="color:#6EE7B7">// Outlined — secondary</span>
 &lt;Button variant=<span style="color:#FCD34D">"outlined"</span>&gt;Export XLSX&lt;/Button&gt;
@@ -967,12 +967,14 @@
               </div>
             </div>
           </div>
-          <div style="margin-top:12px;padding:8px 12px;background:var(--ts-gray-50);border-radius:4px;font-size:11px;color:var(--ts-gray-600)">
-            💡 <strong>User psychology:</strong> When users see red button, they pause and think "Is this safe?" - this built-in safety mechanism protects them from mistakes.
-          </div>
+        </div>
+        <div style="margin-top:12px;padding:8px 12px;background:var(--ts-gray-50);border-radius:4px;font-size:11px;color:var(--ts-gray-600)">
+          💡 <strong>User psychology:</strong> When users see red button, they pause and think "Is this safe?" - this built-in safety mechanism protects them from mistakes.
         </div>
 
         <h4>Color Priority System</h4>
+        <p>When choosing button colors, follow this three-tier priority system to maintain both brand consistency and user safety.</p>
+        
         <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden;margin-bottom:16px">
           <div style="display:grid;grid-template-columns:1fr 2fr 2fr;border-bottom:2px solid var(--ts-gray-200)">
             <div style="padding:10px 14px;background:var(--ts-gray-50);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600)">Priority</div>
@@ -981,22 +983,34 @@
           </div>
           <div style="display:grid;grid-template-columns:1fr 2fr 2fr;border-bottom:1px solid var(--ts-gray-100)">
             <div style="padding:10px 14px;font-size:13px;font-weight:600;color:var(--ts-red)">1. Semantic First</div>
-            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600)">Actions with clear positive/negative outcomes. User safety depends on consistent meaning.</div>
-            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600)">🔴 Delete NCR, Reject Request<br>🟢 Approve Review, Submit Report<br>🟡 Mark as Draft, Need Review</div>
+            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600)">Actions with clear positive/negative outcomes. User safety depends on consistent meaning. <strong>Always use semantic colors for these actions regardless of brand preference.</strong></div>
+            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600)">🔴 Delete NCR, Reject Request<br>🟢 Approve Review, Accept Report<br>🟡 Mark as Draft, Need Review</div>
           </div>
           <div style="display:grid;grid-template-columns:1fr 2fr 2fr;border-bottom:1px solid var(--ts-gray-100)">
             <div style="padding:10px 14px;font-size:13px;font-weight:600;color:var(--ts-blue)">2. Brand Primary</div>
-            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600)">Neutral actions without positive/negative consequences. Just functional operations.</div>
+            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600)">Neutral actions without positive/negative consequences. Just functional operations. <strong>This is the default color for most buttons.</strong> Use when semantic meaning doesn't apply.</div>
             <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600)">+ New NCR, Export XLSX<br>View Details, Edit Record<br>Search, Filter, Sort</div>
           </div>
           <div style="display:grid;grid-template-columns:1fr 2fr 2fr">
             <div style="padding:10px 14px;font-size:13px;font-weight:600;color:var(--ts-teal)">3. Brand Secondary</div>
-            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600)">Secondary actions or status-related buttons that don't fit semantic categories.</div>
-            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600)">Save Draft, Assign Role<br>Mark In Progress, Follow Up<br>Copy, Duplicate</div>
+            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600)">Secondary workflow actions or status-related buttons that don't fit semantic categories. <strong>Use sparingly and only when Brand Primary doesn't fit the context.</strong></div>
+            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600)">Save Draft, Assign Role<br>Copy, Duplicate<br>Archive, Restore</div>
           </div>
         </div>
 
-        <h4>Color Application Rules</h4>
+        <div class="callout callout-info" style="margin-bottom:16px">
+          <span>💡</span>
+          <div>
+            <strong>Decision Tree:</strong> Ask yourself in this order:<br>
+            1. Does this action have a clear positive/negative outcome? → Use <strong>Semantic Color</strong> (red/green/orange)<br>
+            2. Is this a neutral, functional operation? → Use <strong>Brand Primary (Blue)</strong><br>
+            3. Is this a secondary workflow action that doesn't fit above? → Use <strong>Brand Secondary (Teal)</strong><br>
+            <br>
+            <strong>Golden Rule:</strong> If you're unsure, default to Brand Primary (Blue). Never sacrifice semantic clarity for brand consistency.
+          </div>
+        </div>
+
+        <h4>Color Application Examples</h4>
         <div class="demo-row" style="margin-bottom:16px">
           <span class="demo-label">Semantic Colors (Always Priority)</span>
           <button class="btn btn-contained danger">Delete NCR</button>
@@ -1013,31 +1027,6 @@
           <span class="demo-label">Brand Secondary (Teal)</span>
           <button class="btn btn-contained" style="background-color:var(--ts-teal);border-color:var(--ts-teal)">Save Draft</button>
           <button class="btn btn-outlined" style="border-color:var(--ts-teal);color:var(--ts-teal)">Assign Role</button>
-        </div>
-
-        <h4>Status-Specific Color Mapping</h4>
-        <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);padding:16px;margin-bottom:16px">
-          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px">
-            <div style="text-align:center">
-              <div style="font-size:11px;font-weight:600;color:var(--ts-gray-600);margin-bottom:6px;text-transform:uppercase">New/Draft</div>
-              <span style="background:#E3F2FD;color:#1976D2;padding:4px 12px;border-radius:16px;font-size:12px;font-weight:600">New</span>
-            </div>
-            <div style="text-align:center">
-              <div style="font-size:11px;font-weight:600;color:var(--ts-gray-600);margin-bottom:6px;text-transform:uppercase">In Progress</div>
-              <span style="background:#E0F2F1;color:#00796B;padding:4px 12px;border-radius:16px;font-size:12px;font-weight:600">In Progress</span>
-            </div>
-            <div style="text-align:center">
-              <div style="font-size:11px;font-weight:600;color:var(--ts-gray-600);margin-bottom:6px;text-transform:uppercase">Approved</div>
-              <span style="background:#E8F5E9;color:#2E7D32;padding:4px 12px;border-radius:16px;font-size:12px;font-weight:600">Approved</span>
-            </div>
-            <div style="text-align:center">
-              <div style="font-size:11px;font-weight:600;color:var(--ts-gray-600);margin-bottom:6px;text-transform:uppercase">Rejected</div>
-              <span style="background:#FFEBEE;color:#C62828;padding:4px 12px;border-radius:16px;font-size:12px;font-weight:600">Rejected</span>
-            </div>
-          </div>
-          <div style="font-size:11px;color:var(--ts-gray-500);text-align:center">
-            Status colors follow semantic meaning: Blue (neutral/info), Teal (progress), Green (success), Red (error/rejection)
-          </div>
         </div>
 
         <h4>MUI v7 Color Implementation</h4>
@@ -1700,9 +1689,65 @@
           </div>
         </div>
 
+        <h4>Color Priority System</h4>
+        <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden;margin-bottom:16px">
+          <div style="display:grid;grid-template-columns:1fr 2fr 2fr;border-bottom:2px solid var(--ts-gray-200)">
+            <div style="padding:10px 14px;background:var(--ts-gray-50);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600)">Priority</div>
+            <div style="padding:10px 14px;background:var(--ts-gray-50);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600)">When to Use</div>
+            <div style="padding:10px 14px;background:var(--ts-gray-50);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600)">Real Examples</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 2fr 2fr;border-bottom:1px solid var(--ts-gray-100)">
+            <div style="padding:10px 14px;font-size:13px;font-weight:600;color:var(--ts-red)">1. Semantic First</div>
+            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600)">Actions with clear positive/negative outcomes. User safety depends on consistent meaning. <strong>Always use semantic colors for these actions regardless of brand preference.</strong></div>
+            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600)">🔴 Delete NCR, Reject Request<br>🟢 Approve Review, Accept Report<br>🟡 Mark as Draft, Need Review</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 2fr 2fr;border-bottom:1px solid var(--ts-gray-100)">
+            <div style="padding:10px 14px;font-size:13px;font-weight:600;color:var(--ts-blue)">2. Brand Primary</div>
+            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600)">Neutral actions without positive/negative consequences. Just functional operations. <strong>This is the default color for most buttons.</strong> Use when semantic meaning doesn't apply.</div>
+            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600)">+ New NCR, Export XLSX<br>View Details, Edit Record<br>Search, Filter, Sort</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 2fr 2fr">
+            <div style="padding:10px 14px;font-size:13px;font-weight:600;color:var(--ts-teal)">3. Brand Secondary</div>
+            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600)">Secondary workflow actions or status-related buttons that don't fit semantic categories. <strong>Use sparingly and only when Brand Primary doesn't fit the context.</strong></div>
+            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600)">Save Draft, Assign Role<br>Copy, Duplicate<br>Archive, Restore</div>
+          </div>
+        </div>
+
+        <div class="callout callout-info" style="margin-bottom:16px">
+          <span>💡</span>
+          <div>
+            <strong>Decision Tree:</strong> Ask yourself in this order:<br>
+            1. Does this action have a clear positive/negative outcome? → Use <strong>Semantic Color</strong> (red/green/orange)<br>
+            2. Is this a neutral, functional operation? → Use <strong>Brand Primary (Blue)</strong><br>
+            3. Is this a secondary workflow action that doesn't fit above? → Use <strong>Brand Secondary (Teal)</strong><br>
+            <br>
+            <strong>Golden Rule:</strong> If you're unsure, default to Brand Primary (Blue). Never sacrifice semantic clarity for brand consistency.
+          </div>
+        </div>
+
         <h4>Explanation Modal Requirements</h4>
         <p>Status changes that require explanations must follow these functional requirements:</p>
 
+        <div class="card" style="background:var(--ts-gray-50);border:1px solid var(--ts-gray-200);padding:16px;margin-bottom:16px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ts-gray-700);line-height:1.8">
+            <div style="margin-bottom:12px"><strong>Title:</strong></div>
+            <div style="margin-left:16px;margin-bottom:16px;color:var(--ts-blue)">[Action Verb] [Data Name/ID]?</div>
+            
+            <div style="margin-bottom:12px"><strong>Body:</strong></div>
+            <div style="margin-left:16px;margin-bottom:16px">
+              <div>Want to <strong>[Action]</strong> <strong>[Data Name]</strong>?</div>
+              <div style="margin-top:8px;color:var(--ts-gray-600)">This action cannot be undone.</div>
+            </div>
+
+            <div style="margin-bottom:12px"><strong>Examples:</strong></div>
+            <div style="margin-left:16px;color:var(--ts-gray-600);font-size:11px">
+              <div>• Title: "Delete NCR-001 permanently?"</div>
+              <div>  Body: "Want to <strong>delete</strong> <strong>NCR-001</strong>? This action cannot be undone."</div>
+              <div style="margin-top:8px">• Title: "Terminate Transfer TR-2025-042?"</div>
+              <div>  Body: "Want to <strong>terminate</strong> <strong>Transfer TR-2025-042</strong>? This action cannot be undone."</div>
+              <div style="margin-top:8px">• Title: "Reject Order PO-2025-156?"</div>
+              <div>  Body: "Want to <strong>reject</strong> <strong>Order PO-2025-156</strong>? This action cannot be undone."</div>
+            </div>
         <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden;margin-bottom:16px">
           <div style="display:grid;grid-template-columns:1fr 2fr;border-bottom:2px solid var(--ts-gray-200)">
             <div style="padding:10px 14px;background:var(--ts-gray-50);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600)">Requirement</div>
@@ -4850,10 +4895,11 @@
         </div>
 
         <h3>Color Usage Guidelines</h3>
-        <div class="rule"><strong>Primary Action:</strong> Use Green (#087E72) for primary CTAs, confirmed states, and positive actions. The lighter variant (#5DBFB8) is used for hover states and secondary emphasis.</div>
+        <div class="rule"><strong>Primary Action (Neutral):</strong> Use Blue (#1976D2) for primary CTAs and functional actions like "+ New NCR", "Create", "Submit". This is the default for actions without semantic meaning. Lighter variant (#E3F2FD) is used for hover states and secondary emphasis.</div>
+        <div class="rule"><strong>Primary Action (Semantic):</strong> Use Green (#2E7D32) ONLY for approval/acceptance outcomes and confirmed positive states. This semantic meaning must never be overridden for brand consistency — user safety depends on consistent color meaning.</div>
         <div class="rule"><strong>Navigation & Structure:</strong> Use Dark Blue (#1F3A52) for navigation elements, headers, and primary text. Deep Dark Blue (#0F1E2E) is reserved for the darkest text and critical UI elements.</div>
         <div class="rule"><strong>Information & Context:</strong> Light Blue (#E4EBF8) is used for information backgrounds, highlights, and non-critical notifications. Dark Blue 2 (#255072) provides contrast for secondary actions and borders.</div>
-        <div class="rule rule-warn"><strong>Accessibility:</strong> Always verify contrast ratios when combining colors. Green on white meets WCAG AA. Dark Blues on white meet WCAG AAA. Never use Light Blue as text color on white backgrounds.</div>
+        <div class="rule rule-warn"><strong>Accessibility:</strong> Always verify contrast ratios when combining colors. Blue and Green on white meet WCAG AA. Dark Blues on white meet WCAG AAA. Never use Light Blue as text color on white backgrounds.</div>
 
         <h3>Semantic Color Mapping</h3>
         <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden;margin-bottom:16px">
