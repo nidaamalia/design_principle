@@ -4689,60 +4689,28 @@
           <div style="font-size:12px;color:#64748B">KPI cards and micro-indicators are plain MUI components — no charting library needed for those.</div>
         </div>
 
-        <!-- Colour palette -->
-        <h3>Chart Colour Palette</h3>
-        <p>Use a fixed, ordered palette for all charts. Never pick colours ad hoc — series 1 should always be the same colour whether it appears in a bar chart or a line chart on a different module.</p>
-
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
-          <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
-            <div style="width:48px;height:48px;border-radius:var(--radius);background:#1E6B5E"></div>
-            <div style="font-size:10px;font-family:'IBM Plex Mono',monospace;color:var(--ts-gray-500)">#1E6B5E</div>
-            <div style="font-size:10px;color:var(--ts-gray-400)">Series 1</div>
-          </div>
-          <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
-            <div style="width:48px;height:48px;border-radius:var(--radius);background:#2563EB"></div>
-            <div style="font-size:10px;font-family:'IBM Plex Mono',monospace;color:var(--ts-gray-500)">#2563EB</div>
-            <div style="font-size:10px;color:var(--ts-gray-400)">Series 2</div>
-          </div>
-          <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
-            <div style="width:48px;height:48px;border-radius:var(--radius);background:#D97706"></div>
-            <div style="font-size:10px;font-family:'IBM Plex Mono',monospace;color:var(--ts-gray-500)">#D97706</div>
-            <div style="font-size:10px;color:var(--ts-gray-400)">Series 3</div>
-          </div>
-          <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
-            <div style="width:48px;height:48px;border-radius:var(--radius);background:#7C3AED"></div>
-            <div style="font-size:10px;font-family:'IBM Plex Mono',monospace;color:var(--ts-gray-500)">#7C3AED</div>
-            <div style="font-size:10px;color:var(--ts-gray-400)">Series 4</div>
-          </div>
-          <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
-            <div style="width:48px;height:48px;border-radius:var(--radius);background:#DB2777"></div>
-            <div style="font-size:10px;font-family:'IBM Plex Mono',monospace;color:var(--ts-gray-500)">#DB2777</div>
-            <div style="font-size:10px;color:var(--ts-gray-400)">Series 5</div>
-          </div>
-          <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
-            <div style="width:48px;height:48px;border-radius:var(--radius);background:#0891B2"></div>
-            <div style="font-size:10px;font-family:'IBM Plex Mono',monospace;color:var(--ts-gray-500)">#0891B2</div>
-            <div style="font-size:10px;color:var(--ts-gray-400)">Series 6</div>
-          </div>
-          <div style="display:flex;flex-direction:column;align-items:center;gap:6px;margin-left:16px">
-            <div style="width:48px;height:48px;border-radius:var(--radius);background:#DC2626"></div>
-            <div style="font-size:10px;font-family:'IBM Plex Mono',monospace;color:var(--ts-gray-500)">#DC2626</div>
-            <div style="font-size:10px;color:var(--ts-gray-400)">Alert / Bad</div>
-          </div>
-          <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
-            <div style="width:48px;height:48px;border-radius:var(--radius);background:#15803D"></div>
-            <div style="font-size:10px;font-family:'IBM Plex Mono',monospace;color:var(--ts-gray-500)">#15803D</div>
-            <div style="font-size:10px;color:var(--ts-gray-400)">Good / Target</div>
-          </div>
-          <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
-            <div style="width:48px;height:48px;border-radius:var(--radius);background:#E2E8F0"></div>
-            <div style="font-size:10px;font-family:'IBM Plex Mono',monospace;color:var(--ts-gray-500)">#E2E8F0</div>
-            <div style="font-size:10px;color:var(--ts-gray-400)">Neutral / Empty</div>
+        <h3>Chart Colour Guidelines</h3>
+        
+        <div style="display:flex;align-items:flex-start;gap:12px;padding:12px 16px;margin-bottom:12px;background:#E3F2FD;border-left:4px solid var(--ts-blue);border-radius:2px">
+          <div style="flex:1">
+            <strong style="color:var(--ts-gray-900)">Consistent palette across all charts</strong>
+            <p style="margin:4px 0 0;color:var(--ts-gray-700);font-size:13px">Use a fixed colour palette across all charts in the application. Assign colours by data role and semantic meaning, not by aesthetics. Series 1 should always use the same colour whether it appears in a bar chart, line chart, or any other chart type across different modules.</p>
           </div>
         </div>
 
-        <div class="rule"><strong>Always assign colours by data role, not by aesthetics.</strong> "Target" is always green (#15803D), "Alert/Overdue" is always red (#DC2626) — regardless of which module or which chart type.</div>
-        <div class="rule rule-warn"><strong>Max 6 series on a single chart.</strong> More than 6 colours creates a legend that is harder to decode than the chart itself. If you have more series, group into "Other" or use a drill-down pattern.</div>
+        <div style="display:flex;align-items:flex-start;gap:12px;padding:12px 16px;margin-bottom:12px;background:#FFF3E0;border-left:4px solid var(--ts-orange);border-radius:2px">
+          <div style="flex:1">
+            <strong style="color:var(--ts-gray-900)">Max 6 series per chart</strong>
+            <p style="margin:4px 0 0;color:var(--ts-gray-700);font-size:13px">More than 6 colours makes the legend harder to decode than the chart itself. If you have more data series, group them into "Other" or use a drill-down pattern to keep the visualization clear.</p>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:flex-start;gap:12px;padding:12px 16px;margin-bottom:12px;background:#E8F5E9;border-left:4px solid var(--ts-green);border-radius:2px">
+          <div style="flex:1">
+            <strong style="color:var(--ts-gray-900)">Semantic colours for status</strong>
+            <p style="margin:4px 0 0;color:var(--ts-gray-700);font-size:13px">Use semantic colours for status indicators: green for positive/target states, red for alerts/errors, orange for warnings, and neutral greys for empty or baseline states. Ensure sufficient contrast between colours for accessibility and clarity, especially when printed or viewed on different displays.</p>
+          </div>
+        </div>
 
         <h3>Widget Types</h3>
 
