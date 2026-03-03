@@ -906,9 +906,57 @@
 
         <h3>Button Label Rules</h3>
         <div class="rule"><strong>Maximum 3 words</strong> for a button label. Ideal is 1–2 words. If more is needed, reconsider the design.</div>
-        <div class="rule"><strong>Verb + Noun, specific</strong> — "Submit NCR" not "Submit". "Export XLSX" not "Download".</div>
+        <div class="rule"><strong>Verb + Noun, specific</strong> — "Submit NCR" not "Submit".</div>
         <div class="rule rule-warn"><strong>Avoid ambiguous words</strong>: "OK", "Yes", "Confirm" without context. Replace with outcome-describing labels: "Accept NCR", "Delete Transfer".</div>
         <div class="rule rule-danger"><strong>Never use "Submit" alone</strong> in forms across Tubestream's many modules. Always clarify: "Submit Review", "Submit Enquiry", "Submit Transfer".</div>
+
+        <h3>Risk-Based Labeling Rule</h3>
+        <p style="margin-bottom:16px"><strong>The higher the operational or financial impact, the more explicit the label must be.</strong></p>
+
+        <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden;margin-bottom:16px">
+          <!-- Low Risk -->
+          <div style="padding:16px;border-bottom:1px solid var(--ts-gray-100)">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+              <span style="width:24px;height:24px;background:#10B981;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px">●</span>
+              <h4 style="margin:0;font-size:14px;font-weight:600;color:var(--ts-gray-900)">Low Risk (Reversible / Draft Only)</h4>
+            </div>
+            <p style="margin:8px 0;font-size:13px;color:var(--ts-gray-600)"><strong>Short label is acceptable.</strong></p>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px">
+              <div style="padding:6px 12px;background:var(--ts-gray-50);border:1px solid var(--ts-gray-200);border-radius:4px;font-size:12px;color:var(--ts-gray-700)">Save Draft</div>
+              <div style="padding:6px 12px;background:var(--ts-gray-50);border:1px solid var(--ts-gray-200);border-radius:4px;font-size:12px;color:var(--ts-gray-700)">Edit</div>
+              <div style="padding:6px 12px;background:var(--ts-gray-50);border:1px solid var(--ts-gray-200);border-radius:4px;font-size:12px;color:var(--ts-gray-700)">Cancel</div>
+            </div>
+          </div>
+
+          <!-- Medium Risk -->
+          <div style="padding:16px;border-bottom:1px solid var(--ts-gray-100)">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+              <span style="width:24px;height:24px;background:#F59E0B;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px">●</span>
+              <h4 style="margin:0;font-size:14px;font-weight:600;color:var(--ts-gray-900)">Medium Risk (Status Change)</h4>
+            </div>
+            <p style="margin:8px 0;font-size:13px;color:var(--ts-gray-600)"><strong>Be specific.</strong></p>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px">
+              <div style="padding:6px 12px;background:var(--ts-gray-50);border:1px solid var(--ts-gray-200);border-radius:4px;font-size:12px;color:var(--ts-gray-700)">Submit NCR</div>
+              <div style="padding:6px 12px;background:var(--ts-gray-50);border:1px solid var(--ts-gray-200);border-radius:4px;font-size:12px;color:var(--ts-gray-700)">Approve Forecast</div>
+              <div style="padding:6px 12px;background:var(--ts-gray-50);border:1px solid var(--ts-gray-200);border-radius:4px;font-size:12px;color:var(--ts-gray-700)">Close Inspection</div>
+            </div>
+          </div>
+
+          <!-- High Risk -->
+          <div style="padding:16px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+              <span style="width:24px;height:24px;background:#EF4444;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px">●</span>
+              <h4 style="margin:0;font-size:14px;font-weight:600;color:var(--ts-gray-900)">High Risk (Stock / Finance / Integration Impact)</h4>
+            </div>
+            <p style="margin:8px 0;font-size:13px;color:var(--ts-gray-600)"><strong>Be explicit + confirmation dialog.</strong></p>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;margin-bottom:12px">
+              <div style="padding:6px 12px;background:var(--ts-gray-50);border:1px solid var(--ts-gray-200);border-radius:4px;font-size:12px;color:var(--ts-gray-700)">Dispatch to Site</div>
+              <div style="padding:6px 12px;background:var(--ts-gray-50);border:1px solid var(--ts-gray-200);border-radius:4px;font-size:12px;color:var(--ts-gray-700)">Post Inventory Adjustment</div>
+              <div style="padding:6px 12px;background:var(--ts-gray-50);border:1px solid var(--ts-gray-200);border-radius:4px;font-size:12px;color:var(--ts-gray-700)">Transfer to Mill</div>
+            </div>
+            <p style="margin:8px 0;font-size:12px;color:var(--ts-gray-600);font-style:italic">Confirmation modal: Explain impact in 1–2 clear sentences.</p>
+          </div>
+        </div>
 
         <h3>Button Sizes</h3>
         <div class="do-dont">
