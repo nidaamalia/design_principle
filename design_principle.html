@@ -1068,7 +1068,7 @@
         </div>
 
         <h4>Color Priority System</h4>
-        <p>When choosing button colors, follow this three-tier priority system to maintain both brand consistency and user safety.</p>
+        <p>When choosing button colors, follow this two-tier priority system to maintain both brand consistency and user safety.</p>
         
         <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden;margin-bottom:16px">
           <div style="display:grid;grid-template-columns:1fr 2fr 2fr;border-bottom:2px solid var(--ts-gray-200)">
@@ -1081,15 +1081,10 @@
             <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600)">Actions with clear positive/negative outcomes. User safety depends on consistent meaning. <strong>Always use semantic colors for these actions regardless of brand preference.</strong></div>
             <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600)">🔴 Delete NCR, Reject Request<br>🟢 Approve Review, Accept Report<br>🟡 Mark as Draft, Need Review</div>
           </div>
-          <div style="display:grid;grid-template-columns:1fr 2fr 2fr;border-bottom:1px solid var(--ts-gray-100)">
+          <div style="display:grid;grid-template-columns:1fr 2fr 2fr">
             <div style="padding:10px 14px;font-size:13px;font-weight:600;color:var(--ts-blue)">2. Brand Primary</div>
             <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600)">Neutral actions without positive/negative consequences. Just functional operations. <strong>This is the default color for most buttons.</strong> Use when semantic meaning doesn't apply.</div>
             <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600)">+ New NCR, Export XLSX<br>View Details, Edit Record<br>Search, Filter, Sort</div>
-          </div>
-          <div style="display:grid;grid-template-columns:1fr 2fr 2fr">
-            <div style="padding:10px 14px;font-size:13px;font-weight:600;color:var(--ts-teal)">3. Brand Secondary</div>
-            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600)">Secondary workflow actions or status-related buttons that don't fit semantic categories. <strong>Use sparingly and only when Brand Primary doesn't fit the context.</strong></div>
-            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600)">Save Draft, Assign Role<br>Copy, Duplicate<br>Archive, Restore</div>
           </div>
         </div>
 
@@ -1099,7 +1094,6 @@
             <strong>Decision Tree:</strong> Ask yourself in this order:<br>
             1. Does this action have a clear positive/negative outcome? → Use <strong>Semantic Color</strong> (red/green/orange)<br>
             2. Is this a neutral, functional operation? → Use <strong>Brand Primary (Blue)</strong><br>
-            3. Is this a secondary workflow action that doesn't fit above? → Use <strong>Brand Secondary (Teal)</strong><br>
             <br>
             <strong>Golden Rule:</strong> If you're unsure, default to Brand Primary (Blue). Never sacrifice semantic clarity for brand consistency.
           </div>
@@ -1118,11 +1112,6 @@
           <button class="btn btn-outlined">Export XLSX</button>
           <button class="btn btn-text">View Report</button>
         </div>
-        <div class="demo-row" style="margin-bottom:16px">
-          <span class="demo-label">Brand Secondary (Teal)</span>
-          <button class="btn btn-contained" style="background-color:var(--ts-teal);border-color:var(--ts-teal)">Save Draft</button>
-          <button class="btn btn-outlined" style="border-color:var(--ts-teal);color:var(--ts-teal)">Assign Role</button>
-        </div>
 
         <h4>MUI v7 Color Implementation</h4>
         <div class="card" style="background:var(--ts-gray-900);border-color:var(--ts-gray-700)">
@@ -1136,22 +1125,10 @@
 &lt;Button variant=<span style="color:#FCD34D">"contained"</span>&gt;+ New Transfer&lt;/Button&gt;
 &lt;Button variant=<span style="color:#FCD34D">"outlined"</span>&gt;Export XLSX&lt;/Button&gt;
 
-<span style="color:#6EE7B7">// Brand secondary (teal) via custom styling</span>
-&lt;Button 
-  variant=<span style="color:#FCD34D">"contained"</span>
-  sx={{
-    backgroundColor: <span style="color:#FCD34D">'#00796B'</span>,
-    '&amp;:hover': { backgroundColor: <span style="color:#FCD34D">'#004D40'</span> }
-  }}
-&gt;
-  Save Draft
-&lt;/Button&gt;
-
 <span style="color:#6EE7B7">// Theme customization for brand colors</span>
 <span style="color:#F9A8D4">const</span> theme = createTheme({
   palette: {
     primary: { main: <span style="color:#FCD34D">'#1976D2'</span> },     <span style="color:#6EE7B7">// Brand blue</span>
-    secondary: { main: <span style="color:#FCD34D">'#00796B'</span> },   <span style="color:#6EE7B7">// Brand teal</span>
     success: { main: <span style="color:#FCD34D">'#2E7D32'</span> },     <span style="color:#6EE7B7">// Semantic green</span>
     error: { main: <span style="color:#FCD34D">'#C62828'</span> },       <span style="color:#6EE7B7">// Semantic red</span>
     warning: { main: <span style="color:#FCD34D">'#E65100'</span> },     <span style="color:#6EE7B7">// Semantic orange</span>
