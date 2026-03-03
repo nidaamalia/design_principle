@@ -2889,12 +2889,20 @@
 
         <!-- PATTERN 3: FILTER SIDEBAR -->
         <h3>Pattern 3 — Filter Sidebar (8+ filters)</h3>
-        <p>A persistent left-side panel fixed alongside the list. Best for power-users who switch filter combinations frequently. The panel can be collapsed to give more space to the list when not needed.</p>
+        <p>A persistent right-side sticky panel alongside the list. Best for power-users who switch filter combinations frequently. The panel remains sticky as users scroll, and can be collapsed to give more space to the list when not needed.</p>
 
         <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden;margin-bottom:8px">
           <div style="display:flex;min-height:320px">
-            <!-- Filter sidebar panel -->
-            <div style="width:220px;border-right:1px solid var(--ts-gray-200);flex-shrink:0;background:var(--ts-gray-50)">
+            <!-- List area (left side) -->
+            <div style="flex:1;padding:12px 16px;border-right:1px solid var(--ts-gray-200)">
+              <div style="font-size:11px;color:var(--ts-gray-400);margin-bottom:10px">Showing 24 of 148 items · 1 filter active</div>
+              <div style="height:28px;background:var(--ts-gray-100);border-radius:4px;margin-bottom:6px"></div>
+              <div style="height:28px;background:var(--ts-gray-100);border-radius:4px;margin-bottom:6px"></div>
+              <div style="height:28px;background:var(--ts-gray-100);border-radius:4px;margin-bottom:6px"></div>
+              <div style="height:28px;background:var(--ts-gray-100);border-radius:4px"></div>
+            </div>
+            <!-- Filter sidebar panel (right side - sticky) -->
+            <div style="width:220px;border-left:1px solid var(--ts-gray-200);flex-shrink:0;background:var(--ts-gray-50);position:sticky;top:0;height:fit-content">
               <div style="padding:12px 14px;border-bottom:1px solid var(--ts-gray-200);display:flex;align-items:center;justify-content:space-between">
                 <span style="font-size:12px;font-weight:600;color:var(--ts-gray-700)">Filters</span>
                 <button class="btn btn-text" style="font-size:11px;padding:2px 6px;color:var(--ts-gray-400)">Clear all</button>
@@ -2923,14 +2931,6 @@
               <div style="padding:10px 14px">
                 <button class="btn btn-contained" style="width:100%;justify-content:center;font-size:12px">Apply</button>
               </div>
-            </div>
-            <!-- List area -->
-            <div style="flex:1;padding:12px 16px">
-              <div style="font-size:11px;color:var(--ts-gray-400);margin-bottom:10px">Showing 24 of 148 items · 1 filter active</div>
-              <div style="height:28px;background:var(--ts-gray-100);border-radius:4px;margin-bottom:6px"></div>
-              <div style="height:28px;background:var(--ts-gray-100);border-radius:4px;margin-bottom:6px"></div>
-              <div style="height:28px;background:var(--ts-gray-100);border-radius:4px;margin-bottom:6px"></div>
-              <div style="height:28px;background:var(--ts-gray-100);border-radius:4px"></div>
             </div>
           </div>
         </div>
