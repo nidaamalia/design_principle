@@ -1808,119 +1808,6 @@
             <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600)">"Follow Up Notes"</div>
           </div>
         </div>
-
-        <h4>Color Priority System</h4>
-        <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden;margin-bottom:16px">
-          <div style="display:grid;grid-template-columns:1fr 2fr 2fr;border-bottom:2px solid var(--ts-gray-200)">
-            <div style="padding:10px 14px;background:var(--ts-gray-50);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600)">Priority</div>
-            <div style="padding:10px 14px;background:var(--ts-gray-50);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600)">When to Use</div>
-            <div style="padding:10px 14px;background:var(--ts-gray-50);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600)">Real Examples</div>
-          </div>
-          <div style="display:grid;grid-template-columns:1fr 2fr 2fr;border-bottom:1px solid var(--ts-gray-100)">
-            <div style="padding:10px 14px;font-size:13px;font-weight:600;color:var(--ts-red)">1. Semantic First</div>
-            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600)">Actions with clear positive/negative outcomes. User safety depends on consistent meaning. <strong>Always use semantic colors for these actions regardless of brand preference.</strong></div>
-            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600)">🔴 Delete NCR, Reject Request<br>🟢 Approve Review, Accept Report<br>🟡 Mark as Draft, Need Review</div>
-          </div>
-          <div style="display:grid;grid-template-columns:1fr 2fr 2fr;border-bottom:1px solid var(--ts-gray-100)">
-            <div style="padding:10px 14px;font-size:13px;font-weight:600;color:var(--ts-blue)">2. Brand Primary</div>
-            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600)">Neutral actions without positive/negative consequences. Just functional operations. <strong>This is the default color for most buttons.</strong> Use when semantic meaning doesn't apply.</div>
-            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600)">+ New NCR, Export XLSX<br>View Details, Edit Record<br>Search, Filter, Sort</div>
-          </div>
-          <div style="display:grid;grid-template-columns:1fr 2fr 2fr">
-            <div style="padding:10px 14px;font-size:13px;font-weight:600;color:var(--ts-teal)">3. Brand Secondary</div>
-            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600)">Secondary workflow actions or status-related buttons that don't fit semantic categories. <strong>Use sparingly and only when Brand Primary doesn't fit the context.</strong></div>
-            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600)">Save Draft, Assign Role<br>Copy, Duplicate<br>Archive, Restore</div>
-          </div>
-        </div>
-
-        <div class="callout callout-info" style="margin-bottom:16px">
-          <span>💡</span>
-          <div>
-            <strong>Decision Tree:</strong> Ask yourself in this order:<br>
-            1. Does this action have a clear positive/negative outcome? → Use <strong>Semantic Color</strong> (red/green/orange)<br>
-            2. Is this a neutral, functional operation? → Use <strong>Brand Primary (Blue)</strong><br>
-            3. Is this a secondary workflow action that doesn't fit above? → Use <strong>Brand Secondary (Teal)</strong><br>
-            <br>
-            <strong>Golden Rule:</strong> If you're unsure, default to Brand Primary (Blue). Never sacrifice semantic clarity for brand consistency.
-          </div>
-        </div>
-
-        <h4>Explanation Modal Requirements</h4>
-        <p>Status changes that require explanations must follow these functional requirements:</p>
-
-        <div class="card" style="background:var(--ts-gray-50);border:1px solid var(--ts-gray-200);padding:16px;margin-bottom:16px">
-          <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ts-gray-700);line-height:1.8">
-            <div style="margin-bottom:12px"><strong>Title:</strong></div>
-            <div style="margin-left:16px;margin-bottom:16px;color:var(--ts-blue)">[Action Verb] [Data Name/ID]?</div>
-            
-            <div style="margin-bottom:12px"><strong>Body:</strong></div>
-            <div style="margin-left:16px;margin-bottom:16px">
-              <div>Want to <strong>[Action]</strong> <strong>[Data Name]</strong>?</div>
-              <div style="margin-top:8px;color:var(--ts-gray-600)">This action cannot be undone.</div>
-            </div>
-
-            <div style="margin-bottom:12px"><strong>Examples:</strong></div>
-            <div style="margin-left:16px;color:var(--ts-gray-600);font-size:11px">
-              <div>• Title: "Delete NCR-001 permanently?"</div>
-              <div>  Body: "Want to <strong>delete</strong> <strong>NCR-001</strong>? This action cannot be undone."</div>
-              <div style="margin-top:8px">• Title: "Terminate Transfer TR-2025-042?"</div>
-              <div>  Body: "Want to <strong>terminate</strong> <strong>Transfer TR-2025-042</strong>? This action cannot be undone."</div>
-              <div style="margin-top:8px">• Title: "Reject Order PO-2025-156?"</div>
-              <div>  Body: "Want to <strong>reject</strong> <strong>Order PO-2025-156</strong>? This action cannot be undone."</div>
-            </div>
-        <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden;margin-bottom:16px">
-          <div style="display:grid;grid-template-columns:1fr 2fr;border-bottom:2px solid var(--ts-gray-200)">
-            <div style="padding:10px 14px;background:var(--ts-gray-50);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600)">Requirement</div>
-            <div style="padding:10px 14px;background:var(--ts-gray-50);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600)">Implementation Details</div>
-          </div>
-          <div style="display:grid;grid-template-columns:1fr 2fr;border-bottom:1px solid var(--ts-gray-100)">
-            <div style="padding:10px 14px;font-size:13px;font-weight:600;color:var(--ts-gray-700)">Modal Title</div>
-            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600)">Clear action context: "Reason of Rejection", "Reason of Cancellation", "Follow Up Notes"</div>
-          </div>
-          <div style="display:grid;grid-template-columns:1fr 2fr;border-bottom:1px solid var(--ts-gray-100)">
-            <div style="padding:10px 14px;font-size:13px;font-weight:600;color:var(--ts-gray-700)">User Context</div>
-            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600)">Show who is making the change (current user name) for accountability</div>
-          </div>
-          <div style="display:grid;grid-template-columns:1fr 2fr;border-bottom:1px solid var(--ts-gray-100)">
-            <div style="padding:10px 14px;font-size:13px;font-weight:600;color:var(--ts-gray-700)">Required Field</div>
-            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600)">Multi-line text field for explanation. Must be filled before submission.</div>
-          </div>
-          <div style="display:grid;grid-template-columns:1fr 2fr;border-bottom:1px solid var(--ts-gray-100)">
-            <div style="padding:10px 14px;font-size:13px;font-weight:600;color:var(--ts-gray-700)">Validation</div>
-            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600)">Disable submit button until meaningful text is provided (not just whitespace)</div>
-          </div>
-          <div style="display:grid;grid-template-columns:1fr 2fr">
-            <div style="padding:10px 14px;font-size:13px;font-weight:600;color:var(--ts-gray-700)">Single Action</div>
-            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600)">One primary button to submit explanation. No cancel - user must provide reason.</div>
-          </div>
-        </div>
-
-        <div class="rule"><strong>Always require explanations for negative outcomes</strong> — Rejected and Cancelled statuses must capture reasons for accountability and audit compliance.</div>
-        <div class="rule"><strong>Show who and when</strong> — Display the user who made the status change and timestamp in the explanation modal.</div>
-        <div class="rule"><strong>Make explanations accessible</strong> — Use info icons next to status chips to indicate explanations are available.</div>
-        <div class="rule rule-warn"><strong>Do not allow empty explanations</strong> — Disable the "Done" button until user provides meaningful reason text.</div>
-
-        <div style="background:#FFF3E0;border:1px solid #E65100;border-radius:var(--radius);padding:16px;margin-bottom:16px">
-          <div style="font-size:13px;font-weight:600;color:#E65100;margin-bottom:12px">⚠️ Common Mistakes to Avoid</div>
-          <ul style="font-size:13px;color:#E65100;margin:0;padding-left:20px">
-            <li>Using different colors for the same status in different modules</li>
-            <li>Creating module-specific status names (e.g., "NCR Pending" vs "Transfer Pending")</li>
-            <li>Inconsistent explanation requirements (some modules require reasons, others don't)</li>
-            <li>Different visual treatments for the same status type</li>
-          </ul>
-        </div>
-
-        <h4>Modal Content Guidelines</h4>
-        <div style="background:#E8F5E8;border:1px solid #388E3C;border-radius:var(--radius);padding:16px;margin-bottom:16px">
-          <div style="font-size:13px;font-weight:600;color:#388E3C;margin-bottom:12px">✅ Content Best Practices</div>
-          <ul style="font-size:13px;color:#2E7D32;margin:0;padding-left:20px">
-            <li><strong>Be specific:</strong> Include technical details, reference numbers, and measurable criteria</li>
-            <li><strong>Show accountability:</strong> Always display full name and role of the person who made the change</li>
-            <li><strong>Include context:</strong> Explain the impact and next steps where relevant</li>
-            <li><strong>Use professional tone:</strong> Clear, factual language without emotional bias</li>
-            <li><strong>Reference standards:</strong> Mention specific drawings, specifications, or procedures when applicable</li>
-          </ul>
-        </div>
       </section>
 
       <!-- ================================ -->
@@ -1950,7 +1837,6 @@
         </div>
 
         <h3>Confirmation Modal Rules</h3>
-        <div class="rule rule-danger"><strong>Do not put the destructive button on the right by default!</strong> Position: left = "Cancel" (outlined/text), right = destructive action (contained red). Ensure Cancel is easy to find to avoid mis-clicks.</div>
         <div class="rule"><strong>The modal title must describe the action</strong>, not just "Are you sure?" — Use: "Terminate Transfer TR-2025-042?" or "Delete NCR-001 permanently?"</div>
         <div class="rule"><strong>No modal on top of a modal.</strong> If a nested action is needed from within a modal, consider an inline flow or a multi-step modal instead.</div>
 
