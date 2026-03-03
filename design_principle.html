@@ -2805,6 +2805,84 @@
         </div>
         <div style="font-size:12px;color:var(--ts-gray-400);margin-bottom:24px">Active filters always shown as dismissible chips, even when drawer is closed. "Clear all" resets everything at once.</div>
 
+        <h4>Interactive Example: Collapsed vs. Expanded States</h4>
+        <p>Click the "Filter" button below to toggle between collapsed and expanded drawer states.</p>
+
+        <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden;margin-bottom:24px">
+          <!-- Toolbar -->
+          <div style="display:flex;gap:8px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--ts-gray-200)">
+            <div style="position:relative;flex:1">
+              <input style="width:100%;border:1px solid var(--ts-gray-200);border-radius:var(--radius);padding:7px 10px 7px 30px;font-size:13px;font-family:inherit;" placeholder="Search…">
+              <span style="position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--ts-gray-400)">🔍</span>
+            </div>
+            <!-- Filter button with badge - CLICKABLE -->
+            <button id="filterToggleBtn" class="btn btn-outlined" style="position:relative;display:inline-flex;align-items:center;gap:6px;cursor:pointer" onclick="document.getElementById('filterDrawer').style.display = document.getElementById('filterDrawer').style.display === 'none' ? 'block' : 'none'; document.getElementById('filterChips').style.display = document.getElementById('filterChips').style.display === 'none' ? 'flex' : 'none'">
+              ⚙ Filter
+              <span style="background:var(--ts-blue);color:white;font-size:10px;font-weight:700;border-radius:10px;padding:0 5px;line-height:16px">3</span>
+            </button>
+            <button class="btn btn-outlined">Export</button>
+            <button class="btn btn-contained">+ New Inspection</button>
+          </div>
+          <!-- Active filter chips (shown when drawer is closed) -->
+          <div id="filterChips" style="display:flex;gap:6px;align-items:center;padding:8px 16px;background:var(--ts-blue-light);flex-wrap:wrap">
+            <span style="font-size:11px;color:var(--ts-blue);font-weight:500">Active filters:</span>
+            <span style="background:white;border:1px solid #90CAF9;color:var(--ts-blue);font-size:12px;padding:2px 10px;border-radius:100px;display:inline-flex;align-items:center;gap:5px">Yard: Yard A <span style="cursor:pointer;font-size:14px;line-height:1">×</span></span>
+            <span style="background:white;border:1px solid #90CAF9;color:var(--ts-blue);font-size:12px;padding:2px 10px;border-radius:100px;display:inline-flex;align-items:center;gap:5px">Status: Open <span style="cursor:pointer;font-size:14px;line-height:1">×</span></span>
+            <span style="background:white;border:1px solid #90CAF9;color:var(--ts-blue);font-size:12px;padding:2px 10px;border-radius:100px;display:inline-flex;align-items:center;gap:5px">Date: Nov–Dec <span style="cursor:pointer;font-size:14px;line-height:1">×</span></span>
+            <button class="btn btn-text" style="font-size:12px;color:var(--ts-gray-500);padding:2px 6px">Clear all</button>
+          </div>
+          <!-- Drawer (expanded state - hidden by default) -->
+          <div id="filterDrawer" style="display:none;padding:16px;border-bottom:1px solid var(--ts-gray-200);background:var(--ts-gray-50)">
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px">
+              <div>
+                <div style="font-size:11px;font-weight:600;color:var(--ts-gray-600);margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em">Yard / Location</div>
+                <select style="width:100%;border:1px solid var(--ts-gray-200);border-radius:var(--radius);padding:7px 8px;font-size:13px;font-family:inherit;background:white"><option selected>Yard A</option><option>Yard B</option><option>Yard C</option><option>All</option></select>
+              </div>
+              <div>
+                <div style="font-size:11px;font-weight:600;color:var(--ts-gray-600);margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em">Inspector</div>
+                <select style="width:100%;border:1px solid var(--ts-gray-200);border-radius:var(--radius);padding:7px 8px;font-size:13px;font-family:inherit;background:white"><option>All</option><option>John Smith</option><option>Sarah Lee</option></select>
+              </div>
+              <div>
+                <div style="font-size:11px;font-weight:600;color:var(--ts-gray-600);margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em">Date Range</div>
+                <input type="text" value="Nov 1 – Dec 31" style="width:100%;border:1px solid var(--ts-gray-200);border-radius:var(--radius);padding:7px 8px;font-size:13px;font-family:inherit;background:white">
+              </div>
+              <div>
+                <div style="font-size:11px;font-weight:600;color:var(--ts-gray-600);margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em">Inspection Type</div>
+                <select style="width:100%;border:1px solid var(--ts-gray-200);border-radius:var(--radius);padding:7px 8px;font-size:13px;font-family:inherit;background:white"><option>All</option><option selected>New Arrival</option><option>On Spot</option><option>Follow-up</option></select>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px">
+              <div>
+                <div style="font-size:11px;font-weight:600;color:var(--ts-gray-600);margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em">Status</div>
+                <select style="width:100%;border:1px solid var(--ts-gray-200);border-radius:var(--radius);padding:7px 8px;font-size:13px;font-family:inherit;background:white"><option>All</option><option selected>Open</option><option>In Progress</option><option>Completed</option></select>
+              </div>
+              <div>
+                <div style="font-size:11px;font-weight:600;color:var(--ts-gray-600);margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em">Priority</div>
+                <select style="width:100%;border:1px solid var(--ts-gray-200);border-radius:var(--radius);padding:7px 8px;font-size:13px;font-family:inherit;background:white"><option>All</option><option>High</option><option>Medium</option><option>Low</option></select>
+              </div>
+              <div>
+                <div style="font-size:11px;font-weight:600;color:var(--ts-gray-600);margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em">Result</div>
+                <select style="width:100%;border:1px solid var(--ts-gray-200);border-radius:var(--radius);padding:7px 8px;font-size:13px;font-family:inherit;background:white"><option>All</option><option>Pass</option><option>Fail</option><option>Pending</option></select>
+              </div>
+            </div>
+            <div style="display:flex;justify-content:flex-end;gap:8px">
+              <button class="btn btn-text">Reset</button>
+              <button class="btn btn-contained">Apply Filters</button>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px">
+          <div style="background:var(--ts-gray-50);border:1px solid var(--ts-gray-200);border-radius:var(--radius);padding:12px 14px">
+            <div style="font-size:11px;font-weight:600;color:var(--ts-gray-600);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">Collapsed State</div>
+            <p style="font-size:12px;color:var(--ts-gray-600);margin:0">Filter button shows badge with active count. Active filters displayed as dismissible chips below toolbar. Drawer is hidden.</p>
+          </div>
+          <div style="background:var(--ts-gray-50);border:1px solid var(--ts-gray-200);border-radius:var(--radius);padding:12px 14px">
+            <div style="font-size:11px;font-weight:600;color:var(--ts-gray-600);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">Expanded State</div>
+            <p style="font-size:12px;color:var(--ts-gray-600);margin:0">Click the Filter button to expand. All 6–7 filter controls appear in a grid. Users can modify filters and click "Apply Filters" to refresh results.</p>
+          </div>
+        </div>
+
         <div class="rule"><strong>Show active filter chips even when the drawer is closed.</strong> Users must always be able to see what's currently applied without reopening the drawer.</div>
         <div class="rule"><strong>Each chip is individually dismissible</strong> (× button). Clicking × removes that single filter and immediately refreshes the list.</div>
         <div class="rule"><strong>"Apply Filters" vs. live filtering:</strong> For heavy server-side queries (like Inspection or Stock on Hand), require an explicit "Apply" button to avoid hammering the server on every keystroke. For simple client-side lists, live filter is acceptable.</div>
