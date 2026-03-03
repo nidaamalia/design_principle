@@ -742,7 +742,7 @@
     <a class="nav-item" href="#s18">18. Data Formatting</a>
     <a class="nav-item" href="#s19">19. File Attachments</a>
     <a class="nav-item" href="#s20">20. Charts & Widgets</a>
-    <a class="nav-item" href="#s22">22. New Section</a>
+    <a class="nav-item" href="#s21">21. Export</a>
   </nav>
 
   <!-- MAIN -->
@@ -5094,6 +5094,330 @@
         <div class="rule"><strong>Time range selector</strong> — if a chart supports multiple time windows (1M, 3M, 6M, 1Y), use a small ButtonGroup of Text Buttons in the widget header, right-aligned. Not a Select/Dropdown.</div>
         <div class="rule"><strong>All charts use <code>ResponsiveContainer width="100%"</code></strong> — never hardcode pixel widths. Charts must adapt to the grid column they're placed in.</div>
         <div class="rule rule-warn"><strong>Don't mix chart libraries.</strong> Once Recharts is the standard, every chart in Tubestream uses Recharts. Mixing Recharts with Chart.js or D3 creates inconsistent visual output and doubles the bundle size.</div>
+      </section>
+
+      <!-- ================================ -->
+      <!-- S21: EXPORT -->
+      <!-- ================================ -->
+      <section id="s21">
+        <div class="section-header">
+          <div class="section-number">21</div>
+          <h2>Export</h2>
+          <span class="desc">Entry Point · Generate vs Export · Export Scope · Format Selection · File Naming · Feedback</span>
+        </div>
+
+        <p>Export is a frequently used action but rarely designed correctly. Two most common problems: (1) users don't know <strong>what data they will export</strong> before clicking, (2) exported file names are not informative making them difficult to find later. This section covers all aspects.</p>
+
+        <!-- ─────────────────────────────── -->
+        <h3>1. Entry Point — Where Should the Export Button Be?</h3>
+        <p>There are three different export contexts, each with its appropriate entry point:</p>
+
+        <div class="card-grid" style="margin-bottom:16px">
+          <div class="card">
+            <div style="font-size:12px;font-weight:600;color:var(--ts-gray-500);margin-bottom:8px">📋 Export list / filtered view</div>
+            <p style="font-size:12px;color:var(--ts-gray-600);margin-bottom:10px">Export button in the <strong>toolbar row</strong>, aligned with search and filter. Outlined button. Exports what is currently displayed including active filters.</p>
+            <div style="display:flex;align-items:center;gap:6px">
+              <div style="border:1px solid var(--ts-gray-200);border-radius:var(--radius);padding:5px 10px;font-size:12px;color:var(--ts-gray-400);background:var(--ts-gray-50)">🔍 Search…</div>
+              <button class="btn btn-outlined gray btn-sm">⚡ Filter <span style="background:var(--ts-blue);color:white;font-size:10px;padding:0 5px;border-radius:100px;font-weight:700">2</span></button>
+              <button class="btn btn-outlined gray btn-sm">⬇ Export</button>
+            </div>
+          </div>
+          <div class="card">
+            <div style="font-size:12px;font-weight:600;color:var(--ts-gray-500);margin-bottom:8px">📦 Export bulk selection</div>
+            <p style="font-size:12px;color:var(--ts-gray-600);margin-bottom:10px">In the <strong>bulk action toolbar</strong> after rows are selected. Label should include count: "Export Selected (12)".</p>
+            <div style="background:#EEF9F7;border:1px solid #B2DFDB;border-radius:var(--radius);padding:8px 12px;display:flex;align-items:center;gap:8px">
+              <span style="font-size:12px;font-weight:600;color:#1A7A6A">12 rows selected</span>
+              <div style="flex:1"></div>
+              <button class="btn btn-outlined btn-sm gray">⬇ Export Selected (12)</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="rule"><strong>Export button in toolbar always exports filtered view</strong> — not all data. What users see = what users get.</div>
+        <div class="rule rule-warn"><strong>Export is always Outlined or Text button.</strong> Never Contained. Primary CTA is the create action (+ New …), not export.</div>
+
+        <!-- ─────────────────────────────── -->
+        <h3>2. Generate vs Export — Two Different Patterns</h3>
+        <p>On some pages (like Account Balance, Insights), there are two buttons side by side: <strong>Generate</strong> and <strong>Export</strong>. This is a distinct pattern from regular export and must be consistent across the application.</p>
+
+        <!-- Visual comparison -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+          <!-- List page export -->
+          <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);padding:16px">
+            <div style="font-size:11px;font-weight:700;color:var(--ts-gray-400);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">List Page — Direct Export</div>
+            <div style="font-size:12px;color:var(--ts-gray-600);margin-bottom:12px">Data is already on screen. Export directly downloads what is displayed.</div>
+            <div style="display:flex;gap:6px;align-items:center">
+              <div style="flex:1;background:var(--ts-gray-100);height:6px;border-radius:3px"></div>
+              <button class="btn btn-outlined gray btn-sm">⬇ Export</button>
+            </div>
+            <div style="font-size:11px;color:var(--ts-gray-400);margin-top:8px">Click → direct download. One step.</div>
+          </div>
+          <!-- Report generator page -->
+          <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);padding:16px">
+            <div style="font-size:11px;font-weight:700;color:var(--ts-gray-400);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Report Page — Generate then Export</div>
+            <div style="font-size:12px;color:var(--ts-gray-600);margin-bottom:12px">User selects parameters first (Customer, Period, etc). Generate processes and displays preview. Export downloads the generated result.</div>
+            <!-- Filter inputs -->
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px">
+              <div style="border:1px solid var(--ts-gray-200);border-radius:4px;padding:5px 8px;font-size:11px;color:var(--ts-gray-500)">Customer: Santos LTD</div>
+              <div style="border:1px solid var(--ts-gray-200);border-radius:4px;padding:5px 8px;font-size:11px;color:var(--ts-gray-500)">Period: 2-2026 – 2-2027</div>
+            </div>
+            <div style="display:flex;gap:6px">
+              <button class="btn btn-outlined gray btn-sm">⟳ Generate</button>
+              <button class="btn btn-outlined gray btn-sm">⬇ Export</button>
+            </div>
+            <div style="font-size:11px;color:var(--ts-gray-400);margin-top:8px">Two steps: Generate → view preview → Export.</div>
+          </div>
+        </div>
+
+        <div class="rule"><strong>Generate = process and display data based on selected parameters.</strong> The result appears on the page as a preview table/chart. Generate does not download anything.</div>
+        <div class="rule"><strong>Export = download the already-Generated result.</strong> Export button must be disabled or hidden before Generate is run. Don't let users Export stale data from a previous Generate.</div>
+        <div class="rule rule-warn"><strong>Export disabled if never Generated.</strong> Show tooltip "Generate data first before exporting". Don't let Export be active but produce empty or stale results.</div>
+
+        <!-- State diagram -->
+        <div style="background:var(--ts-gray-50);border:1px solid var(--ts-gray-200);border-radius:var(--radius);padding:16px;margin-bottom:16px">
+          <div style="font-size:11px;font-weight:700;color:var(--ts-gray-500);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px">State Flow — Report Generator Page</div>
+          <div style="display:flex;align-items:center;gap:0;flex-wrap:wrap;gap:4px">
+            <div style="background:white;border:1px solid var(--ts-gray-300);border-radius:var(--radius);padding:8px 12px;font-size:12px;color:var(--ts-gray-700);text-align:center">
+              <div style="font-weight:600">Idle</div>
+              <div style="font-size:10px;color:var(--ts-gray-400);margin-top:2px">Export disabled</div>
+            </div>
+            <div style="font-size:16px;color:var(--ts-gray-300);padding:0 4px">→</div>
+            <div style="background:white;border:1px solid var(--ts-blue);border-radius:var(--radius);padding:8px 12px;font-size:12px;color:var(--ts-blue);text-align:center">
+              <div style="font-weight:600">Generating…</div>
+              <div style="font-size:10px;margin-top:2px">Spinner on Generate btn</div>
+            </div>
+            <div style="font-size:16px;color:var(--ts-gray-300);padding:0 4px">→</div>
+            <div style="background:white;border:1px solid var(--ts-green);border-radius:var(--radius);padding:8px 12px;font-size:12px;color:var(--ts-green);text-align:center">
+              <div style="font-weight:600">Generated</div>
+              <div style="font-size:10px;margin-top:2px">Export enabled</div>
+            </div>
+            <div style="font-size:16px;color:var(--ts-gray-300);padding:0 4px">→</div>
+            <div style="background:white;border:1px solid var(--ts-gray-300);border-radius:var(--radius);padding:8px 12px;font-size:12px;color:var(--ts-gray-600);text-align:center">
+              <div style="font-weight:600">Exporting…</div>
+              <div style="font-size:10px;color:var(--ts-gray-400);margin-top:2px">Spinner on Export btn</div>
+            </div>
+            <div style="font-size:16px;color:var(--ts-gray-300);padding:0 4px">→</div>
+            <div style="background:white;border:1px solid var(--ts-green);border-radius:var(--radius);padding:8px 12px;font-size:12px;color:var(--ts-green);text-align:center">
+              <div style="font-weight:600">Downloaded</div>
+              <div style="font-size:10px;margin-top:2px">Toast success</div>
+            </div>
+          </div>
+          <div style="font-size:11px;color:var(--ts-gray-400);margin-top:10px">If user changes parameters after Generate, Export button returns to disabled until Generate is run again.</div>
+        </div>
+
+        <!-- ─────────────────────────────── -->
+        <h3>3. Export Scope Clarity — Users Must Know What They're Exporting</h3>
+        <p>This is the most common discoverability issue. User clicks Export, downloads file, opens it, then the content doesn't match expectations. Root cause: no visual explanation of export scope before clicking.</p>
+
+        <div class="do-dont">
+          <div class="do-box">
+            <div class="do-label"> Scope clear before export</div>
+            <div style="margin-top:10px;background:var(--ts-gray-50);border:1px solid var(--ts-gray-200);border-radius:var(--radius);padding:12px">
+              <!-- Active filter chips visible -->
+              <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">
+                <div style="background:var(--ts-blue-light);color:var(--ts-blue);border:1px solid #BBDEFB;border-radius:100px;padding:2px 10px;font-size:11px;font-weight:500;display:flex;align-items:center;gap:4px">Status: In Progress <span style="cursor:pointer;opacity:.6">✕</span></div>
+                <div style="background:var(--ts-blue-light);color:var(--ts-blue);border:1px solid #BBDEFB;border-radius:100px;padding:2px 10px;font-size:11px;font-weight:500;display:flex;align-items:center;gap:4px">Customer: MITO SG <span style="cursor:pointer;opacity:.6">✕</span></div>
+              </div>
+              <div style="font-size:11px;color:var(--ts-gray-500);margin-bottom:8px">Showing <strong>24 of 148</strong> records · 2 filters active</div>
+              <button class="btn btn-outlined gray btn-sm">⬇ Export 24 records</button>
+            </div>
+            <p style="font-size:11px;color:var(--ts-green);margin-top:8px">Filter chips visible + record count + button label mentions quantity. User knows exactly what they will export.</p>
+          </div>
+          <div class="dont-box">
+            <div class="dont-label"> Scope unclear</div>
+            <div style="margin-top:10px;background:var(--ts-gray-50);border:1px solid var(--ts-gray-200);border-radius:var(--radius);padding:12px">
+              <div style="font-size:11px;color:var(--ts-gray-400);margin-bottom:8px">148 records</div>
+              <button class="btn btn-outlined gray btn-sm">⬇ Export</button>
+            </div>
+            <p style="font-size:11px;color:var(--ts-red);margin-top:8px">User doesn't know if this export is 24 records (filtered) or 148 records (all). Ambiguous.</p>
+          </div>
+        </div>
+
+        <div class="rule" style="margin-top:16px"><strong>Label Export button with record count</strong> when filters are active: "Export 24 records" not just "Export". When no filters: "Export all 148 records".</div>
+        <div class="rule"><strong>Filter chips must be visible when Export button is visible.</strong> From Section 13 — active filters always appear as chips in toolbar. This provides export scope context.</div>
+
+        <!-- ─────────────────────────────── -->
+        <h3>4. Format Selection & Report Naming</h3>
+        <p>When there are multiple report type options, the presentation method must be clear — users should be able to differentiate each option without having to try them one by one.</p>
+
+        <div style="display:flex;gap:24px;align-items:flex-start;margin-bottom:16px;flex-wrap:wrap">
+          <div>
+            <div style="font-size:12px;font-weight:600;color:var(--ts-gray-500);margin-bottom:8px">1–2 formats → direct buttons</div>
+            <div style="display:flex;gap:6px">
+              <button class="btn btn-outlined gray btn-sm">⬇ Export XLSX</button>
+              <button class="btn btn-outlined gray btn-sm">⬇ Export PDF</button>
+            </div>
+            <p style="font-size:11px;color:var(--ts-gray-400);margin-top:6px">No dropdown needed.</p>
+          </div>
+          <div style="margin-bottom:200px">
+            <div style="font-size:12px;font-weight:600;color:var(--ts-gray-500);margin-bottom:8px">3+ report types → dropdown with groups</div>
+            <div style="position:relative;display:inline-block">
+              <button class="btn btn-outlined gray btn-sm">⬇ Export ▾</button>
+              <div style="position:absolute;top:calc(100% + 4px);left:0;background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);box-shadow:0 4px 12px rgba(0,0,0,.1);min-width:240px;z-index:10">
+                <div style="padding:6px 12px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-400);border-bottom:1px solid var(--ts-gray-100)">XLSX</div>
+                <div style="padding:9px 14px;font-size:13px;color:var(--ts-gray-700);border-bottom:1px solid var(--ts-gray-100)">Forecast</div>
+                <div style="padding:9px 14px;font-size:13px;color:var(--ts-gray-700);border-bottom:1px solid var(--ts-gray-100)">Forecast Accuracy — By Yard</div>
+                <div style="padding:9px 14px;font-size:13px;color:var(--ts-gray-700);border-bottom:1px solid var(--ts-gray-100)">Forecast Accuracy — By Product</div>
+                <div style="padding:9px 14px;font-size:13px;color:var(--ts-gray-700);border-bottom:1px solid var(--ts-gray-100)">Account Balance</div>
+                <div style="padding:6px 12px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-400);border-bottom:1px solid var(--ts-gray-100)">PDF</div>
+                <div style="padding:9px 14px;font-size:13px;color:var(--ts-gray-700)">Account Balance Report</div>
+              </div>
+            </div>
+            <p style="font-size:11px;color:var(--ts-gray-400);margin-top:6px;max-width:260px">Group by format (XLSX first, PDF after). Report names are specific and descriptive.</p>
+          </div>
+        </div>
+
+        <div class="rule"><strong>Report names must explicitly explain the difference.</strong> "Forecast Accuracy — By Yard" and "Forecast Accuracy — By Product" is far better than "Forecast Accuracy (2)" and "Forecast Accuracy (3)".</div>
+        <div class="rule rule-warn"><strong>"Report (2)", "Report (3)" is incomplete naming.</strong> This signals the report hasn't been given a proper name. Must be fixed before shipping to production.</div>
+
+        <!-- ─────────────────────────────── -->
+        <h3>5. File Naming Convention</h3>
+        <p>Without convention, user's download folder will be full of <code>export.xlsx</code>, <code>report(1).pdf</code>, <code>data_final_v2.xlsx</code>. Consistent file naming helps users find files they've previously downloaded.</p>
+
+        <div style="background:var(--ts-gray-900);border-radius:var(--radius);padding:16px 20px;margin-bottom:16px;font-family:'IBM Plex Mono',monospace">
+          <div style="font-size:11px;font-weight:600;color:var(--ts-gray-400);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Formula</div>
+          <div style="font-size:14px;line-height:2.2">
+            <span style="color:#6EE7B7">{module}</span><span style="color:#64748B">_</span><span style="color:#FCD34D">{report_type}</span><span style="color:#64748B">_</span><span style="color:#F9A8D4">{primary_filter}</span><span style="color:#64748B">_</span><span style="color:#C4B5FD">{context_filter}</span><span style="color:#64748B">_</span><span style="color:#FB923C">{YYYY-MM-DD}</span><span style="color:#64748B">.</span><span style="color:#94A3B8">xlsx</span>
+          </div>
+          <div style="margin-top:12px;display:flex;flex-direction:column;gap:5px;font-size:12px">
+            <div><span style="color:#6EE7B7">module</span> <span style="color:#475569">— module name, snake_case</span></div>
+            <div><span style="color:#FCD34D">report_type</span> <span style="color:#475569">— report type (omit if only one type)</span></div>
+            <div><span style="color:#F9A8D4">primary_filter</span> <span style="color:#475569">— active status/type filter (omit if "All" / none)</span></div>
+            <div><span style="color:#C4B5FD">context_filter</span> <span style="color:#475569">— additional relevant filter like customer/yard (omit if none)</span></div>
+            <div><span style="color:#FB923C">YYYY-MM-DD</span> <span style="color:#475569">— export date, ISO 8601, always present, always at end</span></div>
+          </div>
+        </div>
+
+        <!-- Examples -->
+        <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden;margin-bottom:16px">
+          <div style="display:grid;grid-template-columns:1fr 220px;border-bottom:2px solid var(--ts-gray-200)">
+            <div style="padding:8px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600);background:var(--ts-gray-50)">Context</div>
+            <div style="padding:8px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600);background:var(--ts-gray-50)">Filename</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 220px;border-bottom:1px solid var(--ts-gray-100);align-items:center">
+            <div style="padding:9px 14px;font-size:12px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">Open Order — no active filters</div>
+            <div style="padding:9px 14px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ts-blue)">open_order_2025-12-15.xlsx</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 220px;border-bottom:1px solid var(--ts-gray-100);align-items:center">
+            <div style="padding:9px 14px;font-size:12px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">Open Order — filter Status: In Progress</div>
+            <div style="padding:9px 14px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ts-blue)">open_order_in_progress_2025-12-15.xlsx</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 220px;border-bottom:1px solid var(--ts-gray-100);align-items:center">
+            <div style="padding:9px 14px;font-size:12px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">NCR — Status: Open, Customer: MITO Singapore</div>
+            <div style="padding:9px 14px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ts-blue)">ncr_open_mito_singapore_2025-12-15.xlsx</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 220px;border-bottom:1px solid var(--ts-gray-100);align-items:center">
+            <div style="padding:9px 14px;font-size:12px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">Insights — Forecast Accuracy by Yard</div>
+            <div style="padding:9px 14px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ts-blue)">insights_forecast_accuracy_by_yard_2025-12-15.xlsx</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 220px;border-bottom:1px solid var(--ts-gray-100);align-items:center">
+            <div style="padding:9px 14px;font-size:12px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">Transfer — PDF single record TR-2025-042</div>
+            <div style="padding:9px 14px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ts-blue)">transfer_TR-2025-042_2025-12-15.pdf</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 220px;align-items:center">
+            <div style="padding:9px 14px;font-size:12px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">Bulk — 12 rows selected from Tally Sheet</div>
+            <div style="padding:9px 14px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ts-blue)">tally_sheet_12_records_2025-12-15.xlsx</div>
+          </div>
+        </div>
+
+        <!-- 7 rules -->
+        <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden;margin-bottom:24px">
+          <div style="padding:8px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600);background:var(--ts-gray-50);border-bottom:2px solid var(--ts-gray-200)">7 Rules</div>
+          <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-700);border-bottom:1px solid var(--ts-gray-100)"><strong>1.</strong> Module name always at the front — easy to sort by name.</div>
+          <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-700);border-bottom:1px solid var(--ts-gray-100)"><strong>2.</strong> Include active primary filter (Status, Type). Omit if "All".</div>
+          <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-700);border-bottom:1px solid var(--ts-gray-100)"><strong>3.</strong> Include context filter if present (Customer, Yard). Omit if "All".</div>
+          <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-700);border-bottom:1px solid var(--ts-gray-100)"><strong>4.</strong> Export date always present, always at end before extension.</div>
+          <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-700);border-bottom:1px solid var(--ts-gray-100)"><strong>5.</strong> Date format: ISO 8601 — <code>YYYY-MM-DD</code>. Not DD-MM-YYYY. ISO alphabetical sort = chronological sort.</div>
+          <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-700);border-bottom:1px solid var(--ts-gray-100)"><strong>6.</strong> Use underscore <code>_</code> as separator. Not space (breaks on some OS), not hyphen (ambiguous with date).</div>
+          <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-700)"><strong>7.</strong> All lowercase, except Record ID (TR-2025-042) which is uppercase.</div>
+        </div>
+
+        <!-- ─────────────────────────────── -->
+        <h3>6. Feedback States</h3>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="width:90px;font-size:11px;color:var(--ts-gray-400);flex-shrink:0">Processing</div>
+            <button class="btn btn-outlined gray btn-sm" style="opacity:.7;cursor:not-allowed;display:flex;align-items:center;gap:6px">
+              <div style="width:11px;height:11px;border:2px solid var(--ts-gray-300);border-top-color:var(--ts-gray-600);border-radius:50%"></div>
+              Exporting…
+            </button>
+            <span style="font-size:11px;color:var(--ts-gray-400)">Button disabled, label changes, spinner appears.</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="width:90px;font-size:11px;color:var(--ts-gray-400);flex-shrink:0">Success</div>
+            <div style="background:var(--ts-gray-900);color:white;padding:9px 14px;border-radius:var(--radius);display:flex;align-items:center;gap:10px;font-size:12px">
+              <span style="color:#4ADE80">✓</span>
+              <span>open_order_in_progress_2025-12-15.xlsx ready</span>
+              <button style="background:none;border:none;color:#94A3B8;font-size:11px;cursor:pointer;padding:0;margin-left:6px">⬇ Download</button>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="width:90px;font-size:11px;color:var(--ts-gray-400);flex-shrink:0">Failed</div>
+            <div style="background:var(--ts-red-light);border:1px solid #FFCDD2;padding:9px 14px;border-radius:var(--radius);display:flex;align-items:center;gap:10px;font-size:12px;color:var(--ts-red)">
+              <span>✕</span> Export failed — please try again
+              <button style="background:none;border:none;color:var(--ts-red);font-size:11px;cursor:pointer;padding:0;margin-left:6px;font-weight:600">Retry</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="rule"><strong>Success toast mentions file name</strong> — not just "Export successful". User immediately knows what file they received.</div>
+        <div class="rule"><strong>Small files (&lt;1 second): auto-download directly.</strong> Large files (server-side): toast with Download button after file is ready.</div>
+
+        <!-- ─────────────────────────────── -->
+        <h3>Implementation</h3>
+        <div class="card" style="background:var(--ts-gray-900);border-color:var(--ts-gray-700)">
+          <div style="font-size:11px;font-weight:600;color:var(--ts-gray-400);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">buildExportFilename() utility + handler</div>
+          <pre style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#93C5FD;line-height:1.9;margin:0;white-space:pre-wrap"><span style="color:#6EE7B7">// utils/exportFilename.ts</span>
+<span style="color:#F9A8D4">export function</span> buildExportFilename({
+  module, reportType, filters = {}, ext = <span style="color:#FCD34D">'xlsx'</span>,
+}: {
+  module: string; reportType?: string;
+  filters?: Record&lt;string, string | null&gt;;
+  ext?: <span style="color:#FCD34D">'xlsx'</span> | <span style="color:#FCD34D">'pdf'</span> | <span style="color:#FCD34D">'csv'</span>;
+}): string {
+  <span style="color:#F9A8D4">const</span> date = format(<span style="color:#F9A8D4">new</span> Date(), <span style="color:#FCD34D">'yyyy-MM-dd'</span>); <span style="color:#6EE7B7">// date-fns</span>
+  <span style="color:#F9A8D4">const</span> parts = [
+    module.toLowerCase().replace(/\s+/g, <span style="color:#FCD34D">'_'</span>),
+    reportType?.toLowerCase().replace(/\s+/g, <span style="color:#FCD34D">'_'</span>),
+    ...Object.values(filters)
+      .filter(v =&gt; v &amp;&amp; v.toLowerCase() !== <span style="color:#FCD34D">'all'</span>) <span style="color:#6EE7B7">// skip "All"</span>
+      .map(v =&gt; v!.toLowerCase().replace(/\s+/g, <span style="color:#FCD34D">'_'</span>)),
+    date,
+  ].filter(Boolean);
+  <span style="color:#F9A8D4">return</span> <span style="color:#FCD34D">`${parts.join('_')}.${ext}`</span>;
+}
+
+<span style="color:#6EE7B7">// Examples:</span>
+buildExportFilename({ module: <span style="color:#FCD34D">'open_order'</span> });
+<span style="color:#6EE7B7">// → open_order_2025-12-15.xlsx</span>
+buildExportFilename({ module: <span style="color:#FCD34D">'ncr'</span>, filters: { status: <span style="color:#FCD34D">'open'</span>, customer: <span style="color:#FCD34D">'MITO Singapore'</span> } });
+<span style="color:#6EE7B7">// → ncr_open_mito_singapore_2025-12-15.xlsx</span>
+buildExportFilename({ module: <span style="color:#FCD34D">'insights'</span>, reportType: <span style="color:#FCD34D">'forecast accuracy by yard'</span> });
+<span style="color:#6EE7B7">// → insights_forecast_accuracy_by_yard_2025-12-15.xlsx</span>
+
+<span style="color:#6EE7B7">// Export handler</span>
+<span style="color:#F9A8D4">const</span> [isExporting, setIsExporting] = useState(<span style="color:#FCD34D">false</span>);
+<span style="color:#F9A8D4">const</span> handleExport = async () =&gt; {
+  setIsExporting(<span style="color:#FCD34D">true</span>);
+  <span style="color:#F9A8D4">try</span> {
+    <span style="color:#F9A8D4">const</span> blob = await exportApi(activeFilters);
+    <span style="color:#F9A8D4">const</span> filename = buildExportFilename({ module: <span style="color:#FCD34D">'open_order'</span>, filters: activeFilters });
+    <span style="color:#F9A8D4">const</span> url = URL.createObjectURL(blob);
+    <span style="color:#F9A8D4">const</span> a = document.createElement(<span style="color:#FCD34D">'a'</span>);
+    a.href = url; a.download = filename; a.click();
+    URL.revokeObjectURL(url);
+    showToast(<span style="color:#FCD34D">`${filename} ready`</span>, <span style="color:#FCD34D">'success'</span>);
+  } <span style="color:#F9A8D4">catch</span> {
+    showToast(<span style="color:#FCD34D">'Export failed — please try again'</span>, <span style="color:#FCD34D">'error'</span>);
+  } <span style="color:#F9A8D4">finally</span> { setIsExporting(<span style="color:#FCD34D">false</span>); }
+};
+
+&lt;Button variant=<span style="color:#FCD34D">"outlined"</span> size=<span style="color:#FCD34D">"small"</span> disabled={isExporting}
+  startIcon={isExporting ? &lt;CircularProgress size={12} /&gt; : &lt;DownloadIcon /&gt;}
+  onClick={handleExport}&gt;
+  {isExporting ? <span style="color:#FCD34D">'Exporting…'</span> : <span style="color:#FCD34D">`Export ${filteredCount} records`</span>}
+&lt;/Button&gt;</pre>
+        </div>
       </section>
 
       <div style="height:60px"></div>
