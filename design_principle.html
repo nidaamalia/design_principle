@@ -743,6 +743,8 @@
     <a class="nav-item" href="#s19">19. File Attachments</a>
     <a class="nav-item" href="#s20">20. Charts & Widgets</a>
     <a class="nav-item" href="#s21">21. Export</a>
+    <a class="nav-item" href="#s22">22. Permissions & Visibility</a>
+    <a class="nav-item" href="#s23">23. Audit & Traceability</a>
   </nav>
 
   <!-- MAIN -->
@@ -5417,6 +5419,475 @@ buildExportFilename({ module: <span style="color:#FCD34D">'insights'</span>, rep
   onClick={handleExport}&gt;
   {isExporting ? <span style="color:#FCD34D">'Exporting…'</span> : <span style="color:#FCD34D">`Export ${filteredCount} records`</span>}
 &lt;/Button&gt;</pre>
+        </div>
+      </section>
+
+      <!-- ================================ -->
+      <!-- S22: PERMISSIONS & VISIBILITY -->
+      <!-- ================================ -->
+      <section id="s22">
+        <div class="section-header">
+          <div class="section-number">22</div>
+          <h2>Permissions &amp; Visibility Logic</h2>
+          <span class="desc">Hide vs Disable · Decision Framework · Mixed Eligibility · Tooltips</span>
+        </div>
+
+        <p>This is one of the largest gaps in enterprise applications. Without agreed-upon rules, every developer makes individual decisions — resulting in inconsistency across the application. In one module buttons are hidden, in another they're disabled, and in yet another they appear but throw errors when clicked.</p>
+
+        <div class="callout callout-warn">
+          <span>⚠️</span>
+          <div><strong>This isn't just about hide vs disable.</strong> You need a decision framework — rules that developers can follow for every scenario without guessing or asking repeatedly.</div>
+        </div>
+
+        <!-- Decision framework table -->
+        <h3>Decision Framework</h3>
+        <p>For every action in every module, answer these three questions in order:</p>
+
+        <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden;margin-bottom:16px">
+          <div style="display:grid;grid-template-columns:32px 1fr 120px 120px 120px;border-bottom:2px solid var(--ts-gray-200)">
+            <div style="background:var(--ts-gray-50);border-right:1px solid var(--ts-gray-200)"></div>
+            <div style="padding:9px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600);background:var(--ts-gray-50);border-right:1px solid var(--ts-gray-200)">Scenario</div>
+            <div style="padding:9px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600);background:var(--ts-gray-50);text-align:center;border-right:1px solid var(--ts-gray-200)">Show</div>
+            <div style="padding:9px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600);background:var(--ts-gray-50);text-align:center;border-right:1px solid var(--ts-gray-200)">Disable</div>
+            <div style="padding:9px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600);background:var(--ts-gray-50);text-align:center">Hide</div>
+          </div>
+          <!-- Row 1 -->
+          <div style="display:grid;grid-template-columns:32px 1fr 120px 120px 120px;border-bottom:1px solid var(--ts-gray-100);align-items:center">
+            <div style="padding:12px 0;display:flex;justify-content:center;border-right:1px solid var(--ts-gray-100)"><div style="width:20px;height:20px;background:var(--ts-blue);color:white;border-radius:50%;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center">1</div></div>
+            <div style="padding:12px 14px;border-right:1px solid var(--ts-gray-100)">
+              <div style="font-size:13px;font-weight:500;color:var(--ts-gray-800)">User never has permission</div>
+              <div style="font-size:11px;color:var(--ts-gray-400);margin-top:2px">Role does not have access to this action at all</div>
+            </div>
+            <div style="padding:12px 14px;text-align:center;font-size:16px;border-right:1px solid var(--ts-gray-100)"><span style="color:var(--ts-red)">✕</span></div>
+            <div style="padding:12px 14px;text-align:center;font-size:16px;border-right:1px solid var(--ts-gray-100)"><span style="color:var(--ts-red)">✕</span></div>
+            <div style="padding:12px 14px;text-align:center;font-size:16px"><span style="color:var(--ts-green)">✓</span></div>
+          </div>
+          <!-- Row 2 -->
+          <div style="display:grid;grid-template-columns:32px 1fr 120px 120px 120px;border-bottom:1px solid var(--ts-gray-100);align-items:center">
+            <div style="padding:12px 0;display:flex;justify-content:center;border-right:1px solid var(--ts-gray-100)"><div style="width:20px;height:20px;background:var(--ts-blue);color:white;border-radius:50%;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center">2</div></div>
+            <div style="padding:12px 14px;border-right:1px solid var(--ts-gray-100)">
+              <div style="font-size:13px;font-weight:500;color:var(--ts-gray-800)">User has permission, but record doesn't meet requirements</div>
+              <div style="font-size:11px;color:var(--ts-gray-400);margin-top:2px">Wrong status, prerequisites not met, etc.</div>
+            </div>
+            <div style="padding:12px 14px;text-align:center;font-size:16px;border-right:1px solid var(--ts-gray-100)"><span style="color:var(--ts-green)">✓</span></div>
+            <div style="padding:12px 14px;text-align:center;font-size:16px;border-right:1px solid var(--ts-gray-100)"><span style="color:var(--ts-green)">✓</span></div>
+            <div style="padding:12px 14px;text-align:center;font-size:16px"><span style="color:var(--ts-red)">✕</span></div>
+          </div>
+          <!-- Row 3 -->
+          <div style="display:grid;grid-template-columns:32px 1fr 120px 120px 120px;align-items:center">
+            <div style="padding:12px 0;display:flex;justify-content:center;border-right:1px solid var(--ts-gray-100)"><div style="width:20px;height:20px;background:var(--ts-blue);color:white;border-radius:50%;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center">3</div></div>
+            <div style="padding:12px 14px;border-right:1px solid var(--ts-gray-100)">
+              <div style="font-size:13px;font-weight:500;color:var(--ts-gray-800)">Bulk selection — mixed eligibility</div>
+              <div style="font-size:11px;color:var(--ts-gray-400);margin-top:2px">User selects 10 rows, only 7 meet requirements for this action</div>
+            </div>
+            <div style="padding:12px 14px;text-align:center;font-size:12px;color:var(--ts-green);font-weight:600;border-right:1px solid var(--ts-gray-100)">✓ filtered</div>
+            <div style="padding:12px 14px;text-align:center;font-size:16px;border-right:1px solid var(--ts-gray-100)"><span style="color:var(--ts-red)">✕</span></div>
+            <div style="padding:12px 14px;text-align:center;font-size:16px"><span style="color:var(--ts-red)">✕</span></div>
+          </div>
+        </div>
+
+        <!-- Rule explanations -->
+        <div class="rule"><strong>Scenario 1 — Hide:</strong> If the user will never be able to perform this action with their role, don't show it. Displaying a button that can't be clicked only creates confusion. Example: Viewer role doesn't need to see "Dispatch" button at all.</div>
+        <div class="rule"><strong>Scenario 2 — Show + Disable + Tooltip:</strong> User knows this action exists and will be available later, but current conditions don't meet requirements. Tooltip must explain why. Example: "Dispatch" greyed out with tooltip "Order must be Ready to dispatch".</div>
+        <div class="rule"><strong>Scenario 3 — Show + filter eligible only:</strong> Display the action, but in the confirmation modal explain how many records will be affected and how many will be skipped. Example: "Dispatch 7 of 10 selected — 3 skipped (wrong status)".</div>
+
+        <!-- Visual demos -->
+        <h3>Demo — Three Scenarios</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px">
+
+          <!-- Scenario 1: Hide -->
+          <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);padding:14px">
+            <div style="font-size:11px;font-weight:700;color:var(--ts-gray-400);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">① Role: Viewer</div>
+            <div style="border:1px solid var(--ts-gray-100);border-radius:4px;padding:10px 12px;font-size:12px;display:flex;align-items:center;justify-content:space-between">
+              <span style="color:var(--ts-blue);font-family:'IBM Plex Mono',monospace;font-size:11px">CO-2025-188</span>
+              <div style="display:flex;align-items:center;gap:6px">
+                <span class="status status-progress" style="font-size:10px">In Progress</span>
+                <!-- No dispatch button — hidden for viewer -->
+                <button class="btn btn-text btn-sm">View →</button>
+              </div>
+            </div>
+            <p style="font-size:11px;color:var(--ts-gray-400);margin-top:8px">Dispatch doesn't exist at all. Viewer can only View.</p>
+          </div>
+
+          <!-- Scenario 2: Disable + tooltip -->
+          <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);padding:14px">
+            <div style="font-size:11px;font-weight:700;color:var(--ts-gray-400);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">② Role: Operator — Wrong status</div>
+            <div style="border:1px solid var(--ts-gray-100);border-radius:4px;padding:10px 12px;font-size:12px;display:flex;align-items:center;justify-content:space-between">
+              <span style="color:var(--ts-blue);font-family:'IBM Plex Mono',monospace;font-size:11px">CO-2025-188</span>
+              <div style="display:flex;align-items:center;gap:6px">
+                <span class="status status-draft" style="font-size:10px">Draft</span>
+                <button class="btn btn-outlined btn-sm" disabled style="opacity:.4;cursor:not-allowed" title="Order must be Ready to dispatch">Dispatch</button>
+              </div>
+            </div>
+            <p style="font-size:11px;color:var(--ts-gray-400);margin-top:8px">Dispatch visible but disabled. Tooltip: "Order must be Ready to dispatch".</p>
+          </div>
+
+          <!-- Scenario 3: Bulk mixed -->
+          <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);padding:14px">
+            <div style="font-size:11px;font-weight:700;color:var(--ts-gray-400);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">③ Bulk — mixed eligibility</div>
+            <div style="background:#EEF9F7;border:1px solid #B2DFDB;border-radius:4px;padding:8px 10px;display:flex;align-items:center;gap:8px;margin-bottom:8px">
+              <span style="font-size:12px;font-weight:600;color:#1A7A6A">10 rows selected</span>
+              <div style="flex:1"></div>
+              <button class="btn btn-outlined btn-sm">Dispatch (7)</button>
+            </div>
+            <div style="background:var(--ts-orange-light);border:1px solid #FDBA74;border-radius:4px;padding:8px 10px;font-size:11px;color:var(--ts-orange)">
+              ⚠ 3 records skipped — status not Ready
+            </div>
+            <p style="font-size:11px;color:var(--ts-gray-400);margin-top:8px">Action still available, count in button label, warning below.</p>
+          </div>
+        </div>
+
+        <!-- Disabled tooltip rule -->
+        <h3>Disabled Button — Tooltip Required</h3>
+        <p>A disabled button without a tooltip is a dead end. Users know they can't do something but don't know why.</p>
+
+        <div class="do-dont">
+          <div class="do-box">
+            <div class="do-label">✓ Disabled + tooltip explains why</div>
+            <div style="margin-top:10px;display:flex;align-items:center;gap:8px">
+              <button class="btn btn-outlined btn-sm" disabled style="opacity:.4;cursor:not-allowed" title="Order must be in Ready status to dispatch. Current status: Draft.">Dispatch</button>
+              <div style="background:var(--ts-gray-900);color:white;padding:5px 10px;border-radius:4px;font-size:11px;max-width:200px">Order must be in Ready status to dispatch. Current status: Draft.</div>
+            </div>
+          </div>
+          <div class="dont-box">
+            <div class="dont-label">✗ Disabled without explanation</div>
+            <div style="margin-top:10px">
+              <button class="btn btn-outlined btn-sm" disabled style="opacity:.4;cursor:not-allowed">Dispatch</button>
+            </div>
+            <p style="font-size:11px;color:var(--ts-red);margin-top:8px">User doesn't know why. Must ask someone or trial-and-error.</p>
+          </div>
+        </div>
+
+        <div class="rule" style="margin-top:16px"><strong>Every disabled button must have a tooltip</strong> explaining: (1) why it's disabled, and (2) what conditions must be met to enable it. Use MUI <code>Tooltip</code> wrapping the disabled button — but you need a wrapper <code>span</code> because disabled buttons don't fire mouse events.</div>
+
+        <!-- Bulk confirmation modal -->
+        <h3>Bulk Mixed Eligibility — Confirmation Modal</h3>
+        <p>When a bulk action can only be applied to some records, the confirmation modal must be explicit.</p>
+
+        <div style="max-width:420px">
+          <div class="card">
+            <div style="font-size:15px;font-weight:600;color:var(--ts-gray-900);margin-bottom:8px">Dispatch 7 of 10 Orders?</div>
+            <div style="background:var(--ts-orange-light);border:1px solid #FDBA74;border-radius:4px;padding:10px 12px;font-size:12px;color:var(--ts-orange);margin-bottom:12px">
+              <strong>3 records will be skipped</strong> — status is not Ready:<br>
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:11px">CO-2025-190, CO-2025-191, CO-2025-193</span>
+            </div>
+            <p style="font-size:12px;color:var(--ts-gray-600);margin-bottom:16px">7 orders will be dispatched immediately. This cannot be undone.</p>
+            <div style="display:flex;justify-content:flex-end;gap:8px">
+              <button class="btn btn-text">Cancel</button>
+              <button class="btn btn-contained">Dispatch 7 Orders</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="rule" style="margin-top:16px"><strong>Confirmation modal for bulk mixed eligibility must show:</strong> (1) how many will be processed, (2) how many will be skipped and why, (3) if possible, list the IDs that will be skipped. Button label states the explicit number: "Dispatch 7 Orders".</div>
+
+        <!-- MUI code -->
+        <h3>Implementation</h3>
+        <div class="card" style="background:var(--ts-gray-900);border-color:var(--ts-gray-700)">
+          <div style="font-size:11px;font-weight:600;color:var(--ts-gray-400);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">MUI — Disabled button with tooltip</div>
+          <pre style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#93C5FD;line-height:1.9;margin:0;white-space:pre-wrap"><span style="color:#6EE7B7">// Disabled MUI button doesn't fire mouse events — needs span wrapper</span>
+&lt;Tooltip
+  title={!canDispatch ? <span style="color:#FCD34D">"Order must be Ready to dispatch"</span> : <span style="color:#FCD34D">""</span>}
+  disableHoverListener={canDispatch}
+&gt;
+  &lt;span&gt;
+    &lt;Button
+      variant=<span style="color:#FCD34D">"outlined"</span>
+      disabled={!canDispatch}
+      onClick={handleDispatch}
+    &gt;
+      Dispatch
+    &lt;/Button&gt;
+  &lt;/span&gt;
+&lt;/Tooltip&gt;
+
+<span style="color:#6EE7B7">// Permission check helper — define per module</span>
+<span style="color:#F9A8D4">const</span> canDispatch = userRole !== <span style="color:#FCD34D">'viewer'</span> &amp;&amp; order.status === <span style="color:#FCD34D">'ready'</span>;
+<span style="color:#F9A8D4">const</span> showDispatch = userRole !== <span style="color:#FCD34D">'viewer'</span>; <span style="color:#6EE7B7">// hide entirely for viewer</span>
+
+{showDispatch &amp;&amp; (
+  &lt;Tooltip title={!canDispatch ? <span style="color:#FCD34D">"Order must be Ready to dispatch"</span> : <span style="color:#FCD34D">""</span>}&gt;
+    &lt;span&gt;&lt;Button disabled={!canDispatch}&gt;Dispatch&lt;/Button&gt;&lt;/span&gt;
+  &lt;/Tooltip&gt;
+)}</pre>
+        </div>
+      </section>
+
+      <!-- ================================ -->
+      <!-- S23: AUDIT & TRACEABILITY -->
+      <!-- ================================ -->
+      <section id="s23">
+        <div class="section-header">
+          <div class="section-number">23</div>
+          <h2>Audit &amp; Traceability</h2>
+          <span class="desc">Created By · Last Modified · History · Field Changes</span>
+        </div>
+
+        <p>In supply chain operations, questions like "who changed this?", "when did the status change?", and "what was modified?" are asked daily. Without consistent patterns, every developer creates their own audit display, leading to fragmented user experience.</p>
+
+        <div class="callout callout-info">
+          <span>ℹ️</span>
+          <div><strong>Backend dependency notice:</strong> This section documents <strong>UI patterns</strong> for audit &amp; traceability — not backend implementation. These features require backend support for audit logging. If your backend doesn't support this yet, use this as a reference for future sprints.</div>
+        </div>
+
+        <!-- Feature availability disclaimer -->
+        <div style="background:#FFF7ED;border:1px solid #FED7AA;border-radius:var(--radius);padding:14px 16px;margin-bottom:16px;display:flex;gap:12px">
+          <span style="font-size:18px;flex-shrink:0">⚠️</span>
+          <div>
+            <div style="font-size:13px;font-weight:600;color:var(--ts-orange);margin-bottom:4px">Implementation priority varies by feature</div>
+            <div style="font-size:12px;color:var(--ts-gray-600);line-height:1.7">
+              <strong>Can be implemented without audit log backend:</strong> Created By/Date and Last Modified By/Date — these are simple fields stored on the record itself.
+              <strong>Requires audit log backend:</strong> History tab and field-level changes — these need a separate audit log system that tracks who changed what and when.
+            </div>
+          </div>
+        </div>
+
+        <!-- Dependency table -->
+        <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden;margin-bottom:20px">
+          <div style="display:grid;grid-template-columns:1fr 130px 160px;border-bottom:2px solid var(--ts-gray-200)">
+            <div style="padding:8px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600);background:var(--ts-gray-50)">Feature</div>
+            <div style="padding:8px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600);background:var(--ts-gray-50);text-align:center">Backend needed</div>
+            <div style="padding:8px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600);background:var(--ts-gray-50);text-align:center">MVP priority</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 130px 160px;border-bottom:1px solid var(--ts-gray-100);align-items:center">
+            <div style="padding:9px 14px;font-size:13px;color:var(--ts-gray-700)">Created By / Created Date</div>
+            <div style="padding:9px 14px;text-align:center;font-size:12px;color:var(--ts-green);font-weight:500">Simple fields ✓</div>
+            <div style="padding:9px 14px;text-align:center"><span style="background:var(--ts-green-light);color:var(--ts-green);font-size:11px;font-weight:600;padding:2px 10px;border-radius:100px">Implement now</span></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 130px 160px;border-bottom:1px solid var(--ts-gray-100);align-items:center">
+            <div style="padding:9px 14px;font-size:13px;color:var(--ts-gray-700)">Last Modified By / Date</div>
+            <div style="padding:9px 14px;text-align:center;font-size:12px;color:var(--ts-green);font-weight:500">Simple fields ✓</div>
+            <div style="padding:9px 14px;text-align:center"><span style="background:var(--ts-green-light);color:var(--ts-green);font-size:11px;font-weight:600;padding:2px 10px;border-radius:100px">Implement now</span></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 130px 160px;border-bottom:1px solid var(--ts-gray-100);align-items:center">
+            <div style="padding:9px 14px;font-size:13px;color:var(--ts-gray-700)">History Tab / Changelog</div>
+            <div style="padding:9px 14px;text-align:center;font-size:12px;color:var(--ts-orange);font-weight:500">Audit log API</div>
+            <div style="padding:9px 14px;text-align:center"><span style="background:var(--ts-orange-light);color:var(--ts-orange);font-size:11px;font-weight:600;padding:2px 10px;border-radius:100px">Post-MVP</span></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 130px 160px;align-items:center">
+            <div style="padding:9px 14px;font-size:13px;color:var(--ts-gray-700)">Field-level changes (before → after)</div>
+            <div style="padding:9px 14px;text-align:center;font-size:12px;color:var(--ts-orange);font-weight:500">Audit log API</div>
+            <div style="padding:9px 14px;text-align:center"><span style="background:var(--ts-orange-light);color:var(--ts-orange);font-size:11px;font-weight:600;padding:2px 10px;border-radius:100px">Post-MVP</span></div>
+          </div>
+        </div>
+
+        <!-- Anatomy -->
+        <h3>Anatomy — 4 Audit Elements</h3>
+        <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden;margin-bottom:16px">
+          <div style="display:grid;grid-template-columns:36px 140px 1fr 140px;border-bottom:2px solid var(--ts-gray-200)">
+            <div style="background:var(--ts-gray-50);border-right:1px solid var(--ts-gray-200)"></div>
+            <div style="padding:9px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600);background:var(--ts-gray-50);border-right:1px solid var(--ts-gray-200)">Element</div>
+            <div style="padding:9px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600);background:var(--ts-gray-50);border-right:1px solid var(--ts-gray-200)">Where displayed</div>
+            <div style="padding:9px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600);background:var(--ts-gray-50)">Format</div>
+          </div>
+          <div style="display:grid;grid-template-columns:36px 140px 1fr 140px;border-bottom:1px solid var(--ts-gray-100);align-items:center">
+            <div style="padding:11px 0;display:flex;justify-content:center;border-right:1px solid var(--ts-gray-100)"><div style="width:20px;height:20px;background:var(--ts-blue);color:white;border-radius:50%;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center">1</div></div>
+            <div style="padding:11px 14px;font-size:13px;font-weight:500;border-right:1px solid var(--ts-gray-100)">Created By / Date</div>
+            <div style="padding:11px 14px;font-size:12px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">Detail page footer, below form, or metadata section</div>
+            <div style="padding:11px 14px;font-size:12px;color:var(--ts-gray-600)">Name · DD MMM YYYY</div>
+          </div>
+          <div style="display:grid;grid-template-columns:36px 140px 1fr 140px;border-bottom:1px solid var(--ts-gray-100);align-items:center">
+            <div style="padding:11px 0;display:flex;justify-content:center;border-right:1px solid var(--ts-gray-100)"><div style="width:20px;height:20px;background:var(--ts-blue);color:white;border-radius:50%;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center">2</div></div>
+            <div style="padding:11px 14px;font-size:13px;font-weight:500;border-right:1px solid var(--ts-gray-100)">Last Modified</div>
+            <div style="padding:11px 14px;font-size:12px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">Aligned with Created By in footer, or tooltip on timestamp in list</div>
+            <div style="padding:11px 14px;font-size:12px;color:var(--ts-gray-600)">Name · DD MMM YYYY HH:mm</div>
+          </div>
+          <div style="display:grid;grid-template-columns:36px 140px 1fr 140px;border-bottom:1px solid var(--ts-gray-100);align-items:center">
+            <div style="padding:11px 0;display:flex;justify-content:center;border-right:1px solid var(--ts-gray-100)"><div style="width:20px;height:20px;background:var(--ts-blue);color:white;border-radius:50%;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center">3</div></div>
+            <div style="padding:11px 14px;font-size:13px;font-weight:500;border-right:1px solid var(--ts-gray-100)">History / Changelog</div>
+            <div style="padding:11px 14px;font-size:12px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">"History" tab on detail page. Not in drawer or modal — history needs space.</div>
+            <div style="padding:11px 14px;font-size:12px;color:var(--ts-gray-600)">Timeline list, reverse chronological</div>
+          </div>
+          <div style="display:grid;grid-template-columns:36px 140px 1fr 140px;align-items:center">
+            <div style="padding:11px 0;display:flex;justify-content:center;border-right:1px solid var(--ts-gray-100)"><div style="width:20px;height:20px;background:var(--ts-blue);color:white;border-radius:50%;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center">4</div></div>
+            <div style="padding:11px 14px;font-size:13px;font-weight:500;border-right:1px solid var(--ts-gray-100)">Field-level changes</div>
+            <div style="padding:11px 14px;font-size:12px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">Within each history entry — show before → after per changed field</div>
+            <div style="padding:11px 14px;font-size:12px;color:var(--ts-gray-600)">Field: old → new</div>
+          </div>
+        </div>
+
+        <!-- Created By / Last Modified demo -->
+        <h3>① Created By &amp; Last Modified — Detail Page Footer</h3>
+        <p>Always present on every detail page, at the very bottom of the form/content. Muted, not drawing attention from main content — but easy to find when needed.</p>
+
+        <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden;margin-bottom:16px">
+          <!-- Simulated detail page content -->
+          <div style="padding:16px;border-bottom:1px solid var(--ts-gray-100)">
+            <div style="font-size:12px;font-weight:600;color:var(--ts-gray-500);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Order Details</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+              <div><div style="font-size:11px;color:var(--ts-gray-400);margin-bottom:3px">Customer</div><div style="font-size:13px;color:var(--ts-gray-800)">MITO Singapore</div></div>
+              <div><div style="font-size:11px;color:var(--ts-gray-400);margin-bottom:3px">Status</div><span class="status status-progress" style="font-size:11px">In Progress</span></div>
+              <div><div style="font-size:11px;color:var(--ts-gray-400);margin-bottom:3px">Est. CRD</div><div style="font-size:13px;color:var(--ts-gray-800)">22 Jun 2025</div></div>
+            </div>
+          </div>
+          <!-- Audit footer -->
+          <div style="padding:10px 16px;background:var(--ts-gray-50);display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--ts-gray-200)">
+            <div style="display:flex;align-items:center;gap:20px">
+              <div style="font-size:11px;color:var(--ts-gray-400)">
+                <span style="font-weight:500;color:var(--ts-gray-500)">Created by</span> Ahmad R. &nbsp;·&nbsp; 13 Mar 2024
+              </div>
+              <div style="font-size:11px;color:var(--ts-gray-400)">
+                <span style="font-weight:500;color:var(--ts-gray-500)">Last modified by</span> Sarah T. &nbsp;·&nbsp; 05 Jun 2025, 14:23
+              </div>
+            </div>
+            <button class="btn btn-text btn-sm gray" style="font-size:11px">View History →</button>
+          </div>
+        </div>
+
+        <div class="rule"><strong>Audit footer always present on every detail page</strong> — Created By, Created Date, Last Modified By, Last Modified DateTime. Display as muted metadata in footer, not in the middle of the form.</div>
+        <div class="rule"><strong>"View History →" link in footer</strong> navigates to History tab on the same page. Not a modal, not a drawer.</div>
+
+        <!-- History tab demo -->
+        <h3>② History Tab — Changelog Timeline</h3>
+        <p>History tab contains all changes to the record, reverse chronological (newest first). Each entry shows who, when, and what changed.</p>
+
+        <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden;margin-bottom:16px">
+          <!-- Tabs -->
+          <div style="display:flex;border-bottom:1px solid var(--ts-gray-200)">
+            <div style="padding:10px 16px;font-size:13px;color:var(--ts-gray-400);cursor:pointer">Details</div>
+            <div style="padding:10px 16px;font-size:13px;color:var(--ts-gray-400);cursor:pointer">Documents</div>
+            <div style="padding:10px 16px;font-size:13px;font-weight:500;color:var(--ts-teal);border-bottom:2px solid var(--ts-teal);cursor:pointer">History</div>
+          </div>
+          <!-- Timeline -->
+          <div style="padding:16px 20px;display:flex;flex-direction:column;gap:0">
+
+            <!-- Entry 1 — most recent -->
+            <div style="display:flex;gap:14px;padding-bottom:16px;position:relative">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:0;flex-shrink:0">
+                <div style="width:28px;height:28px;background:var(--ts-orange-light);border:2px solid var(--ts-orange);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px">📋</div>
+                <div style="width:1px;flex:1;background:var(--ts-gray-200);margin-top:4px"></div>
+              </div>
+              <div style="flex:1;padding-top:4px">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+                  <span style="font-size:13px;font-weight:500;color:var(--ts-gray-800)">Status changed</span>
+                  <span class="status status-progress" style="font-size:10px">In Progress</span>
+                </div>
+                <div style="font-size:11px;color:var(--ts-gray-400);margin-bottom:8px">Sarah T. &nbsp;·&nbsp; 05 Jun 2025, 14:23</div>
+                <!-- Field changes -->
+                <div style="background:var(--ts-gray-50);border:1px solid var(--ts-gray-200);border-radius:4px;padding:8px 12px;font-size:12px">
+                  <div style="display:flex;align-items:center;gap:8px">
+                    <span style="color:var(--ts-gray-500);font-weight:500;min-width:60px">Status</span>
+                    <span class="status status-open" style="font-size:10px">Open</span>
+                    <span style="color:var(--ts-gray-300)">→</span>
+                    <span class="status status-progress" style="font-size:10px">In Progress</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Entry 2 -->
+            <div style="display:flex;gap:14px;padding-bottom:16px;position:relative">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:0;flex-shrink:0">
+                <div style="width:28px;height:28px;background:var(--ts-blue-light);border:2px solid var(--ts-blue);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px">✏️</div>
+                <div style="width:1px;flex:1;background:var(--ts-gray-200);margin-top:4px"></div>
+              </div>
+              <div style="flex:1;padding-top:4px">
+                <div style="font-size:13px;font-weight:500;color:var(--ts-gray-800);margin-bottom:4px">Record updated</div>
+                <div style="font-size:11px;color:var(--ts-gray-400);margin-bottom:8px">Ahmad R. &nbsp;·&nbsp; 01 Jun 2025, 09:45</div>
+                <!-- Multiple field changes -->
+                <div style="background:var(--ts-gray-50);border:1px solid var(--ts-gray-200);border-radius:4px;padding:8px 12px;font-size:12px;display:flex;flex-direction:column;gap:6px">
+                  <div style="display:flex;align-items:baseline;gap:8px">
+                    <span style="color:var(--ts-gray-500);font-weight:500;min-width:80px;font-size:11px">Est. CRD</span>
+                    <span style="color:var(--ts-red);text-decoration:line-through;font-size:11px">15 Jun 2025</span>
+                    <span style="color:var(--ts-gray-300)">→</span>
+                    <span style="color:var(--ts-green);font-size:11px">22 Jun 2025</span>
+                  </div>
+                  <div style="display:flex;align-items:baseline;gap:8px">
+                    <span style="color:var(--ts-gray-500);font-weight:500;min-width:80px;font-size:11px">Del. Term</span>
+                    <span style="color:var(--ts-red);text-decoration:line-through;font-size:11px">FOB</span>
+                    <span style="color:var(--ts-gray-300)">→</span>
+                    <span style="color:var(--ts-green);font-size:11px">CIF</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Entry 3 — created -->
+            <div style="display:flex;gap:14px">
+              <div style="display:flex;flex-direction:column;align-items:center;flex-shrink:0">
+                <div style="width:28px;height:28px;background:var(--ts-green-light);border:2px solid var(--ts-green);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px">✓</div>
+              </div>
+              <div style="flex:1;padding-top:4px">
+                <div style="font-size:13px;font-weight:500;color:var(--ts-gray-800);margin-bottom:4px">Record created</div>
+                <div style="font-size:11px;color:var(--ts-gray-400)">Ahmad R. &nbsp;·&nbsp; 13 Mar 2024, 08:30</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="rule"><strong>History timeline reverse chronological</strong> — newest first. Users typically want to see the most recent changes.</div>
+        <div class="rule"><strong>Field-level changes format:</strong> old value (strikethrough red) → new value (green). If value is a status, use status pill not plain text.</div>
+        <div class="rule"><strong>Every entry must have:</strong> (1) action label — "Status changed", "Record updated", "Record created", (2) who performed it, (3) when (datetime, not relative), (4) field changes if applicable.</div>
+        <div class="rule rule-warn"><strong>Use Tab, not Drawer or Modal for History.</strong> History can be long, needs vertical space. Drawer is too narrow, modal doesn't scroll comfortably for many entries.</div>
+
+        <!-- List view -->
+        <h3>③ Audit Info in List View</h3>
+        <p>In list/table view, don't display full audit info — too many columns. Just show timestamp as tooltip, or in expandable row.</p>
+
+        <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden;margin-bottom:16px">
+          <table style="width:100%;border-collapse:collapse;font-size:13px">
+            <thead>
+              <tr style="background:var(--ts-gray-50)">
+                <th style="padding:8px 12px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-400);border-bottom:1px solid var(--ts-gray-200)">Order No.</th>
+                <th style="padding:8px 12px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-400);border-bottom:1px solid var(--ts-gray-200)">Customer</th>
+                <th style="padding:8px 12px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-400);border-bottom:1px solid var(--ts-gray-200)">Status</th>
+                <th style="padding:8px 12px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-400);border-bottom:1px solid var(--ts-gray-200)">Last Modified</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding:10px 12px;border-bottom:1px solid var(--ts-gray-100)"><span style="color:var(--ts-blue);font-family:'IBM Plex Mono',monospace;font-size:12px">CO-2025-188</span></td>
+                <td style="padding:10px 12px;border-bottom:1px solid var(--ts-gray-100);color:var(--ts-gray-700)">MITO Singapore</td>
+                <td style="padding:10px 12px;border-bottom:1px solid var(--ts-gray-100)"><span class="status status-progress" style="font-size:11px">In Progress</span></td>
+                <td style="padding:10px 12px;border-bottom:1px solid var(--ts-gray-100)">
+                  <span style="font-size:12px;color:var(--ts-gray-500)" title="Modified by Sarah T. on 05 Jun 2025, 14:23">05 Jun 2025</span>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding:10px 12px"><span style="color:var(--ts-blue);font-family:'IBM Plex Mono',monospace;font-size:12px">CO-2025-189</span></td>
+                <td style="padding:10px 12px;color:var(--ts-gray-700)">MITO Jakarta</td>
+                <td style="padding:10px 12px"><span class="status status-done" style="font-size:11px">Completed</span></td>
+                <td style="padding:10px 12px">
+                  <span style="font-size:12px;color:var(--ts-gray-500)" title="Modified by Ahmad R. on 01 Jun 2025, 09:45">01 Jun 2025</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="rule"><strong>In list view, just show "Last Modified" date</strong> as a column. Full details (who, exact time) in tooltip on hover. Don't add "Created By" column in list — too cluttered.</div>
+        <div class="rule"><strong>"Last Modified" tooltip format:</strong> "Modified by [Name] on [DD MMM YYYY, HH:mm]". Hover-accessible, doesn't clutter the column.</div>
+
+        <!-- MUI code -->
+        <h3>Implementation</h3>
+        <div class="card" style="background:var(--ts-gray-900);border-color:var(--ts-gray-700)">
+          <div style="font-size:11px;font-weight:600;color:var(--ts-gray-400);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">MUI — Audit footer + history entry</div>
+          <pre style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#93C5FD;line-height:1.9;margin:0;white-space:pre-wrap"><span style="color:#6EE7B7">// Audit footer — reusable component</span>
+<span style="color:#F9A8D4">const</span> AuditFooter = ({ createdBy, createdAt, modifiedBy, modifiedAt, onViewHistory }) =&gt; (
+  &lt;Box sx={{ display: <span style="color:#FCD34D">'flex'</span>, alignItems: <span style="color:#FCD34D">'center'</span>, justifyContent: <span style="color:#FCD34D">'space-between'</span>,
+    px: 2, py: 1, bgcolor: <span style="color:#FCD34D">'grey.50'</span>, borderTop: <span style="color:#FCD34D">'1px solid'</span>, borderColor: <span style="color:#FCD34D">'divider'</span> }}&gt;
+    &lt;Stack direction=<span style="color:#FCD34D">'row'</span> spacing={3}&gt;
+      &lt;Typography variant=<span style="color:#FCD34D">'caption'</span> color=<span style="color:#FCD34D">'text.secondary'</span>&gt;
+        &lt;strong&gt;Created by&lt;/strong&gt; {createdBy} · {format(createdAt, <span style="color:#FCD34D">'dd MMM yyyy'</span>)}
+      &lt;/Typography&gt;
+      &lt;Typography variant=<span style="color:#FCD34D">'caption'</span> color=<span style="color:#FCD34D">'text.secondary'</span>&gt;
+        &lt;strong&gt;Last modified by&lt;/strong&gt; {modifiedBy} · {format(modifiedAt, <span style="color:#FCD34D">'dd MMM yyyy, HH:mm'</span>)}
+      &lt;/Typography&gt;
+    &lt;/Stack&gt;
+    &lt;Button size=<span style="color:#FCD34D">'small'</span> variant=<span style="color:#FCD34D">'text'</span> onClick={onViewHistory}&gt;View History →&lt;/Button&gt;
+  &lt;/Box&gt;
+);
+
+<span style="color:#6EE7B7">// Field change diff — before → after</span>
+<span style="color:#F9A8D4">const</span> FieldDiff = ({ field, before, after }) =&gt; (
+  &lt;Box sx={{ display: <span style="color:#FCD34D">'flex'</span>, gap: 1, alignItems: <span style="color:#FCD34D">'center'</span>, fontSize: 12 }}&gt;
+    &lt;Typography variant=<span style="color:#FCD34D">'caption'</span> color=<span style="color:#FCD34D">'text.secondary'</span> sx={{ minWidth: 80 }}&gt;{field}&lt;/Typography&gt;
+    &lt;Typography variant=<span style="color:#FCD34D">'caption'</span> sx={{ color: <span style="color:#FCD34D">'error.main'</span>, textDecoration: <span style="color:#FCD34D">'line-through'</span> }}&gt;{before}&lt;/Typography&gt;
+    &lt;Typography variant=<span style="color:#FCD34D">'caption'</span> color=<span style="color:#FCD34D">'text.disabled'</span>&gt;→&lt;/Typography&gt;
+    &lt;Typography variant=<span style="color:#FCD34D">'caption'</span> sx={{ color: <span style="color:#FCD34D">'success.main'</span> }}&gt;{after}&lt;/Typography&gt;
+  &lt;/Box&gt;
+);</pre>
         </div>
       </section>
 
