@@ -2826,21 +2826,28 @@
         <h3>Anatomy of Bulk Action Mode</h3>
 
         <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden;margin-bottom:8px">
-          <!-- Normal toolbar (step 0) -->
+          <!-- Normal toolbar (step 1) -->
           <div style="padding:10px 14px;border-bottom:1px solid var(--ts-gray-100);background:var(--ts-gray-50)">
             <span style="font-size:11px;font-weight:600;color:var(--ts-gray-500);text-transform:uppercase;letter-spacing:.05em">Step 1 — Default state (no selection)</span>
           </div>
           <div style="display:flex;gap:8px;align-items:center;padding:10px 14px;border-bottom:1px solid var(--ts-gray-200)">
             <input type="checkbox" style="accent-color:var(--ts-blue);width:14px;height:14px">
             <span style="font-size:13px;color:var(--ts-gray-400);flex:1">Check any row to begin selecting</span>
-            <button class="btn btn-outlined">Export</button>
             <button class="btn btn-contained">+ New Transfer</button>
           </div>
-          <div style="display:flex;align-items:center;padding:10px 14px;gap:12px;border-bottom:1px solid var(--ts-gray-100)">
-            <input type="checkbox" style="accent-color:var(--ts-blue);width:14px;height:14px"> <span style="font-size:13px;color:var(--ts-gray-700)">TR-2025-042</span> <span class="status status-open" style="margin-left:auto">Open</span>
+          <div style="display:flex;align-items:center;padding:10px 14px;gap:8px;border-bottom:1px solid var(--ts-gray-100)">
+            <input type="checkbox" style="accent-color:var(--ts-blue);width:14px;height:14px"> 
+            <span style="font-size:13px;color:var(--ts-gray-700);flex:1">TR-2025-042</span> 
+            <span class="status status-open">Open</span>
+            <button class="btn btn-text btn-sm" style="font-size:12px;color:var(--ts-gray-600)">Export</button>
+            <button class="btn btn-text btn-sm danger" style="font-size:12px">Terminate</button>
           </div>
-          <div style="display:flex;align-items:center;padding:10px 14px;gap:12px;">
-            <input type="checkbox" style="accent-color:var(--ts-blue);width:14px;height:14px"> <span style="font-size:13px;color:var(--ts-gray-700)">TR-2025-043</span> <span class="status status-draft" style="margin-left:auto">Draft</span>
+          <div style="display:flex;align-items:center;padding:10px 14px;gap:8px;">
+            <input type="checkbox" style="accent-color:var(--ts-blue);width:14px;height:14px"> 
+            <span style="font-size:13px;color:var(--ts-gray-700);flex:1">TR-2025-043</span> 
+            <span class="status status-draft">Draft</span>
+            <button class="btn btn-text btn-sm" style="font-size:12px;color:var(--ts-gray-600)">Export</button>
+            <button class="btn btn-text btn-sm danger" style="font-size:12px">Terminate</button>
           </div>
         </div>
 
@@ -2862,47 +2869,131 @@
             <button class="btn btn-text" style="font-size:12px;color:var(--ts-gray-500)">✕ Cancel</button>
           </div>
           <div style="display:flex;align-items:center;padding:10px 14px;gap:12px;background:#EFF6FF;border-bottom:1px solid #DBEAFE">
-            <input type="checkbox" checked style="accent-color:var(--ts-blue);width:14px;height:14px"> <span style="font-size:13px;color:var(--ts-gray-700)">TR-2025-042</span> <span class="status status-open" style="margin-left:auto">Open</span>
+            <input type="checkbox" checked style="accent-color:var(--ts-blue);width:14px;height:14px"> 
+            <span style="font-size:13px;color:var(--ts-gray-700)">TR-2025-042</span> 
+            <span class="status status-open" style="margin-left:auto">Open</span>
+            <button class="btn btn-text btn-sm" style="font-size:12px;color:var(--ts-gray-600);opacity:0.5;cursor:not-allowed" disabled>Export</button>
+            <button class="btn btn-text btn-sm danger" style="font-size:12px;opacity:0.5;cursor:not-allowed" disabled>Terminate</button>
           </div>
           <div style="display:flex;align-items:center;padding:10px 14px;gap:12px;background:#EFF6FF;">
-            <input type="checkbox" checked style="accent-color:var(--ts-blue);width:14px;height:14px"> <span style="font-size:13px;color:var(--ts-gray-700)">TR-2025-043</span> <span class="status status-draft" style="margin-left:auto">Draft</span>
+            <input type="checkbox" checked style="accent-color:var(--ts-blue);width:14px;height:14px"> 
+            <span style="font-size:13px;color:var(--ts-gray-700)">TR-2025-043</span> 
+            <span class="status status-draft" style="margin-left:auto">Draft</span>
+            <button class="btn btn-text btn-sm" style="font-size:12px;color:var(--ts-gray-600);opacity:0.5;cursor:not-allowed" disabled>Export</button>
+            <button class="btn btn-text btn-sm danger" style="font-size:12px;opacity:0.5;cursor:not-allowed" disabled>Terminate</button>
           </div>
         </div>
 
         <h3>Behavior Rules</h3>
-
-        <div class="annotation"><div class="ann-num">1</div><div><strong>Checkboxes always visible in the first column.</strong> Don't hide them until hover — this makes bulk selection discoverable without friction.</div></div>
-        <div class="annotation" style="margin-top:10px"><div class="ann-num">2</div><div><strong>Toolbar transforms when selection is active.</strong> The normal CTA buttons (+ New, Export) are replaced by bulk action buttons. This makes the scope clear and prevents accidental single-row actions while in bulk mode.</div></div>
+        <div class="annotation" style="margin-top:10px"><div class="ann-num">2</div><div><strong>Toolbar transforms when selection is active.</strong> The normal CTA button (+ New Transfer) is replaced by bulk action buttons. Row actions remain visible but disabled. This makes the scope clear and prevents accidental single-row actions while in bulk mode.</div></div>
         <div class="annotation" style="margin-top:10px"><div class="ann-num">3</div><div><strong>Selected rows get a tinted background</strong> (light blue). Always distinguish selected vs unselected rows visually.</div></div>
-        <div class="annotation" style="margin-top:10px"><div class="ann-num">4</div><div><strong>"Select all N" link</strong> for selecting beyond the current page. Distinguish "select all on this page" (checkbox in header) from "select all N records in this query".</div></div>
+        <div class="annotation" style="margin-top:10px"><div class="ann-num">4</div><div><strong>"Select all N" link</strong> for selecting beyond the current page. Distinguish "select all on this page" (checkbox in header) from "select all N records in this query". Pagination remains active — users can select rows across multiple pages.</div></div>
         <div class="annotation" style="margin-top:10px"><div class="ann-num">5</div><div><strong>"✕ Cancel" exits bulk mode</strong> and deselects everything. Always reachable as a Text Button at the far right of the bulk toolbar.</div></div>
 
         <hr>
-        <h3>Contextual Bulk Actions</h3>
-        <p>Not all bulk actions should always be available. Show only actions that are valid for all currently selected rows.</p>
+        <h3>Bulk Selection + Pagination</h3>
+        <p>Bulk selection dengan pagination membutuhkan dua scope yang berbeda dan harus eksplisit — jangan biarkan user berasumsi scope mana yang aktif.</p>
 
-        <div class="do-dont" style="margin-top:12px">
-          <div class="do-box">
-            <div class="do-label">Contextual — Only Valid Actions (✓)</div>
-            <p style="font-size:12px;color:var(--ts-green);margin-bottom:8px">Selected: 3 rows, all status = Open</p>
-            <div style="display:flex;gap:6px;flex-wrap:wrap">
-              <button class="btn btn-outlined btn-sm">Export Selected</button>
-              <button class="btn btn-contained btn-sm danger">Terminate</button>
-            </div>
-            <p style="margin-top:8px;font-size:12px;color:var(--ts-green)">Only shows actions applicable to Open transfers. No confusion.</p>
+        <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden;margin-bottom:16px">
+          <!-- Page-only scope -->
+          <div style="padding:10px 14px;border-bottom:1px solid var(--ts-gray-100);background:var(--ts-gray-50)">
+            <span style="font-size:11px;font-weight:600;color:var(--ts-gray-500);text-transform:uppercase;letter-spacing:.05em">Scope 1 — This page only (default)</span>
           </div>
-          <div class="dont-box">
-            <div class="dont-label">Always-On — Confusing Mix (✗)</div>
-            <p style="font-size:12px;color:var(--ts-red);margin-bottom:8px">Selected: 3 rows with mixed statuses</p>
-            <div style="display:flex;gap:6px;flex-wrap:wrap">
-              <button class="btn btn-outlined btn-sm" disabled>Dispatch</button>
-              <button class="btn btn-outlined btn-sm" disabled>Approve</button>
-              <button class="btn btn-contained btn-sm danger" disabled>Terminate</button>
-            </div>
-            <p style="margin-top:8px;font-size:12px;color:var(--ts-red)">Showing disabled bulk buttons is noisy and confusing. Hide them entirely instead.</p>
+          <div style="display:flex;gap:8px;align-items:center;padding:10px 14px;background:#EFF6FF;border-bottom:1px solid #BFDBFE">
+            <input type="checkbox" checked style="accent-color:var(--ts-blue);width:14px;height:14px">
+            <span style="font-size:13px;font-weight:600;color:var(--ts-blue)">25 rows selected</span>
+            <span style="font-size:12px;color:var(--ts-gray-500)">— this page only</span>
+            <div style="flex:1"></div>
+            <button class="btn btn-text" style="font-size:12px;color:var(--ts-blue);text-decoration:underline">Select all 148 records across all pages</button>
+            <button class="btn btn-outlined btn-sm">Export Selected</button>
+            <button class="btn btn-contained btn-sm danger">Terminate Selected</button>
+            <button class="btn btn-text" style="font-size:12px;color:var(--ts-gray-500)">✕ Cancel</button>
+          </div>
+          <div style="padding:10px 14px;font-size:12px;color:var(--ts-gray-600)">
+            Default selection scope = current page only. User must explicitly click "Select all N records" to expand scope.
           </div>
         </div>
 
+        <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden;margin-bottom:16px">
+          <!-- All-pages scope -->
+          <div style="padding:10px 14px;border-bottom:1px solid var(--ts-gray-100);background:var(--ts-gray-50)">
+            <span style="font-size:11px;font-weight:600;color:var(--ts-gray-500);text-transform:uppercase;letter-spacing:.05em">Scope 2 — All pages (explicit opt-in)</span>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;padding:10px 14px;background:#FFF4E6;border-bottom:1px solid #FFD699">
+            <input type="checkbox" checked style="accent-color:#FF9800;width:14px;height:14px">
+            <span style="font-size:13px;font-weight:600;color:#E65100">All 148 records selected</span>
+            <button class="btn btn-text" style="font-size:12px;color:#E65100;text-decoration:underline">Clear selection</button>
+            <div style="flex:1"></div>
+            <button class="btn btn-outlined btn-sm">Export Selected</button>
+            <button class="btn btn-contained btn-sm danger">Terminate Selected</button>
+            <button class="btn btn-text" style="font-size:12px;color:var(--ts-gray-500)">✕ Cancel</button>
+          </div>
+          <div style="padding:10px 14px;font-size:12px;color:var(--ts-gray-600)">
+            Background changes to orange-tint as a visual warning. This tells the user "what you're about to do affects records you cannot see right now."
+          </div>
+        </div>
+
+        <div class="rule"><strong>Default selection scope = current page only.</strong> Selecting all visible rows never auto-includes rows on other pages. User must explicitly click "Select all N records" to expand scope.</div>
+        <div class="rule"><strong>When all-pages scope is active, change the bulk toolbar background to orange-tint</strong> as a visual warning. This tells the user "what you're about to do affects records you cannot see right now."</div>
+        <div class="rule"><strong>Destructive bulk actions on all-pages scope must show the exact count in the confirmation modal.</strong> "Terminate 148 Transfers?" bukan "Terminate all selected?" — user harus tahu angkanya sebelum konfirmasi.</div>
+        <div class="rule"><strong>Pagination tetap berjalan selama bulk mode aktif.</strong> User bisa navigate ke page berikutnya — rows yang sudah diselect di page sebelumnya tetap terselect. Tandai dengan visual indicator di baris (background tint) saat user kembali ke halaman tersebut.</div>
+
+        <hr>
+        <h3>Single-Row vs Bulk Actions</h3>
+        <div class="rule"><strong>Every bulk action must also exist as a single-row action</strong> unless it is inherently multi-row (e.g., "Merge" or "Consolidate"). Actions like Terminate and Export must be visible as row buttons, not hidden in kebab menus.</div>
+        
+        <div style="background:var(--ts-orange-light);border-left:4px solid var(--ts-orange);border-radius:2px;padding:12px 16px;margin-bottom:16px">
+          <strong style="color:var(--ts-orange)">⚠️ Don't hide actions in bulk toolbar only.</strong> Always surface single-row actions on the row itself. If Terminate only appears when rows are selected, users must discover bulk mode first — three unnecessary steps.
+        </div>
+
+        <h4 style="margin:16px 0 12px;color:var(--ts-gray-700);font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.06em">Row Action Visibility Strategy</h4>
+        <p>Not all row actions should be hidden in a kebab menu. Visibility depends on <strong>frequency of use</strong> and <strong>importance</strong>.</p>
+        
+        <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden;margin-bottom:16px">
+          <div style="display:grid;grid-template-columns:150px 1fr 1fr;background:var(--ts-gray-50);border-bottom:2px solid var(--ts-gray-200)">
+            <div style="padding:10px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600)">Action Type</div>
+            <div style="padding:10px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600)">Placement</div>
+            <div style="padding:10px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600)">Rationale</div>
+          </div>
+          <!-- Primary / Frequent -->
+          <div style="display:grid;grid-template-columns:150px 1fr 1fr;border-bottom:1px solid var(--ts-gray-100);align-items:start">
+            <div style="padding:12px 14px;font-size:12px;font-weight:600;color:var(--ts-gray-700);border-right:1px solid var(--ts-gray-100)">Primary / Frequent</div>
+            <div style="padding:12px 14px;border-right:1px solid var(--ts-gray-100)">
+              <div style="font-size:12px;color:var(--ts-gray-600);margin-bottom:4px"><strong>Visible as button</strong></div>
+              <div style="font-size:11px;color:var(--ts-gray-500)">e.g., "Export", "View Details"</div>
+            </div>
+            <div style="padding:12px 14px;font-size:12px;color:var(--ts-gray-600)">Users perform this action frequently. Hiding it in a menu reduces discoverability and adds friction. Show it directly on the row.</div>
+          </div>
+          <!-- Destructive / Important -->
+          <div style="display:grid;grid-template-columns:150px 1fr 1fr;border-bottom:1px solid var(--ts-gray-100);align-items:start">
+            <div style="padding:12px 14px;font-size:12px;font-weight:600;color:var(--ts-gray-700);border-right:1px solid var(--ts-gray-100)">Destructive / Important</div>
+            <div style="padding:12px 14px;border-right:1px solid var(--ts-gray-100)">
+              <div style="font-size:12px;color:var(--ts-gray-600);margin-bottom:4px"><strong>Visible as button</strong></div>
+              <div style="font-size:11px;color:var(--ts-gray-500)">e.g., "Terminate", "Delete"</div>
+            </div>
+            <div style="padding:12px 14px;font-size:12px;color:var(--ts-gray-600)">Even if infrequent, destructive actions must be discoverable. Users need to know the action exists before they need it. Hiding it in a menu creates surprise and confusion.</div>
+          </div>
+          <!-- Secondary / Rare -->
+          <div style="display:grid;grid-template-columns:150px 1fr 1fr;border-bottom:1px solid var(--ts-gray-100);align-items:start">
+            <div style="padding:12px 14px;font-size:12px;font-weight:600;color:var(--ts-gray-700);border-right:1px solid var(--ts-gray-100)">Secondary / Rare</div>
+            <div style="padding:12px 14px;border-right:1px solid var(--ts-gray-100)">
+              <div style="font-size:12px;color:var(--ts-gray-600);margin-bottom:4px"><strong>Hide in kebab menu</strong></div>
+              <div style="font-size:11px;color:var(--ts-gray-500)">e.g., "Duplicate", "Move to Folder", "Print Label", "Share", "Download"</div>
+            </div>
+            <div style="padding:12px 14px;font-size:12px;color:var(--ts-gray-600)">Users rarely need these actions. Hiding them saves row space and reduces visual clutter. Kebab menu is the right place for secondary actions.</div>
+          </div>
+          <!-- Many Actions (4+) -->
+          <div style="display:grid;grid-template-columns:150px 1fr 1fr;align-items:start">
+            <div style="padding:12px 14px;font-size:12px;font-weight:600;color:var(--ts-gray-700);border-right:1px solid var(--ts-gray-100)">Many Actions (4+)</div>
+            <div style="padding:12px 14px;border-right:1px solid var(--ts-gray-100)">
+              <div style="font-size:12px;color:var(--ts-gray-600);margin-bottom:4px"><strong>Show 1–2 primary + kebab menu</strong></div>
+              <div style="font-size:11px;color:var(--ts-gray-500)">e.g., "View Details" button + "⋯" menu with Export, Terminate, Duplicate, etc.</div>
+            </div>
+            <div style="padding:12px 14px;font-size:12px;color:var(--ts-gray-600)">When there are 4+ actions, showing all as buttons creates clutter. Prioritize 1–2 most frequent actions as visible buttons, then group the rest (including destructive actions) in a kebab menu. The menu makes all actions discoverable without overwhelming the row.</div>
+          </div>
+        </div>
+
+        <hr>
         <h3>Destructive Bulk Actions</h3>
         <div class="rule rule-danger"><strong>Always require a confirmation modal before executing a destructive bulk action.</strong> The modal must state how many records will be affected: "Terminate 5 transfers? This cannot be undone."</div>
         <div class="rule"><strong>Confirmation modal for bulk destructive actions must show a count,</strong> not just "Are you sure?" — Example: "You are about to export 12 NCR records" or "Terminate 3 transfers permanently?"</div>
@@ -2920,9 +3011,10 @@
           </div>
         </div>
 
-        <h3>Bulk Action Button Labels</h3>
-        <div class="rule">Include the count in the confirmation button label: <code>Terminate 3 Transfers</code>, not just <code>Confirm</code>. This is a final sanity check for the user.</div>
-        <div class="rule rule-warn"><strong>Don't offer bulk delete/terminate for records with downstream dependencies</strong> (e.g., a Transfer that has dispatched items). Either disable those rows from selection or show an error list after the action explaining which records failed.</div>
+
+        <div style="background:var(--ts-orange-light);border-left:4px solid var(--ts-orange);border-radius:2px;padding:12px 16px;margin-bottom:16px">
+          <strong style="color:var(--ts-orange)">⚠️ Never silently skip records with dependencies.</strong> If you terminate 5 transfers but 2 have dispatched items and get skipped, the user won't know. Always show which records succeeded and which failed — with reasons.
+        </div>
       </section>
 
       <!-- ================================ -->
