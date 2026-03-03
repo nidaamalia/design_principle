@@ -788,11 +788,11 @@
         <div class="card-grid">
           <div class="card">
             <h4>🎯 Clarity First</h4>
-            <p>Every action must communicate its outcome before it's clicked. Labels must be specific — not "Submit" but "Submit NCR". No ambiguity allowed.</p>
+            <p>Every action must communicate its outcome before it is clicked. Labels must be specific — not "Submit" but "Submit NCR". No ambiguity allowed.</p>
           </div>
           <div class="card">
             <h4>⚡ Efficiency</h4>
-            <p>Tubestream users are operators performing the same tasks repeatedly. Reduce cognitive load. Don't force users to read before they can act.</p>
+            <p>Tubestream users are operators performing the same tasks repeatedly. Reduce cognitive load. Do not force users to read before they can act.</p>
           </div>
           <div class="card">
             <h4>🛡 Safety Net</h4>
@@ -1171,7 +1171,7 @@
 
         <div class="rule"><strong>Semantic colors always win</strong> — Never use brand colors for delete, approve, reject, or warning actions. User safety depends on consistent color meaning.</div>
         <div class="rule"><strong>One primary CTA per context</strong> — If you have both a semantic action (Approve) and a brand action (+ New) in the same area, the semantic action gets contained styling.</div>
-        <div class="rule rule-warn"><strong>Don't mix brand variants in the same button group</strong> — Stick to one brand color per action group to avoid visual confusion.</div>
+        <div class="rule rule-warn"><strong>Do not mix brand variants in the same button group</strong> — Stick to one brand color per action group to avoid visual confusion.</div>
         <div class="rule rule-danger"><strong>Never override semantic colors with brand colors</strong> — A red "Delete" button should never be blue just for brand consistency.</div>
       </section>
 
@@ -1262,7 +1262,7 @@
 
         <div class="callout callout-warn">
           <span>⚠️</span>
-          <div>Don't render 4–5 small buttons inline in a table row. It creates visual noise, makes focus difficult, and is unusable on mobile.</div>
+          <div>Do not render 4–5 small buttons inline in a table row. It creates visual noise, makes focus difficult, and is unusable on mobile.</div>
         </div>
 
         <h3>Pattern: Primary Visible + Overflow</h3>
@@ -1358,7 +1358,7 @@
         <div class="rule"><strong>Primary navigation</strong> (between modules) → Sidebar menu.</div>
         <div class="rule"><strong>Navigation to detail</strong> (from list to detail page) → Click the row OR click a text link on the ID/Name.</div>
         <div class="rule"><strong>Navigation to a related sub-page</strong> → Text Button with arrow: <code>View NCR Report →</code></div>
-        <div class="rule rule-warn"><strong>Don't use a Contained button for pure navigation.</strong> Contained buttons = actions that change state (submit, approve, delete). Navigation = links or text buttons.</div>
+        <div class="rule rule-warn"><strong>Do not use a Contained button for pure navigation.</strong> Contained buttons = actions that change state (submit, approve, delete). Navigation = links or text buttons.</div>
 
         <h3>Link Styles</h3>
         <div class="card">
@@ -1474,7 +1474,7 @@
 
         <div class="rule" style="margin-top:16px"><strong>Expand trigger:</strong> Clicking anywhere on the header row should expand it — not just the chevron icon. A tiny click target is frustrating.</div>
         <div class="rule"><strong>Chevron direction:</strong> ▶ = collapsed, ▼ = expanded. A 90° rotation animation is smoother than swapping icons.</div>
-        <div class="rule rule-warn"><strong>Don't expand all rows by default.</strong> Default = all collapsed. Users expand what they need.</div>
+        <div class="rule rule-warn"><strong>Do not expand all rows by default.</strong> Default = all collapsed. Users expand what they need.</div>
       </section>
 
       <!-- ================================ -->
@@ -1518,7 +1518,7 @@
             <button class="btn btn-contained">Submit NCR</button>
           </div>
         </div>
-        <div class="rule rule-warn"><strong>Don't place Cancel directly adjacent to Submit.</strong> Add visual separation to prevent accidental destructive clicks.</div>
+        <div class="rule rule-warn"><strong>Do not place Cancel directly adjacent to Submit.</strong> Add visual separation to prevent accidental destructive clicks.</div>
         <div class="rule"><strong>"Do It Later"</strong> (in the Set Due Date modal) is a correct example — a Text Button for a "skip" action. This pattern is already correct in the current system.</div>
 
         <h3>Validation Timing</h3>
@@ -1552,15 +1552,15 @@
           <div style="display:grid;grid-template-columns:120px 1fr 1fr 80px;align-items:start">
             <div style="padding:10px 14px;font-size:12px;font-weight:600;color:var(--ts-gray-700);border-right:1px solid var(--ts-gray-100)">After submit attempt</div>
             <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">Once submit is clicked, errors then clear on fix</div>
-            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">Best UX for long forms — don't show errors before user has had a chance to fill the form</div>
+            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">Best UX for long forms — do not show errors before user has had a chance to fill the form</div>
             <div style="padding:10px 14px;font-size:12px;font-weight:600;color:var(--ts-green)">✓ Default</div>
           </div>
         </div>
 
         <div class="rule"><strong>Default for all Tubestream forms: validate on submit, then clear each field's error as the user fixes it.</strong> This avoids showing red errors on untouched fields which feels aggressive.</div>
-        <div class="rule"><strong>On blur validation for async checks</strong> — lot number lookup, duplicate PO check. Don't wait until submit to run a server round-trip.</div>
+        <div class="rule"><strong>On blur validation for async checks</strong> — lot number lookup, duplicate PO check. Do not wait until submit to run a server round-trip.</div>
         <div class="rule rule-warn"><strong>Never validate on every keystroke for non-search fields.</strong> Showing "Invalid format" while the user is still typing is disruptive and premature.</div>
-        <div class="rule"><strong>On submit, scroll to and focus the first invalid field.</strong> Don't just show a generic "Form has errors" toast — take the user directly to what needs fixing.</div>
+        <div class="rule"><strong>On submit, scroll to and focus the first invalid field.</strong> Do not just show a generic "Form has errors" toast — take the user directly to what needs fixing.</div>
 
         <div class="card" style="background:var(--ts-gray-900);border-color:var(--ts-gray-700);margin-top:16px">
           <div style="font-size:11px;font-weight:600;color:var(--ts-gray-400);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">MUI v7 — Validation with React Hook Form</div>
@@ -1764,7 +1764,7 @@
 
         <div class="rule"><strong>Exact color consistency required</strong> — The "In Progress" status must use exactly <code>#E0F2F1</code> background and <code>#00796B</code> text across ALL modules.</div>
         <div class="rule"><strong>Status text must match exactly</strong> — Use "In Progress" not "In-Progress", "InProgress", or "Processing". Consistent terminology prevents user confusion.</div>
-        <div class="rule rule-warn"><strong>Don't create module-specific statuses</strong> — If a status exists in one module, consider if it applies to others before creating a new variant.</div>
+        <div class="rule rule-warn"><strong>Do not create module-specific statuses</strong> — If a status exists in one module, consider if it applies to others before creating a new variant.</div>
         <div class="rule rule-danger"><strong>Never change status colors arbitrarily</strong> — These colors have semantic meaning. Changing them breaks user expectations and muscle memory.</div>
 
         <h3>Status with Required Explanations</h3>
@@ -1883,7 +1883,7 @@
         <div class="rule"><strong>Always require explanations for negative outcomes</strong> — Rejected and Cancelled statuses must capture reasons for accountability and audit compliance.</div>
         <div class="rule"><strong>Show who and when</strong> — Display the user who made the status change and timestamp in the explanation modal.</div>
         <div class="rule"><strong>Make explanations accessible</strong> — Use info icons next to status chips to indicate explanations are available.</div>
-        <div class="rule rule-warn"><strong>Don't allow empty explanations</strong> — Disable the "Done" button until user provides meaningful reason text.</div>
+        <div class="rule rule-warn"><strong>Do not allow empty explanations</strong> — Disable the "Done" button until user provides meaningful reason text.</div>
 
         <div style="background:#FFF3E0;border:1px solid #E65100;border-radius:var(--radius);padding:16px;margin-bottom:16px">
           <div style="font-size:13px;font-weight:600;color:#E65100;margin-bottom:12px">⚠️ Common Mistakes to Avoid</div>
@@ -1935,7 +1935,7 @@
         </div>
 
         <h3>Confirmation Modal Rules</h3>
-        <div class="rule rule-danger"><strong>Don't put the destructive button on the right by default!</strong> Position: left = "Cancel" (outlined/text), right = destructive action (contained red). Ensure Cancel is easy to find to avoid mis-clicks.</div>
+        <div class="rule rule-danger"><strong>Do not put the destructive button on the right by default!</strong> Position: left = "Cancel" (outlined/text), right = destructive action (contained red). Ensure Cancel is easy to find to avoid mis-clicks.</div>
         <div class="rule"><strong>The modal title must describe the action</strong>, not just "Are you sure?" — Use: "Terminate Transfer TR-2025-042?" or "Delete NCR-001 permanently?"</div>
         <div class="rule"><strong>No modal on top of a modal.</strong> If a nested action is needed from within a modal, consider an inline flow or a multi-step modal instead.</div>
 
@@ -2212,7 +2212,7 @@
 
         <!-- Annotation zones -->
         <div class="annotation"><div class="ann-num">1</div><div><strong>Page title + Breadcrumb — top left.</strong> Title is the page name (<code>h6</code>). Breadcrumb sits directly below showing Category › Section › Current Page. Active/current item is the page title, not a link.</div></div>
-        <div class="annotation" style="margin-top:10px"><div class="ann-num">2</div><div><strong>Primary CTA — top right, sejajar page title.</strong> "+ New NCR" always here. Secondary actions (Export) sit left of it. Never below the table, never in the toolbar row.</div></div>
+        <div class="annotation" style="margin-top:10px"><div class="ann-num">2</div><div><strong>Primary CTA — top right, aligned with page title.</strong> "+ New NCR" always here. Secondary actions (Export) sit left of it. Never below the table, never in the toolbar row.</div></div>
         <div class="annotation" style="margin-top:10px"><div class="ann-num">3</div><div><strong>Toolbar row — below page header, above table.</strong> Contains search, column toggle, filter button. Separated from header by a top border. Record count shown right-aligned.</div></div>
         <div class="annotation" style="margin-top:10px"><div class="ann-num">4</div><div><strong>Status tabs — below toolbar, above table.</strong> Status tabs are the primary filter. Always visible, never in a dropdown. Active tab shows count badge.</div></div>
         <div class="annotation" style="margin-top:10px"><div class="ann-num">5</div><div><strong>Sidebar — icon-only (28px wide) by default.</strong> Expands to show text labels on hover or click. Active item highlighted with teal accent. Icon-only state uses tooltips for label.</div></div>
@@ -2451,7 +2451,7 @@
         </div>
 
         <div class="rule"><strong>Never use <code>body1</code> in Tubestream.</strong> MUI's <code>body1</code> is 16px — too large for a data-dense enterprise app. Use <code>body2</code> (14px) as the default body text everywhere.</div>
-        <div class="rule rule-warn"><strong>Don't hardcode <code>fontSize</code> in <code>sx</code></strong> to compensate for wrong variant choice. Pick the right variant first; only use <code>sx</code> for genuine one-off overrides.</div>
+        <div class="rule rule-warn"><strong>Do not hardcode <code>fontSize</code> in <code>sx</code></strong> to compensate for wrong variant choice. Pick the right variant first; only use <code>sx</code> for genuine one-off overrides.</div>
 
         <h3>Text Overflow & Truncation</h3>
         <p>When text content exceeds its container width, use <strong>ellipsis truncation</strong> with tooltips for full content access. This pattern is essential for maintaining layout integrity in data-dense interfaces like tables and cards.</p>
@@ -3028,7 +3028,7 @@
 
         <hr>
         <h3>Bulk Selection + Pagination</h3>
-        <p>Bulk selection dengan pagination membutuhkan dua scope yang berbeda dan harus eksplisit — jangan biarkan user berasumsi scope mana yang aktif.</p>
+        <p>Bulk selection with pagination requires two distinct scopes that must be explicit — never let users assume which scope is active.</p>
 
         <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden;margin-bottom:16px">
           <!-- Page-only scope -->
@@ -3071,20 +3071,17 @@
 
         <div class="rule"><strong>Default selection scope = current page only.</strong> Selecting all visible rows never auto-includes rows on other pages. User must explicitly click "Select all N records" to expand scope.</div>
         <div class="rule"><strong>When all-pages scope is active, change the bulk toolbar background to orange-tint</strong> as a visual warning. This tells the user "what you're about to do affects records you cannot see right now."</div>
-        <div class="rule"><strong>Destructive bulk actions on all-pages scope must show the exact count in the confirmation modal.</strong> "Terminate 148 Transfers?" bukan "Terminate all selected?" — user harus tahu angkanya sebelum konfirmasi.</div>
-        <div class="rule"><strong>Pagination tetap berjalan selama bulk mode aktif.</strong> User bisa navigate ke page berikutnya — rows yang sudah diselect di page sebelumnya tetap terselect. Tandai dengan visual indicator di baris (background tint) saat user kembali ke halaman tersebut.</div>
+        <div class="rule"><strong>Destructive bulk actions on all-pages scope must show the exact count in the confirmation modal.</strong> "Terminate 148 Transfers?" not "Terminate all selected?" — users must know the exact number before confirming.</div>
+        <div class="rule"><strong>Pagination remains active during bulk mode.</strong> Users can navigate to the next page — rows already selected on previous pages remain selected. Mark them with a visual indicator (background tint) when users return to that page.</div>
 
-        <hr>
         <h3>Single-Row vs Bulk Actions</h3>
         <div class="rule"><strong>Every bulk action must also exist as a single-row action</strong> unless it is inherently multi-row (e.g., "Merge" or "Consolidate"). Actions like Terminate and Export must be visible as row buttons, not hidden in kebab menus.</div>
         
         <div style="background:var(--ts-orange-light);border-left:4px solid var(--ts-orange);border-radius:2px;padding:12px 16px;margin-bottom:16px">
-          <strong style="color:var(--ts-orange)">⚠️ Don't hide actions in bulk toolbar only.</strong> Always surface single-row actions on the row itself. If Terminate only appears when rows are selected, users must discover bulk mode first — three unnecessary steps.
-        </div>
+          <strong style="color:var(--ts-orange)">⚠️ Do not hide actions in the bulk toolbar only.</strong> Always surface single-row actions on the row itself. If Terminate only appears when rows are selected, users must discover bulk mode first — three unnecessary steps.</div>
 
         <h4 style="margin:16px 0 12px;color:var(--ts-gray-700);font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.06em">Row Action Visibility Strategy</h4>
         <p>Not all row actions should be hidden in a kebab menu. Visibility depends on <strong>frequency of use</strong> and <strong>importance</strong>.</p>
-        
         <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden;margin-bottom:16px">
           <div style="display:grid;grid-template-columns:150px 1fr 1fr;background:var(--ts-gray-50);border-bottom:2px solid var(--ts-gray-200)">
             <div style="padding:10px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600)">Action Type</div>
