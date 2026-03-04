@@ -775,14 +775,18 @@
         <span>⚙️</span>
         <div>
           <strong>MUI v7 context.</strong> All patterns and code references in this document use <strong>Material UI v7</strong>. Key things to know:
-          <ul style="margin-top:6px;padding-left:16px;font-size:13px;display:flex;flex-direction:column;gap:4px">
-            <li>Use <code>slots</code> and <code>slotProps</code> for component customization — <code>TransitionComponent</code>, <code>TransitionProps</code>, and similar v5/v6 props have been removed.</li>
-            <li>MUI's spacing base is <strong>8px</strong> (<code>theme.spacing(1) = 8px</code>). This document maps all spacing values to their <code>theme.spacing()</code> equivalent.</li>
+          <ul style="margin-top:6px;padding-left:16px;font-size:13px;display:flex;flex-direction:column;gap:4px">            <li>MUI's spacing base is <strong>8px</strong> (<code>theme.spacing(1) = 8px</code>). This document maps all spacing values to their <code>theme.spacing()</code> equivalent.</li>
             <li>Typography variants map directly to MUI's built-in scale — see Section 12.</li>
             <li>Density is controlled via component <code>size</code> prop: <code>"small"</code> | <code>"medium"</code> | <code>"large"</code>.</li>
           </ul>
         </div>
       </div>
+      
+      <div class="callout callout-info" style="background:#FFF8E1;border-color:#FFB300">
+        <span>⚠️</span>
+        <div><strong>Important:</strong> This document provides structural and pattern guidance for UI/UX consistency. However, all design decisions—including color selection, typography choices, spacing, and component variations—remain the responsibility of the UI/UX designer. These guidelines inform and support design decisions but do not replace professional design judgment.</div>
+      </div>
+      <br>
 
       <!-- ================================ -->
       <!-- S1: CORE PRINCIPLES -->
@@ -892,8 +896,7 @@
         </div>
 
         <h4>Color Usage Guidelines</h4>
-        <div class="rule"><strong>Primary Action (Neutral):</strong> Use Blue (#1976D2) for primary CTAs and functional actions like "+ New NCR", "Create", "Submit".</div>
-        <div class="rule"><strong>Primary Action (Semantic):</strong> Use Green (#2E7D32) ONLY for approval/acceptance outcomes and confirmed positive states.</div>
+        <div class="rule"><strong>Primary Action (Neutral):</strong> Use Blue (#1F3A52) for primary CTAs and functional actions like "+ New NCR", "Create", "Submit".</div>
         <div class="rule"><strong>Navigation & Structure:</strong> Use Dark Blue (#1F3A52) for navigation elements, headers, and primary text.</div>
         <div class="rule rule-warn"><strong>Never use brand colors for error or warning states.</strong> Use semantic red, orange, and yellow instead.</div>
 
@@ -1062,79 +1065,7 @@
           </div>
         </div>
 
-        <h4>Real-World Examples Users Already Know</h4>
-        <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);padding:16px;margin-bottom:16px">
-          <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px">
-            <!-- Red Examples -->
-            <div>
-              <div style="font-size:13px;font-weight:600;color:var(--ts-gray-700);margin-bottom:8px">🔴 Red = Danger/Error (Universal)</div>
-              <div style="display:flex;flex-direction:column;gap:6px">
-                <div style="display:flex;align-items:center;gap:8px">
-                  <span style="color:#C62828;font-weight:600">❌</span>
-                  <span style="font-size:12px;color:var(--ts-gray-600)">Gmail: Delete, Report Spam</span>
-                </div>
-                <div style="display:flex;align-items:center;gap:8px">
-                  <span style="color:#C62828;font-weight:600">❌</span>
-                  <span style="font-size:12px;color:var(--ts-gray-600)">Slack: Remove, Leave Channel</span>
-                </div>
-                <div style="display:flex;align-items:center;gap:8px">
-                  <span style="color:#C62828;font-weight:600">❌</span>
-                  <span style="font-size:12px;color:var(--ts-gray-600)">Jira: Delete Issue, Cancel</span>
-                </div>
-                <div style="display:flex;align-items:center;gap:8px">
-                  <span style="color:#C62828;font-weight:600">❌</span>
-                  <span style="font-size:12px;color:var(--ts-gray-600)">Windows: Delete File, Empty Recycle</span>
-                </div>
-              </div>
-            </div>
-            <!-- Green Examples -->
-            <div>
-              <div style="font-size:13px;font-weight:600;color:var(--ts-gray-700);margin-bottom:8px">🟢 Green = Success/Go (Universal)</div>
-              <div style="display:flex;flex-direction:column;gap:6px">
-                <div style="display:flex;align-items:center;gap:8px">
-                  <span style="color:#2E7D32;font-weight:600">✅</span>
-                  <span style="font-size:12px;color:var(--ts-gray-600)">Gmail: Send, Archive</span>
-                </div>
-                <div style="display:flex;align-items:center;gap:8px">
-                  <span style="color:#2E7D32;font-weight:600">✅</span>
-                  <span style="font-size:12px;color:var(--ts-gray-600)">Slack: Send Message, Join</span>
-                </div>
-                <div style="display:flex;align-items:center;gap:8px">
-                  <span style="color:#2E7D32;font-weight:600">✅</span>
-                  <span style="font-size:12px;color:var(--ts-gray-600)">Jira: Approve, Resolve</span>
-                </div>
-                <div style="display:flex;align-items:center;gap:8px">
-                  <span style="color:#2E7D32;font-weight:600">✅</span>
-                  <span style="font-size:12px;color:var(--ts-gray-600)">Windows: Install, Complete</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div style="margin-top:12px;padding:8px 12px;background:var(--ts-gray-50);border-radius:4px;font-size:11px;color:var(--ts-gray-600)">
-          💡 <strong>User psychology:</strong> When users see red button, they pause and think "Is this safe?" - this built-in safety mechanism protects them from mistakes.
-        </div>
 
-        <h4>Color Priority System</h4>
-        <p>When choosing button colors, follow this two-tier priority system to maintain both brand consistency and user safety.</p>
-        
-        <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden;margin-bottom:16px">
-          <div style="display:grid;grid-template-columns:1fr 2fr 2fr;border-bottom:2px solid var(--ts-gray-200)">
-            <div style="padding:10px 14px;background:var(--ts-gray-50);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600)">Priority</div>
-            <div style="padding:10px 14px;background:var(--ts-gray-50);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600)">When to Use</div>
-            <div style="padding:10px 14px;background:var(--ts-gray-50);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600)">Real Examples</div>
-          </div>
-          <div style="display:grid;grid-template-columns:1fr 2fr 2fr;border-bottom:1px solid var(--ts-gray-100)">
-            <div style="padding:10px 14px;font-size:13px;font-weight:600;color:var(--ts-red)">1. Semantic First</div>
-            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600)">Actions with clear positive/negative outcomes. User safety depends on consistent meaning. <strong>Always use semantic colors for these actions regardless of brand preference.</strong></div>
-            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600)">🔴 Delete NCR, Reject Request<br>🟢 Approve Review, Accept Report<br>🟡 Mark as Draft, Need Review</div>
-          </div>
-          <div style="display:grid;grid-template-columns:1fr 2fr 2fr">
-            <div style="padding:10px 14px;font-size:13px;font-weight:600;color:var(--ts-blue)">2. Brand Primary</div>
-            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600)">Neutral actions without positive/negative consequences. Just functional operations. <strong>This is the default color for most buttons.</strong> Use when semantic meaning doesn't apply.</div>
-            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600)">+ New NCR, Export XLSX<br>View Details, Edit Record<br>Search, Filter, Sort</div>
-          </div>
-        </div>
 
         <div class="callout callout-info" style="margin-bottom:16px">
           <span>💡</span>
@@ -1490,6 +1421,32 @@
         <div class="rule" style="margin-top:16px"><strong>Expand trigger:</strong> Clicking anywhere on the header row should expand it — not just the chevron icon. A tiny click target is frustrating.</div>
         <div class="rule"><strong>Chevron direction:</strong> ▶ = collapsed, ▼ = expanded. A 90° rotation animation is smoother than swapping icons.</div>
         <div class="rule rule-warn"><strong>Do not expand all rows by default.</strong> Default = all collapsed. Users expand what they need.</div>
+      
+        <h3>MUI DataGrid — Pagination Standard</h3>
+        <p>For pages using MUI DataGrid, pagination is built-in. Standardize the configuration across all modules as follows:</p>
+
+        <div class="card" style="background:var(--ts-gray-900);border-color:var(--ts-gray-700)">
+          <pre style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#93C5FD;line-height:1.9;margin:0;white-space:pre-wrap"><span style="color:#6EE7B7">// Standard DataGrid pagination config for all Tubestream list pages</span>
+&lt;DataGrid
+  rows={rows}
+  columns={columns}
+  <span style="color:#6EE7B7">// Default 25 rows — enough to scan without overwhelming</span>
+  initialState={{ pagination: { paginationModel: { pageSize: 25 } } }}
+  <span style="color:#6EE7B7">// Consistent options across all modules</span>
+  pageSizeOptions={[25, 50, 100]}
+  <span style="color:#6EE7B7">// Always server-side for Tubestream (data is too large for client-side)</span>
+  paginationMode=<span style="color:#FCD34D">"server"</span>
+  rowCount={totalRowCount}
+  onPaginationModelChange={handlePaginationChange}
+  <span style="color:#6EE7B7">// Always small density</span>
+  density=<span style="color:#FCD34D">"compact"</span>
+  <span style="color:#6EE7B7">// Disable row count estimate — always show exact count</span>
+  rowCountMode=<span style="color:#FCD34D">"exact"</span>
+/&gt;</pre>
+        </div>
+
+        <div class="rule"><strong>Default page size is 25 across all modules.</strong> Never let individual developers decide — inconsistent defaults break user expectations when navigating between modules.</div>
+        <div class="rule rule-warn"><strong>Always use server-side pagination</strong> for Tubestream data. Client-side pagination (loading all rows then paginating in the browser) is only acceptable for lists with a known hard cap under ~200 rows.</div>      
       </section>
 
       <!-- ================================ -->
@@ -1534,38 +1491,36 @@
           </div>
         </div>
         <div class="rule rule-warn"><strong>Do not place Cancel directly adjacent to Submit.</strong> Add visual separation to prevent accidental destructive clicks.</div>
-        <div class="rule"><strong>"Do It Later"</strong> (in the Set Due Date modal) is a correct example — a Text Button for a "skip" action. This pattern is already correct in the current system.</div>
-
         <h3>Validation Timing</h3>
         <p>When and how errors appear is as important as what they say. Tubestream uses a <strong>hybrid approach</strong> — not purely on-submit, not purely live.</p>
 
         <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden;margin-bottom:16px">
-          <div style="display:grid;grid-template-columns:120px 1fr 1fr 80px;border-bottom:2px solid var(--ts-gray-200)">
+          <div style="display:grid;grid-template-columns:120px 1fr 1fr 120px;border-bottom:2px solid var(--ts-gray-200)">
             <div style="padding:10px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600);background:var(--ts-gray-50)">Timing</div>
             <div style="padding:10px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600);background:var(--ts-gray-50)">When it fires</div>
             <div style="padding:10px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600);background:var(--ts-gray-50)">Use for</div>
             <div style="padding:10px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-600);background:var(--ts-gray-50)">Tubestream</div>
           </div>
-          <div style="display:grid;grid-template-columns:120px 1fr 1fr 80px;border-bottom:1px solid var(--ts-gray-100);align-items:start">
-            <div style="padding:10px 14px;font-size:12px;font-weight:600;color:var(--ts-gray-700);border-right:1px solid var(--ts-gray-100)">On blur</div>
+          <div style="display:grid;grid-template-columns:120px 1fr 1fr 120px;border-bottom:1px solid var(--ts-gray-100);align-items:start">
+            <div style="padding:10px 14px;font-size:12px;font-weight:600;color:var(--ts-gray-700)">On blur</div>
             <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">After user leaves the field</div>
             <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">Format validation — lot number format, date range, numeric range</div>
             <div style="padding:10px 14px;font-size:12px;font-weight:600;color:var(--ts-green)">✓ Use</div>
           </div>
-          <div style="display:grid;grid-template-columns:120px 1fr 1fr 80px;border-bottom:1px solid var(--ts-gray-100);align-items:start">
-            <div style="padding:10px 14px;font-size:12px;font-weight:600;color:var(--ts-gray-700);border-right:1px solid var(--ts-gray-100)">On submit</div>
+          <div style="display:grid;grid-template-columns:120px 1fr 1fr 120px;border-bottom:1px solid var(--ts-gray-100);align-items:start">
+            <div style="padding:10px 14px;font-size:12px;font-weight:600;color:var(--ts-gray-700)">On submit</div>
             <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">When user clicks submit</div>
             <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">Required field check — catches anything missed before sending to server</div>
             <div style="padding:10px 14px;font-size:12px;font-weight:600;color:var(--ts-green)">✓ Use</div>
           </div>
-          <div style="display:grid;grid-template-columns:120px 1fr 1fr 80px;border-bottom:1px solid var(--ts-gray-100);align-items:start">
-            <div style="padding:10px 14px;font-size:12px;font-weight:600;color:var(--ts-gray-700);border-right:1px solid var(--ts-gray-100)">Live / onChange</div>
+          <div style="display:grid;grid-template-columns:120px 1fr 1fr 120px;border-bottom:1px solid var(--ts-gray-100);align-items:start">
+            <div style="padding:10px 14px;font-size:12px;font-weight:600;color:var(--ts-gray-700)">Live / onChange</div>
             <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">Every keystroke</div>
             <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">Character count limits, real-time search, password strength</div>
             <div style="padding:10px 14px;font-size:12px;font-weight:600;color:var(--ts-orange)">Limited</div>
           </div>
-          <div style="display:grid;grid-template-columns:120px 1fr 1fr 80px;align-items:start">
-            <div style="padding:10px 14px;font-size:12px;font-weight:600;color:var(--ts-gray-700);border-right:1px solid var(--ts-gray-100)">After submit attempt</div>
+          <div style="display:grid;grid-template-columns:120px 1fr 1fr 120px;align-items:start">
+            <div style="padding:10px 14px;font-size:12px;font-weight:600;color:var(--ts-gray-700)">After submit attempt</div>
             <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">Once submit is clicked, errors then clear on fix</div>
             <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">Best UX for long forms — do not show errors before user has had a chance to fill the form</div>
             <div style="padding:10px 14px;font-size:12px;font-weight:600;color:var(--ts-green)">✓ Default</div>
@@ -1601,31 +1556,6 @@
 };</pre>
         </div>
 
-        <h3>MUI DataGrid — Pagination Standard</h3>
-        <p>For pages using MUI DataGrid, pagination is built-in. Standardize the configuration across all modules as follows:</p>
-
-        <div class="card" style="background:var(--ts-gray-900);border-color:var(--ts-gray-700)">
-          <pre style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#93C5FD;line-height:1.9;margin:0;white-space:pre-wrap"><span style="color:#6EE7B7">// Standard DataGrid pagination config for all Tubestream list pages</span>
-&lt;DataGrid
-  rows={rows}
-  columns={columns}
-  <span style="color:#6EE7B7">// Default 25 rows — enough to scan without overwhelming</span>
-  initialState={{ pagination: { paginationModel: { pageSize: 25 } } }}
-  <span style="color:#6EE7B7">// Consistent options across all modules</span>
-  pageSizeOptions={[25, 50, 100]}
-  <span style="color:#6EE7B7">// Always server-side for Tubestream (data is too large for client-side)</span>
-  paginationMode=<span style="color:#FCD34D">"server"</span>
-  rowCount={totalRowCount}
-  onPaginationModelChange={handlePaginationChange}
-  <span style="color:#6EE7B7">// Always small density</span>
-  density=<span style="color:#FCD34D">"compact"</span>
-  <span style="color:#6EE7B7">// Disable row count estimate — always show exact count</span>
-  rowCountMode=<span style="color:#FCD34D">"exact"</span>
-/&gt;</pre>
-        </div>
-
-        <div class="rule"><strong>Default page size is 25 across all modules.</strong> Never let individual developers decide — inconsistent defaults break user expectations when navigating between modules.</div>
-        <div class="rule rule-warn"><strong>Always use server-side pagination</strong> for Tubestream data. Client-side pagination (loading all rows then paginating in the browser) is only acceptable for lists with a known hard cap under ~200 rows.</div>
       </section>
 
       <!-- ================================ -->
