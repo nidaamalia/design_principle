@@ -2530,8 +2530,8 @@
             <div style="padding:12px 16px;font-size:13px;color:var(--ts-gray-600)">Inspection list, Stock on Hand, KPI Reports</div>
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr 1fr">
-            <div style="padding:12px 16px;font-size:13px;border-right:1px solid var(--ts-gray-100)"><strong>Filter Sidebar</strong><br><span style="font-size:12px;color:var(--ts-gray-500)">8+ filters</span></div>
-            <div style="padding:12px 16px;font-size:13px;border-right:1px solid var(--ts-gray-100)">Power-user views where users frequently refine multiple dimensions at once. Persistent, visible alongside the list.</div>
+            <div style="padding:12px 16px;font-size:13px;border-right:1px solid var(--ts-gray-100)"><strong>Filter Drawer (Advanced)</strong><br><span style="font-size:12px;color:var(--ts-gray-500)">8+ filters</span></div>
+            <div style="padding:12px 16px;font-size:13px;border-right:1px solid var(--ts-gray-100)">Power-user views with many filter dimensions. Drawer opens on click. Preserves list space when closed.</div>
             <div style="padding:12px 16px;font-size:13px;color:var(--ts-gray-600)">Open Order (Location, Lot, Status, Vessel, Date range, Customer, PO type…)</div>
           </div>
         </div>
@@ -2720,63 +2720,103 @@
         <div class="rule"><strong>Each chip is individually dismissible</strong> (× button). Clicking × removes that single filter and immediately refreshes the list.</div>
         <div class="rule"><strong>"Apply Filters" vs. live filtering:</strong> For heavy server-side queries (like Inspection or Stock on Hand), require an explicit "Apply" button to avoid hammering the server on every keystroke. For simple client-side lists, live filter is acceptable.</div>
 
-        <!-- PATTERN 3: FILTER SIDEBAR -->
-        <h3>Pattern 3 — Filter Sidebar (8+ filters)</h3>
-        <p>A persistent right-side sticky panel alongside the list. Best for power-users who switch filter combinations frequently. The panel remains sticky as users scroll, and can be collapsed to give more space to the list when not needed.</p>
+        <!-- PATTERN 3: ADVANCED FILTER DRAWER -->
+        <h3>Pattern 3 — Advanced Filter Drawer (8+ filters)</h3>
+        <p>For power-user views with 8+ filter dimensions, use a wide drawer that opens on click. The drawer can be positioned as a side panel (240–280px wide) or full-width modal, depending on screen space. This preserves list width when closed while providing ample space for complex filters when open.</p>
+
+        <p>Drawer slides in from the right, overlaying the list. Width: 240–280px. Users can still see the filtered list behind it.</p>
 
         <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden;margin-bottom:8px">
-          <div style="display:flex;min-height:320px">
-            <!-- List area (left side) -->
-            <div style="flex:1;padding:12px 16px;border-right:1px solid var(--ts-gray-200)">
-              <div style="font-size:11px;color:var(--ts-gray-400);margin-bottom:10px">Showing 24 of 148 items · 1 filter active</div>
-              <div style="height:28px;background:var(--ts-gray-100);border-radius:4px;margin-bottom:6px"></div>
-              <div style="height:28px;background:var(--ts-gray-100);border-radius:4px;margin-bottom:6px"></div>
-              <div style="height:28px;background:var(--ts-gray-100);border-radius:4px;margin-bottom:6px"></div>
-              <div style="height:28px;background:var(--ts-gray-100);border-radius:4px"></div>
+          <!-- Toolbar with Filter button -->
+          <div style="display:flex;gap:8px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--ts-gray-200)">
+            <div style="position:relative;flex:1">
+              <input style="width:100%;border:1px solid var(--ts-gray-200);border-radius:var(--radius);padding:7px 10px 7px 30px;font-size:13px;font-family:inherit;" placeholder="Search…">
+              <span style="position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--ts-gray-400)">🔍</span>
             </div>
-            <!-- Filter sidebar panel (right side - sticky) -->
-            <div style="width:220px;border-left:1px solid var(--ts-gray-200);flex-shrink:0;background:var(--ts-gray-50);position:sticky;top:0;height:fit-content">
-              <div style="padding:12px 14px;border-bottom:1px solid var(--ts-gray-200);display:flex;align-items:center;justify-content:space-between">
-                <span style="font-size:12px;font-weight:600;color:var(--ts-gray-700)">Filters</span>
-                <button class="btn btn-text" style="font-size:11px;padding:2px 6px;color:var(--ts-gray-400)">Clear all</button>
+            <!-- Filter button with badge - opens drawer -->
+            <button class="btn btn-outlined" style="position:relative;display:inline-flex;align-items:center;gap:6px;cursor:pointer" onclick="document.getElementById('advancedFilterDrawer').style.display = document.getElementById('advancedFilterDrawer').style.display === 'none' ? 'block' : 'none'">
+              ⚙ Filter
+              <span style="background:var(--ts-blue);color:white;font-size:10px;font-weight:700;border-radius:10px;padding:0 5px;line-height:16px">5</span>
+            </button>
+            <button class="btn btn-outlined">Export</button>
+            <button class="btn btn-contained">+ New Order</button>
+          </div>
+          <!-- Active filter chips -->
+          <div style="display:flex;gap:6px;align-items:center;padding:8px 16px;background:var(--ts-blue-light);flex-wrap:wrap">
+            <span style="font-size:11px;color:var(--ts-blue);font-weight:500">Active filters:</span>
+            <span style="background:white;border:1px solid #90CAF9;color:var(--ts-blue);font-size:12px;padding:2px 10px;border-radius:100px;display:inline-flex;align-items:center;gap:5px">Location: Yard A <span style="cursor:pointer;font-size:14px;line-height:1">×</span></span>
+            <span style="background:white;border:1px solid #90CAF9;color:var(--ts-blue);font-size:12px;padding:2px 10px;border-radius:100px;display:inline-flex;align-items:center;gap:5px">Status: Open <span style="cursor:pointer;font-size:14px;line-height:1">×</span></span>
+            <button class="btn btn-text" style="font-size:12px;color:var(--ts-gray-500);padding:2px 6px">Clear all</button>
+          </div>
+          <!-- List area -->
+          <div style="padding:12px 16px;background:white;min-height:480px;position:relative">
+            <div style="font-size:11px;color:var(--ts-gray-400);margin-bottom:10px">Showing 24 of 148 items</div>
+            <div style="height:28px;background:var(--ts-gray-100);border-radius:4px;margin-bottom:6px"></div>
+            <div style="height:28px;background:var(--ts-gray-100);border-radius:4px;margin-bottom:6px"></div>
+            <div style="height:28px;background:var(--ts-gray-100);border-radius:4px;margin-bottom:6px"></div>
+            <div style="height:28px;background:var(--ts-gray-100);border-radius:4px;margin-bottom:6px"></div>
+            <div style="height:28px;background:var(--ts-gray-100);border-radius:4px;margin-bottom:6px"></div>
+            <div style="height:28px;background:var(--ts-gray-100);border-radius:4px;margin-bottom:6px"></div>
+            <div style="height:28px;background:var(--ts-gray-100);border-radius:4px;margin-bottom:6px"></div>
+            <div style="height:28px;background:var(--ts-gray-100);border-radius:4px;margin-bottom:6px"></div>
+            <div style="height:28px;background:var(--ts-gray-100);border-radius:4px;margin-bottom:6px"></div>
+            <div style="height:28px;background:var(--ts-gray-100);border-radius:4px"></div>
+            
+            <!-- Side drawer (hidden by default) -->
+            <div id="advancedFilterDrawer" style="display:none;position:absolute;top:0;right:0;bottom:0;width:260px;background:white;border-left:1px solid var(--ts-gray-200);box-shadow:0 4px 12px rgba(0,0,0,0.15);z-index:100;overflow-y:auto">
+              <div style="padding:12px 14px;border-bottom:1px solid var(--ts-gray-200);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:white">
+                <span style="font-size:12px;font-weight:600;color:var(--ts-gray-700)">Advanced Filters</span>
+                <button class="btn btn-text" style="font-size:14px;padding:2px 6px;color:var(--ts-gray-400);cursor:pointer" onclick="document.getElementById('advancedFilterDrawer').style.display = 'none'">✕</button>
               </div>
               <!-- Filter groups -->
-              <div style="padding:10px 14px;border-bottom:1px solid var(--ts-gray-100)">
-                <div style="font-size:11px;font-weight:600;color:var(--ts-gray-500);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">Ownership</div>
-                <div style="display:flex;flex-direction:column;gap:4px">
-                  <label style="display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ts-gray-700);cursor:pointer"><input type="checkbox" checked style="accent-color:var(--ts-blue)"> MITO Singapore</label>
-                  <label style="display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ts-gray-700);cursor:pointer"><input type="checkbox" style="accent-color:var(--ts-blue)"> MITO Jakarta</label>
-                  <label style="display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ts-gray-700);cursor:pointer"><input type="checkbox" style="accent-color:var(--ts-blue)"> MITO Australia</label>
-                </div>
+              <div style="padding:12px 14px;border-bottom:1px solid var(--ts-gray-100)">
+                <div style="font-size:11px;font-weight:600;color:var(--ts-gray-500);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">Location</div>
+                <select style="width:100%;border:1px solid var(--ts-gray-200);border-radius:4px;padding:6px 8px;font-size:12px;font-family:inherit;background:white"><option selected>Yard A</option><option>Yard B</option><option>Yard C</option><option>All</option></select>
               </div>
-              <div style="padding:10px 14px;border-bottom:1px solid var(--ts-gray-100)">
-                <div style="font-size:11px;font-weight:600;color:var(--ts-gray-500);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">Location</div>
-                <select style="width:100%;border:1px solid var(--ts-gray-200);border-radius:4px;padding:5px 8px;font-size:12px;font-family:inherit;background:white"><option>All Yards & Ports</option></select>
+              <div style="padding:12px 14px;border-bottom:1px solid var(--ts-gray-100)">
+                <div style="font-size:11px;font-weight:600;color:var(--ts-gray-500);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">Lot Number</div>
+                <input type="text" placeholder="Search lot…" style="width:100%;border:1px solid var(--ts-gray-200);border-radius:4px;padding:6px 8px;font-size:12px;font-family:inherit;background:white">
               </div>
-              <div style="padding:10px 14px;border-bottom:1px solid var(--ts-gray-100)">
-                <div style="font-size:11px;font-weight:600;color:var(--ts-gray-500);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">Lot Number</div>
-                <input type="text" placeholder="Search lot…" style="width:100%;border:1px solid var(--ts-gray-200);border-radius:4px;padding:5px 8px;font-size:12px;font-family:inherit;background:white">
+              <div style="padding:12px 14px;border-bottom:1px solid var(--ts-gray-100)">
+                <div style="font-size:11px;font-weight:600;color:var(--ts-gray-500);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">Status</div>
+                <select style="width:100%;border:1px solid var(--ts-gray-200);border-radius:4px;padding:6px 8px;font-size:12px;font-family:inherit;background:white"><option>All</option><option selected>Open</option><option>In Progress</option><option>Completed</option></select>
               </div>
-              <div style="padding:10px 14px;border-bottom:1px solid var(--ts-gray-100)">
-                <div style="font-size:11px;font-weight:600;color:var(--ts-gray-500);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">Date Range</div>
-                <input type="text" placeholder="From – To" style="width:100%;border:1px solid var(--ts-gray-200);border-radius:4px;padding:5px 8px;font-size:12px;font-family:inherit;background:white">
+              <div style="padding:12px 14px;border-bottom:1px solid var(--ts-gray-100)">
+                <div style="font-size:11px;font-weight:600;color:var(--ts-gray-500);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">Vessel</div>
+                <input type="text" placeholder="Vessel name…" style="width:100%;border:1px solid var(--ts-gray-200);border-radius:4px;padding:6px 8px;font-size:12px;font-family:inherit;background:white">
               </div>
-              <div style="padding:10px 14px">
-                <button class="btn btn-contained" style="width:100%;justify-content:center;font-size:12px">Apply</button>
+              <div style="padding:12px 14px;border-bottom:1px solid var(--ts-gray-100)">
+                <div style="font-size:11px;font-weight:600;color:var(--ts-gray-500);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">Date Range</div>
+                <input type="text" placeholder="From – To" style="width:100%;border:1px solid var(--ts-gray-200);border-radius:4px;padding:6px 8px;font-size:12px;font-family:inherit;background:white">
+              </div>
+              <div style="padding:12px 14px;border-bottom:1px solid var(--ts-gray-100)">
+                <div style="font-size:11px;font-weight:600;color:var(--ts-gray-500);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">Customer</div>
+                <select style="width:100%;border:1px solid var(--ts-gray-200);border-radius:4px;padding:6px 8px;font-size:12px;font-family:inherit;background:white"><option>All</option><option>MITO Singapore</option><option>MITO Jakarta</option></select>
+              </div>
+              <div style="padding:12px 14px;border-bottom:1px solid var(--ts-gray-100)">
+                <div style="font-size:11px;font-weight:600;color:var(--ts-gray-500);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">PO Type</div>
+                <select style="width:100%;border:1px solid var(--ts-gray-200);border-radius:4px;padding:6px 8px;font-size:12px;font-family:inherit;background:white"><option>All</option><option>Standard</option><option>Expedited</option><option>Blanket</option></select>
+              </div>
+              <div style="padding:12px 14px;display:flex;gap:8px">
+                <button class="btn btn-text" style="flex:1;justify-content:center;font-size:12px">Reset</button>
+                <button class="btn btn-contained" style="flex:1;justify-content:center;font-size:12px">Apply</button>
               </div>
             </div>
           </div>
         </div>
-        <div style="font-size:12px;color:var(--ts-gray-400);margin-bottom:24px">Filter sidebar width: 200–240px. Always show result count ("Showing X of Y") in the list header when filters are active.</div>
 
-        <div class="rule"><strong>Show a result count</strong> ("Showing 24 of 148") whenever any filter is active. This confirms the filter worked and helps users calibrate their criteria.</div>
-        <div class="rule"><strong>Filter sidebar can be collapsible</strong> via a toggle arrow — useful when users need full list width after setting their filters.</div>
-        <div class="rule rule-warn"><strong>Don't use a filter sidebar for simple lists.</strong> It adds visual complexity and wastes horizontal space. Only use when 8+ filter dimensions genuinely need to coexist.</div>
+        <div style="font-size:12px;color:var(--ts-gray-400);margin-bottom:24px">Drawer width: 240–280px. Opens on Filter button click, closes on outside click or close button (✕). Active filters always visible as chips.</div>
+
+        <div class="rule"><strong>Drawer opens on click</strong> and overlays the list without pushing content. Users can still see filtered results behind the drawer.</div>
+        <div class="rule"><strong>Show active filter chips even when drawer is closed.</strong> Users must always know what filters are applied without reopening the drawer.</div>
+        <div class="rule"><strong>Each chip is individually dismissible</strong> (× button). Clicking × removes that single filter and immediately refreshes the list.</div>
+        <div class="rule rule-warn"><strong>Never use a persistent sticky sidebar for 8+ filters.</strong> It wastes horizontal space and forces users to see filters they don't need. Drawer on click is more flexible and space-efficient.</div>
 
         <h3>Universal Filter Rules</h3>
         <div class="rule"><strong>Never reset filters on page refresh.</strong> Persist the last-used filter state in URL params or session so users don't lose their context when returning.</div>
         <div class="rule"><strong>Empty state must explain why.</strong> If filters return zero results, say "No results for these filters" and offer a "Clear filters" shortcut — never show a generic empty list.</div>
         <div class="rule rule-warn"><strong>Date range = always two fields (From / To)</strong>, not a single "period" text input. Single-field date ranges are ambiguous and error-prone.</div>
+
       </section>
 
       <!-- ================================ -->
@@ -4933,7 +4973,7 @@
         <div class="section-header">
           <div class="section-number">21</div>
           <h2>Export</h2>
-          <span class="desc">Entry Point · Generate vs Export · Export Scope · Format Selection · File Naming · Feedback</span>
+          <span class="desc">Direct Export · Indirect Export · Export Scope · Format Selection · File Naming · Feedback</span>
         </div>
 
         <p>Export is a frequently used action but rarely designed correctly. Two most common problems: (1) users don't know <strong>what data they will export</strong> before clicking, (2) exported file names are not informative making them difficult to find later. This section covers all aspects.</p>
