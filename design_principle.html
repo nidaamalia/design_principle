@@ -2722,8 +2722,6 @@
 
         <!-- PATTERN 3: ADVANCED FILTER DRAWER -->
         <h3>Pattern 3 — Advanced Filter Drawer (8+ filters)</h3>
-        <p>For power-user views with 8+ filter dimensions, use a wide drawer that opens on click. The drawer can be positioned as a side panel (240–280px wide) or full-width modal, depending on screen space. This preserves list width when closed while providing ample space for complex filters when open.</p>
-
         <p>Drawer slides in from the right, overlaying the list. Width: 240–280px. Users can still see the filtered list behind it.</p>
 
         <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden;margin-bottom:8px">
@@ -2762,8 +2760,8 @@
             <div style="height:28px;background:var(--ts-gray-100);border-radius:4px;margin-bottom:6px"></div>
             <div style="height:28px;background:var(--ts-gray-100);border-radius:4px"></div>
             
-            <!-- Side drawer (hidden by default) -->
-            <div id="advancedFilterDrawer" style="display:none;position:absolute;top:0;right:0;bottom:0;width:260px;background:white;border-left:1px solid var(--ts-gray-200);box-shadow:0 4px 12px rgba(0,0,0,0.15);z-index:100;overflow-y:auto">
+            <!-- Side drawer (visible by default) -->
+            <div id="advancedFilterDrawer" style="display:block;position:absolute;top:0;right:0;bottom:0;width:260px;background:white;border-left:1px solid var(--ts-gray-200);box-shadow:0 4px 12px rgba(0,0,0,0.15);z-index:100;overflow-y:auto">
               <div style="padding:12px 14px;border-bottom:1px solid var(--ts-gray-200);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:white">
                 <span style="font-size:12px;font-weight:600;color:var(--ts-gray-700)">Advanced Filters</span>
                 <button class="btn btn-text" style="font-size:14px;padding:2px 6px;color:var(--ts-gray-400);cursor:pointer" onclick="document.getElementById('advancedFilterDrawer').style.display = 'none'">✕</button>
