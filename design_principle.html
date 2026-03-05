@@ -8,8 +8,8 @@
   @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
   :root {
-    --ts-blue: #0D47A1;
-    --ts-blue-mid: #1565C0;
+    --ts-blue: #087E72;
+    --ts-blue-mid: #06695F;
     --ts-blue-light: #E3F2FD;
     --ts-teal: #00796B;
     --ts-teal-light: #E0F2F1;
@@ -298,7 +298,7 @@
   }
   .btn-contained:hover { background: var(--ts-blue-mid); }
   .btn-contained.danger { background: var(--ts-red); }
-  .btn-contained.success { background: var(--ts-green); }
+  .btn-contained.success { background: #087E72; }
 
   .btn-outlined {
     background: transparent;
@@ -659,7 +659,7 @@
     margin-bottom: 16px;
     font-size: 13px;
   }
-  .callout-info { background: var(--ts-blue-light); border: 1px solid #90CAF9; color: var(--ts-blue-mid); }
+  .callout-info { background: #E0F2F1; border: 1px solid #5DBFB8; color: #087E72; }
   .callout-warn { background: var(--ts-orange-light); border: 1px solid #FFCC80; color: var(--ts-orange); }
   .callout-success { background: var(--ts-green-light); border: 1px solid #A5D6A7; color: var(--ts-green); }
 
@@ -782,7 +782,7 @@
         </div>
       </div>
       
-      <div class="callout callout-info" style="background:#FFF8E1;border-color:#FFB300">
+      <div class="callout callout-info" style="background:#FFF8E1;border-color:#FFB300;color:#3c3c3c">
         <span>⚠️</span>
         <div><strong>Important:</strong> This document provides structural and pattern guidance for UI/UX consistency. However, all design decisions—including color selection, typography choices, spacing, and component variations—remain the responsibility of the UI/UX designer. These guidelines inform and support design decisions but do not replace professional design judgment.</div>
       </div>
@@ -896,8 +896,8 @@
         </div>
 
         <h4>Color Usage Guidelines</h4>
-        <div class="rule"><strong>Primary Action (Neutral):</strong> Use Dark Blue (#152C3E) for primary CTAs and functional actions like "+ New NCR", "Create", "Submit".</div>
-        <div class="rule"><strong>Navigation & Structure:</strong> Use Dark Blue (#152C3E) for navigation elements, headers, and primary text.</div>
+        <div class="rule"><strong>Primary Action (Neutral):</strong> Use Green (#087E72) for primary CTAs and functional actions like "+ New NCR", "Create", "Submit".</div>
+        <div class="rule"><strong>Navigation & Structure:</strong> Use Green (#087E72) for navigation elements, headers, and primary text.</div>
         <div class="rule rule-warn"><strong>Never use brand colors for error or warning states.</strong> Use semantic red, orange, and yellow instead.</div>
 
       </section>
@@ -1072,9 +1072,9 @@
           <div>
             <strong>Decision Tree:</strong> Ask yourself in this order:<br>
             1. Does this action have a clear positive/negative outcome? → Use <strong>Semantic Color</strong> (red/green/orange)<br>
-            2. Is this a neutral, functional operation? → Use <strong>Brand Primary (Blue)</strong><br>
+            2. Is this a neutral, functional operation? → Use <strong>Brand Primary (Green)</strong><br>
             <br>
-            <strong>Golden Rule:</strong> If you're unsure, default to Brand Primary (Blue). Never sacrifice semantic clarity for brand consistency.
+            <strong>Golden Rule:</strong> If you're unsure, default to Brand Primary (Green). Never sacrifice semantic clarity for brand consistency.
           </div>
         </div>
 
@@ -1086,39 +1086,17 @@
           <button class="btn btn-outlined" style="border-color:#FF9800;color:#FF9800">Warning Action</button>
         </div>
         <div class="demo-row" style="margin-bottom:16px">
-          <span class="demo-label">Brand Primary (Blue)</span>
+          <span class="demo-label">Brand Primary (Green)</span>
           <button class="btn btn-contained">+ New Transfer</button>
           <button class="btn btn-outlined">Export XLSX</button>
           <button class="btn btn-text">View Report</button>
         </div>
 
-        <h4>MUI v7 Color Implementation</h4>
-        <div class="card" style="background:var(--ts-gray-900);border-color:var(--ts-gray-700)">
-          <div style="font-size:11px;font-weight:600;color:var(--ts-gray-400);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Brand color examples</div>
-          <pre style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#93C5FD;line-height:1.7;margin:0;white-space:pre-wrap"><span style="color:#6EE7B7">// Semantic colors always take priority</span>
-&lt;Button variant=<span style="color:#FCD34D">"contained"</span> color=<span style="color:#FCD34D">"error"</span>&gt;Delete NCR&lt;/Button&gt;
-&lt;Button variant=<span style="color:#FCD34D">"contained"</span> color=<span style="color:#FCD34D">"success"</span>&gt;Approve Request&lt;/Button&gt;
-&lt;Button variant=<span style="color:#FCD34D">"contained"</span> color=<span style="color:#FCD34D">"warning"</span>&gt;Review Required&lt;/Button&gt;
-
-<span style="color:#6EE7B7">// Brand primary (default blue) for neutral actions</span>
-&lt;Button variant=<span style="color:#FCD34D">"contained"</span>&gt;+ New Transfer&lt;/Button&gt;
-&lt;Button variant=<span style="color:#FCD34D">"outlined"</span>&gt;Export XLSX&lt;/Button&gt;
-
-<span style="color:#6EE7B7">// Theme customization for brand colors</span>
-<span style="color:#F9A8D4">const</span> theme = createTheme({
-  palette: {
-    primary: { main: <span style="color:#FCD34D">'#1976D2'</span> },     <span style="color:#6EE7B7">// Brand blue</span>
-    success: { main: <span style="color:#FCD34D">'#2E7D32'</span> },     <span style="color:#6EE7B7">// Semantic green</span>
-    error: { main: <span style="color:#FCD34D">'#C62828'</span> },       <span style="color:#6EE7B7">// Semantic red</span>
-    warning: { main: <span style="color:#FCD34D">'#E65100'</span> },     <span style="color:#6EE7B7">// Semantic orange</span>
-  }
-});</pre>
-        </div>
 
         <div class="rule"><strong>Semantic colors always win</strong> — Never use brand colors for delete, approve, reject, or warning actions. User safety depends on consistent color meaning.</div>
         <div class="rule"><strong>One primary CTA per context</strong> — If you have both a semantic action (Approve) and a brand action (+ New) in the same area, the semantic action gets contained styling.</div>
         <div class="rule rule-warn"><strong>Do not mix brand variants in the same button group</strong> — Stick to one brand color per action group to avoid visual confusion.</div>
-        <div class="rule rule-danger"><strong>Never override semantic colors with brand colors</strong> — A red "Delete" button should never be blue just for brand consistency.</div>
+        <div class="rule rule-danger"><strong>Never override semantic colors with brand colors</strong>.</div>
       </section>
 
       <!-- ================================ -->
@@ -1311,7 +1289,7 @@
           <div style="display:flex;flex-direction:column;gap:12px;font-size:13px">
             <div>
               <strong>Internal link (in-app navigation):</strong><br>
-              <a class="ts-link" href="#">NCR-2025-001</a> &nbsp;—&nbsp; Blue color <code>#1565C0</code>, no underline by default, underline on hover.
+              <a class="ts-link" href="#">NCR-2025-001</a> &nbsp;—&nbsp; Green color <code>#087E72</code>, no underline by default, underline on hover.
             </div>
             <div>
               <strong>CTA link (dashboard shortcut navigation):</strong><br>
@@ -3053,7 +3031,7 @@
             <div style="padding:12px 14px;font-size:12px;font-weight:600;color:var(--ts-gray-700);border-right:1px solid var(--ts-gray-100)">🔗 Navigate</div>
             <div style="padding:12px 14px;border-right:1px solid var(--ts-gray-100)">
               <a href="#" style="color:var(--ts-blue);text-decoration:none;font-size:13px;font-weight:500;border-bottom:1px solid #90CAF9">NCR-2025-001</a>
-              <div style="font-size:11px;color:var(--ts-gray-400);margin-top:3px">Blue text · underline on hover · font-weight 500</div>
+              <div style="font-size:11px;color:var(--ts-gray-400);margin-top:3px">Green text · underline on hover · font-weight 500</div>
             </div>
             <div style="padding:12px 14px;font-size:12px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)"><code>pointer</code></div>
             <div style="padding:12px 14px;font-size:12px;color:var(--ts-gray-600)">Full page navigation to detail / related page</div>
@@ -3130,7 +3108,7 @@
                 <div style="font-size:11px;color:var(--ts-gray-400);margin-bottom:4px">Navigates to Lot detail</div>
                 <a href="#" style="color:var(--ts-blue);font-size:13px;font-weight:500;text-decoration:none;border-bottom:1px solid #90CAF9">LOT-2025-0042</a>
               </div>
-              <div style="font-size:12px;color:var(--ts-gray-600)">Blue + light underline. Click = full navigation to Lot Info page.</div>
+              <div style="font-size:12px;color:var(--ts-gray-600)">Green + light underline. Click = full navigation to Lot Info page.</div>
             </div>
 
             <div style="display:flex;align-items:flex-start;gap:16px">
@@ -3147,7 +3125,7 @@
                 <div style="font-size:11px;color:var(--ts-gray-400);margin-bottom:4px">Opens a dialog with more info</div>
                 <button style="background:none;border:none;color:var(--ts-blue);font-size:13px;font-weight:500;cursor:pointer;padding:0;text-decoration:underline;text-underline-offset:3px">LOT-2025-0042 ↗</button>
               </div>
-              <div style="font-size:12px;color:var(--ts-gray-600)">Blue + solid underline + ↗ suffix. Click = opens modal/drawer with extended info. Does not navigate away.</div>
+              <div style="font-size:12px;color:var(--ts-gray-600)">Green + solid underline + ↗ suffix. Click = opens modal/drawer with extended info. Does not navigate away.</div>
             </div>
 
             <div style="display:flex;align-items:flex-start;gap:16px">
@@ -3155,12 +3133,12 @@
                 <div style="font-size:11px;color:var(--ts-gray-400);margin-bottom:4px">Inline editable value</div>
                 <span style="font-size:13px;color:var(--ts-gray-700);padding:3px 6px;border:1px dashed var(--ts-gray-300);border-radius:4px;cursor:text;display:inline-flex;align-items:center;gap:5px;transition:all 0.2s ease" onmouseover="this.style.borderColor='var(--ts-blue)';this.querySelector('svg').style.color='var(--ts-blue)';this.querySelector('svg').style.opacity='1'" onmouseout="this.style.borderColor='var(--ts-gray-300)';this.querySelector('svg').style.color='var(--ts-gray-300)';this.querySelector('svg').style.opacity='0.6'">LOT-2025-0042 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ts-gray-300);opacity:0.6;transition:all 0.2s ease;flex-shrink:0"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></span>
               </div>
-              <div style="font-size:12px;color:var(--ts-gray-600)">Plain text + dashed border box + pencil icon. Hover = border becomes solid blue + icon brightens. Click = activates input.</div>
+              <div style="font-size:12px;color:var(--ts-gray-600)">Plain text + dashed border box + pencil icon. Hover = border becomes solid green + icon brightens. Click = activates input.</div>
             </div>
           </div>
         </div>
 
-        <div class="rule"><strong>Dashed underline = informational hover only</strong> (no click-through). Solid underline = clickable link. No underline + blue = navigation link (underline reveals on hover).</div>
+        <div class="rule"><strong>Dashed underline = informational hover only</strong> (no click-through). Solid underline = clickable link. No underline + green = navigation link (underline reveals on hover).</div>
         <div class="rule"><strong>↗ suffix = opens overlay/dialog</strong> (user stays on current page). Use it consistently whenever a text link opens a modal instead of navigating away.</div>
         <div class="rule rule-warn"><strong>Never make plain gray body text secretly clickable</strong> without any visual cue. This is the #1 discoverability failure in Tubestream. If it's clickable, it must look clickable.</div>
 
@@ -3186,7 +3164,7 @@
             <div style="padding:12px 14px;font-size:12px;font-weight:600;color:var(--ts-gray-700);border-right:1px solid var(--ts-gray-100)">Hover</div>
             <div style="padding:12px 14px;display:flex;align-items:center;gap:12px">
               <span style="font-size:13px;color:var(--ts-gray-700);padding:3px 8px;border:1px dashed var(--ts-blue);border-radius:4px;display:inline-flex;align-items:center;gap:6px;cursor:text">250 units <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ts-blue);opacity:1;flex-shrink:0"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></span>
-              <span style="font-size:11px;color:var(--ts-gray-400)">← dashed border becomes solid blue + pencil icon brightens</span>
+              <span style="font-size:11px;color:var(--ts-gray-400)">← dashed border becomes solid green + pencil icon brightens</span>
             </div>
           </div>
           <!-- Editing state -->
@@ -3294,7 +3272,7 @@
 
             <div style="display:flex;align-items:stretch;gap:0;border:1px solid var(--ts-gray-200);border-bottom:none">
               <div style="width:180px;flex-shrink:0;padding:10px 14px;font-size:13px;color:var(--ts-gray-700);border-right:1px solid var(--ts-gray-200);background:var(--ts-gray-50)">See full detail of this record</div>
-              <div style="flex:1;padding:10px 14px;font-size:13px;color:var(--ts-gray-700)">Row-click (entire row) → navigates to detail page. ID/Name in first column = blue link as fallback.</div>
+              <div style="flex:1;padding:10px 14px;font-size:13px;color:var(--ts-gray-700)">Row-click (entire row) → navigates to detail page. ID/Name in first column = green link as fallback.</div>
             </div>
             <div style="display:flex;align-items:stretch;gap:0;border:1px solid var(--ts-gray-200);border-bottom:none">
               <div style="width:180px;flex-shrink:0;padding:10px 14px;font-size:13px;color:var(--ts-gray-700);border-right:1px solid var(--ts-gray-200);background:var(--ts-gray-50)">See a few extra fields without leaving</div>
@@ -4278,7 +4256,7 @@
         <!-- IDs & References -->
         <h3>IDs & Reference Numbers</h3>
         <div class="rule"><strong>IDs are always monospace font in table cells</strong> — use <code>font-family: 'IBM Plex Mono'</code> or MUI's <code>sx={{ fontFamily: 'monospace' }}</code>. This makes them scannable and distinguishable from regular text at a glance.</div>
-        <div class="rule"><strong>IDs are always a navigation link</strong> (blue, underline on hover). They are the primary identifier of a record — they should always be clickable to open the detail page.</div>
+        <div class="rule"><strong>IDs are always a navigation link</strong> (green, underline on hover). They are the primary identifier of a record — they should always be clickable to open the detail page.</div>
 
         <h3>MUI v7 — Formatting Utilities</h3>
         <div class="card" style="background:var(--ts-gray-900);border-color:var(--ts-gray-700)">
@@ -4348,13 +4326,13 @@
           <div style="border:2px dashed var(--ts-blue);border-radius:var(--radius);padding:28px 20px;text-align:center;background:var(--ts-blue-light)">
             <div style="font-size:28px;margin-bottom:8px">📂</div>
             <div style="font-size:13px;font-weight:600;color:var(--ts-blue)">Drop to attach</div>
-            <div style="font-size:11px;color:var(--ts-blue);margin-top:6px;opacity:.7">Drag-over state — border turns blue, background tints</div>
+            <div style="font-size:11px;color:var(--ts-blue);margin-top:6px;opacity:.7">Drag-over state — border turns green, background tints</div>
           </div>
         </div>
         <p style="font-size:12px;color:var(--ts-gray-400);margin-bottom:20px">Top = default state (hover to preview drag-over). Bottom = active drag-over state.</p>
 
         <div class="rule"><strong>Always show accepted file types and size limits</strong> inside the upload zone — not just in a tooltip or docs page. Users need this before they go hunting for the file.</div>
-        <div class="rule"><strong>Drag-over must give clear visual feedback</strong> — border color changes to blue, background tints. Without this, users don't know the drop target is active.</div>
+        <div class="rule"><strong>Drag-over must give clear visual feedback</strong> — border color changes to green, background tints. Without this, users don't know the drop target is active.</div>
         <div class="rule rule-warn"><strong>Never allow upload to proceed silently for invalid files.</strong> Validate file type and size client-side immediately on selection — before the server round-trip.</div>
 
         <!-- File list -->
@@ -4414,7 +4392,7 @@
 
         <div class="rule"><strong>File icon reflects file type</strong> — PDF 📄, image 🖼, Excel 📊, Word 📝. Don't show a generic paperclip for everything.</div>
         <div class="rule"><strong>Show: file name, type, size, uploader, upload datetime</strong> on every file row. This is audit-relevant in a supply chain context — users need to know who attached what and when.</div>
-        <div class="rule"><strong>File name is a link</strong> — clicking it opens preview (PDF/image) or triggers download (XLSX, DOCX). Use the same blue link style as other navigation links.</div>
+        <div class="rule"><strong>File name is a link</strong> — clicking it opens preview (PDF/image) or triggers download (XLSX, DOCX). Use the same green link style as other navigation links.</div>
         <div class="rule rule-warn"><strong>Delete requires confirmation</strong> for already-saved files. A progress-state cancel (✕) does not need confirmation — it hasn't been saved yet.</div>
 
         <!-- Upload states -->
@@ -4432,7 +4410,7 @@
           </div>
           <div style="display:grid;grid-template-columns:120px 1fr 1fr;border-bottom:1px solid var(--ts-gray-100);align-items:center">
             <div style="padding:10px 14px;font-size:12px;font-weight:600;color:var(--ts-blue);border-right:1px solid var(--ts-gray-100)">Drag over</div>
-            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">Blue dashed border, blue-tint background</div>
+            <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600);border-right:1px solid var(--ts-gray-100)">Green dashed border, green-tint background</div>
             <div style="padding:10px 14px;font-size:13px;color:var(--ts-gray-600)">Ready to accept drop</div>
           </div>
           <div style="display:grid;grid-template-columns:120px 1fr 1fr;border-bottom:1px solid var(--ts-gray-100);align-items:center">
