@@ -1,0 +1,2016 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FileUploadZone — Component Reference</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <style>
+    /* ─── Reset & Base ─────────────────────────────────────────────────────── */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      /* Brand */
+      --blue: #185FA5;
+      --blue-light: #E6F1FB;
+      --blue-mid: #B5D4F4;
+      --blue-dark: #0C447C;
+
+      --red: #A32D2D;
+      --red-light: #FCEBEB;
+      --red-mid: #F7C1C1;
+
+      --green: #3B6D11;
+      --green-light: #EAF3DE;
+      --green-mid: #C0DD97;
+
+      --amber: #854F0B;
+      --amber-light: #FAEEDA;
+      --amber-mid: #FAC775;
+
+      /* Neutrals */
+      --gray-50: #F9FAFB;
+      --gray-100: #F3F4F6;
+      --gray-200: #E5E7EB;
+      --gray-300: #D1D5DB;
+      --gray-400: #9CA3AF;
+      --gray-500: #6B7280;
+      --gray-600: #4B5563;
+      --gray-700: #374151;
+      --gray-900: #111827;
+
+      /* Component */
+      --radius-sm: 6px;
+      --radius: 8px;
+      --radius-lg: 10px;
+      --radius-xl: 12px;
+
+      --font: 'DM Sans', sans-serif;
+      --mono: 'DM Mono', monospace;
+
+      --border: 1px solid var(--gray-200);
+      --shadow: 0 1px 3px rgba(0, 0, 0, .06), 0 1px 2px rgba(0, 0, 0, .04);
+    }
+
+    body {
+      font-family: var(--font);
+      font-size: 14px;
+      color: var(--gray-700);
+      background: #F4F5F7;
+      line-height: 1.6;
+    }
+
+    /* ─── Page Layout ──────────────────────────────────────────────────────── */
+    .page-header {
+      background: white;
+      border-bottom: var(--border);
+      padding: 24px 40px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .page-header h1 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--gray-900);
+      letter-spacing: -.02em;
+    }
+
+    .page-header p {
+      font-size: 13px;
+      color: var(--gray-400);
+      margin-top: 2px;
+    }
+
+    .page-body {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      min-height: calc(100vh - 69px);
+    }
+
+    /* ─── Sidebar ──────────────────────────────────────────────────────────── */
+    .sidebar {
+      background: white;
+      border-right: var(--border);
+      padding: 24px 0;
+      position: sticky;
+      top: 69px;
+      height: calc(100vh - 69px);
+      overflow-y: auto;
+    }
+
+    .sidebar-section {
+      padding: 4px 20px 12px;
+    }
+
+    .sidebar-title {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--gray-400);
+      margin-bottom: 6px;
+    }
+
+    .sidebar a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 8px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      color: var(--gray-600);
+      text-decoration: none;
+      transition: background .12s, color .12s;
+      cursor: pointer;
+    }
+
+    .sidebar a:hover {
+      background: var(--gray-100);
+      color: var(--gray-900);
+    }
+
+    .sidebar a.active {
+      background: var(--blue-light);
+      color: var(--blue-dark);
+      font-weight: 500;
+    }
+
+    .sidebar-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gray-300);
+      flex-shrink: 0;
+    }
+
+    .sidebar a.active .sidebar-dot {
+      background: var(--blue);
+    }
+
+    /* ─── Content ──────────────────────────────────────────────────────────── */
+    .content {
+      padding: 36px 40px;
+      max-width: 900px;
+    }
+
+    .section {
+      margin-bottom: 56px;
+    }
+
+    .section-header {
+      margin-bottom: 20px;
+    }
+
+    .section-header h2 {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--gray-900);
+      letter-spacing: -.02em;
+    }
+
+    .section-header p {
+      font-size: 13px;
+      color: var(--gray-500);
+      margin-top: 4px;
+    }
+
+    /* Demo card */
+    .demo-card {
+      background: white;
+      border: var(--border);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .demo-card-header {
+      padding: 12px 16px;
+      border-bottom: var(--border);
+      background: var(--gray-50);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .demo-card-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      color: var(--gray-400);
+    }
+
+    .demo-card-badge {
+      font-size: 11px;
+      font-family: var(--mono);
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: var(--gray-100);
+      color: var(--gray-500);
+    }
+
+    .demo-card-body {
+      padding: 24px;
+    }
+
+    /* Rule box */
+    .rule-box {
+      padding: 12px 14px;
+      border-radius: var(--radius);
+      font-size: 12.5px;
+      margin-top: 12px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      line-height: 1.5;
+    }
+
+    .rule-box.info {
+      background: var(--blue-light);
+      color: var(--blue-dark);
+      border-left: 3px solid var(--blue);
+    }
+
+    .rule-box.warn {
+      background: var(--amber-light);
+      color: var(--amber);
+      border-left: 3px solid var(--amber);
+    }
+
+    .rule-box.error {
+      background: var(--red-light);
+      color: var(--red);
+      border-left: 3px solid var(--red);
+    }
+
+    .rule-box-icon {
+      flex-shrink: 0;
+      font-size: 13px;
+      margin-top: 1px;
+    }
+
+    /* Divider */
+    .divider {
+      border: none;
+      border-top: var(--border);
+      margin: 32px 0;
+    }
+
+    /* ─── Props Table ──────────────────────────────────────────────────────── */
+    .props-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .props-table th {
+      text-align: left;
+      padding: 8px 12px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      color: var(--gray-400);
+      background: var(--gray-50);
+      border-bottom: var(--border);
+    }
+
+    .props-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--gray-100);
+      vertical-align: top;
+    }
+
+    .props-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .prop-name {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--blue);
+      font-weight: 500;
+    }
+
+    .prop-type {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--gray-500);
+      padding: 1px 6px;
+      background: var(--gray-100);
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    .prop-default {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--gray-400);
+    }
+
+    /* ─── Code Block ───────────────────────────────────────────────────────── */
+    .code-block {
+      background: #1C1E26;
+      border-radius: var(--radius-lg);
+      padding: 18px 20px;
+      font-family: var(--mono);
+      font-size: 12.5px;
+      line-height: 1.8;
+      color: #A9B1D6;
+      overflow-x: auto;
+      margin-top: 12px;
+    }
+
+    .code-block .kw {
+      color: #7AA2F7;
+    }
+
+    .code-block .str {
+      color: #9ECE6A;
+    }
+
+    .code-block .cmt {
+      color: #565f89;
+      font-style: italic;
+    }
+
+    .code-block .val {
+      color: #FF9E64;
+    }
+
+    .code-block .fn {
+      color: #E0AF68;
+    }
+
+
+    /* ═══════════════════════════════════════════════════════════════════════
+   FILE UPLOAD ZONE COMPONENT STYLES
+═══════════════════════════════════════════════════════════════════════ */
+
+    /* ── Drop Zone (Full) ────────────────────────────────────────────────── */
+    .fu-drop-zone {
+      border: 2px dashed var(--gray-300);
+      border-radius: var(--radius-lg);
+      padding: 36px 24px;
+      text-align: center;
+      background: var(--gray-50);
+      cursor: pointer;
+      transition: border-color .15s, background .15s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      user-select: none;
+    }
+
+    .fu-drop-zone:hover:not(.fu-dz-disabled) {
+      border-color: var(--blue);
+      background: var(--blue-light);
+    }
+
+    .fu-drop-zone.fu-dz-dragover {
+      border-color: var(--blue);
+      border-style: solid;
+      background: var(--blue-light);
+    }
+
+    .fu-drop-zone.fu-dz-invalid {
+      border-color: var(--red);
+      background: var(--red-light);
+    }
+
+    .fu-drop-zone.fu-dz-disabled {
+      opacity: .5;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .fu-dz-icon {
+      color: var(--gray-400);
+      margin-bottom: 4px;
+    }
+
+    .fu-dz-label {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gray-700);
+      margin: 0;
+    }
+
+    .fu-dz-or {
+      font-size: 12px;
+      color: var(--gray-400);
+      margin: 0;
+    }
+
+    .fu-dz-limits {
+      font-size: 11px;
+      color: var(--gray-400);
+      margin: 0;
+    }
+
+    .fu-dz-hint {
+      font-size: 11px;
+      color: var(--blue);
+      font-style: italic;
+      margin: 0;
+    }
+
+    .fu-browse-btn {
+      padding: 7px 18px;
+      border: 1px solid var(--gray-300);
+      border-radius: var(--radius-sm);
+      background: white;
+      color: var(--gray-700);
+      font-size: 13px;
+      font-weight: 500;
+      font-family: var(--font);
+      cursor: pointer;
+      transition: border-color .15s, color .15s;
+    }
+
+    .fu-browse-btn:hover:not(:disabled) {
+      border-color: var(--blue);
+      color: var(--blue);
+    }
+
+    .fu-browse-btn:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+
+    /* Zone error inline */
+    .fu-zone-err {
+      margin-top: 8px;
+      padding: 8px 12px;
+      background: var(--red-light);
+      border: 1px solid var(--red-mid);
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      color: var(--red);
+      font-weight: 500;
+      display: none;
+      align-items: center;
+      gap: 6px;
+      width: 100%;
+      text-align: left;
+    }
+
+    .fu-zone-err.visible {
+      display: flex;
+    }
+
+    /* ── File List ───────────────────────────────────────────────────────── */
+    .fu-file-list {
+      border: var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-top: 12px;
+    }
+
+    .fu-list-header {
+      background: var(--gray-50);
+      border-bottom: var(--border);
+      padding: 9px 14px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--gray-500);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+
+    .fu-file-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--gray-100);
+      transition: background .1s;
+    }
+
+    .fu-file-row:last-child {
+      border-bottom: none;
+    }
+
+    .fu-file-row.fu-row-error {
+      background: var(--red-light);
+    }
+
+    .fu-file-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .fu-file-name {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--gray-700);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 2px;
+    }
+
+    .fu-file-name.fu-name-link {
+      color: var(--blue);
+      cursor: pointer;
+    }
+
+    .fu-file-name.fu-name-error {
+      color: var(--red);
+    }
+
+    .fu-file-meta {
+      font-size: 11px;
+      color: var(--gray-400);
+    }
+
+    .fu-file-errmsg {
+      font-size: 11px;
+      color: var(--red);
+      margin-top: 2px;
+    }
+
+    .fu-file-actions {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    /* Progress */
+    .fu-prog-track {
+      width: 100%;
+      height: 4px;
+      background: var(--gray-200);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-top: 6px;
+    }
+
+    .fu-prog-fill {
+      height: 100%;
+      background: var(--blue);
+      border-radius: 2px;
+      transition: width .3s ease;
+    }
+
+    .fu-prog-label {
+      font-size: 11px;
+      color: var(--gray-400);
+      margin-top: 3px;
+    }
+
+    /* Action buttons */
+    .fu-act-btn {
+      width: 28px;
+      height: 28px;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-sm);
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--gray-500);
+      padding: 0;
+      text-decoration: none;
+      transition: background .1s, border-color .1s;
+      font-family: var(--font);
+    }
+
+    .fu-act-btn:hover {
+      background: var(--gray-100);
+      border-color: var(--gray-300);
+    }
+
+    .fu-act-btn.danger {
+      color: var(--red);
+      border-color: var(--red-mid);
+    }
+
+    .fu-act-btn.danger:hover {
+      background: var(--red-light);
+    }
+
+    .fu-act-btn.retry {
+      width: auto;
+      padding: 0 10px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--red);
+      border-color: var(--red);
+    }
+
+
+    /* ── Inline Upload (Form Field Variant) ─────────────────────────────── */
+    /* Looks like a regular form field — label on top, file trigger inside */
+    .fu-inline-field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+    }
+
+    .fu-inline-label {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--gray-500);
+      white-space: nowrap;
+    }
+
+    .fu-inline-label .required {
+      color: var(--red);
+      margin-left: 1px;
+    }
+
+    .fu-inline-trigger {
+      height: 40px;
+      border: 1px solid var(--gray-300);
+      border-radius: var(--radius);
+      background: white;
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      gap: 8px;
+      cursor: pointer;
+      transition: border-color .15s;
+      overflow: hidden;
+    }
+
+    .fu-inline-trigger:hover {
+      border-color: var(--blue);
+    }
+
+    .fu-inline-trigger.fu-inline-active {
+      border-color: var(--blue);
+    }
+
+    .fu-inline-trigger.fu-inline-error {
+      border-color: var(--red);
+    }
+
+    .fu-inline-trigger.fu-inline-filled {
+      border-color: var(--gray-300);
+      background: white;
+    }
+
+    .fu-inline-placeholder {
+      font-size: 13px;
+      color: var(--gray-400);
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .fu-inline-filename {
+      font-size: 13px;
+      color: var(--gray-700);
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .fu-inline-icon {
+      color: var(--gray-400);
+      flex-shrink: 0;
+    }
+
+    .fu-inline-icon.active {
+      color: var(--blue);
+    }
+
+    .fu-inline-clear {
+      width: 18px;
+      height: 18px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      color: var(--gray-400);
+      padding: 0;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: background .1s, color .1s;
+    }
+
+    .fu-inline-clear:hover {
+      background: var(--gray-200);
+      color: var(--gray-700);
+    }
+
+    .fu-inline-progress {
+      height: 2px;
+      background: var(--blue);
+      border-radius: 0 0 var(--radius) var(--radius);
+      transition: width .3s ease;
+      position: relative;
+      margin-top: -2px;
+    }
+
+    .fu-inline-errmsg {
+      font-size: 11px;
+      color: var(--red);
+      margin-top: 2px;
+    }
+
+    /* ── Form grid (for inline demo) ─────────────────────────────────────── */
+    .form-row {
+      display: grid;
+      gap: 0;
+      border: var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: white;
+      box-shadow: var(--shadow);
+    }
+
+    .form-cell {
+      border-right: var(--border);
+      padding: 10px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+    }
+
+    .form-cell:last-child {
+      border-right: none;
+    }
+
+    .form-cell-label {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--gray-500);
+    }
+
+    .form-cell-label .req {
+      color: var(--red);
+    }
+
+    .form-cell-input {
+      font-size: 13px;
+      color: var(--gray-700);
+      border: none;
+      outline: none;
+      background: transparent;
+      font-family: var(--font);
+      padding: 0;
+      width: 100%;
+    }
+
+    .form-cell-input::placeholder {
+      color: var(--gray-300);
+    }
+
+    .form-cell-icon {
+      color: var(--gray-300);
+    }
+
+    /* Inline upload inside form-cell */
+    .form-cell-upload {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      min-width: 0;
+    }
+
+    .form-cell-upload-text {
+      font-size: 13px;
+      color: var(--gray-400);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex: 1;
+    }
+
+    .form-cell-upload-text.has-file {
+      color: var(--blue);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════
+   STATES SHOWCASE STYLES
+═══════════════════════════════════════════════════════════════════════ */
+    .states-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 700px) {
+      .states-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .state-card {
+      background: white;
+      border: var(--border);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .state-card-header {
+      padding: 10px 14px;
+      border-bottom: var(--border);
+      background: var(--gray-50);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .state-card-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--gray-600);
+    }
+
+    .state-badge {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      padding: 2px 7px;
+      border-radius: 20px;
+    }
+
+    .state-badge.idle {
+      background: var(--gray-100);
+      color: var(--gray-500);
+    }
+
+    .state-badge.drag {
+      background: var(--blue-light);
+      color: var(--blue-dark);
+    }
+
+    .state-badge.uploading {
+      background: var(--blue-light);
+      color: var(--blue-dark);
+    }
+
+    .state-badge.success {
+      background: var(--green-light);
+      color: var(--green);
+    }
+
+    .state-badge.error {
+      background: var(--red-light);
+      color: var(--red);
+    }
+
+    .state-badge.invalid {
+      background: var(--amber-light);
+      color: var(--amber);
+    }
+
+    .state-card-body {
+      padding: 16px;
+    }
+
+    /* ─── Inline States Grid ─────────────────────────────────────────────── */
+    .inline-states-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    /* ─── Badge pill ─────────────────────────────────────────────────────── */
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-family: var(--mono);
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: var(--gray-100);
+      color: var(--gray-500);
+    }
+
+    .badge.blue {
+      background: var(--blue-light);
+      color: var(--blue-dark);
+    }
+
+    /* ─── Scrollspy active ───────────────────────────────────────────────── */
+  </style>
+</head>
+
+<body>
+
+  <!-- ── Page Header ─────────────────────────────────────────────────────── -->
+  <header class="page-header">
+    <h1>FileUploadZone</h1>
+    <p>Component reference — all variants, states, and props</p>
+  </header>
+
+  <div class="page-body">
+
+    <!-- ── Sidebar ─────────────────────────────────────────────────────────── -->
+    <nav class="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-title">Variants</div>
+        <a href="#full" onclick="setActive(this)"><span class="sidebar-dot"></span>Full Drop Zone</a>
+        <a href="#inline" onclick="setActive(this)"><span class="sidebar-dot"></span>Inline (Form Field)</a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-title">States</div>
+        <a href="#states-full" onclick="setActive(this)"><span class="sidebar-dot"></span>Full Zone States</a>
+        <a href="#states-inline" onclick="setActive(this)"><span class="sidebar-dot"></span>Inline Field States</a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-title">Reference</div>
+        <a href="#props" onclick="setActive(this)"><span class="sidebar-dot"></span>Props API</a>
+        <a href="#usage" onclick="setActive(this)"><span class="sidebar-dot"></span>Usage Examples</a>
+        <a href="#rules" onclick="setActive(this)"><span class="sidebar-dot"></span>Rules & Guidelines</a>
+      </div>
+    </nav>
+
+    <!-- ── Main Content ─────────────────────────────────────────────────────── -->
+    <main class="content">
+
+      <!-- ════════════════════════════════════════════════════════════════════════
+     SECTION 1: FULL DROP ZONE
+════════════════════════════════════════════════════════════════════════ -->
+      <section class="section" id="full">
+        <div class="section-header">
+          <h2>Full Drop Zone</h2>
+          <p>The primary upload variant. Use when file upload is the main action of a step, page, or form section.</p>
+        </div>
+
+        <div class="demo-card">
+          <div class="demo-card-header">
+            <span class="demo-card-label">Default</span>
+            <span class="demo-card-badge">multiple · accept=all · maxSizeMB=10</span>
+          </div>
+          <div class="demo-card-body" id="demo-full-default">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+        <div class="rule-box info" style="margin-top:16px">
+          <span class="rule-box-icon">ⓘ</span>
+          <span>The drop zone stays active while files are uploading — users can queue additional files without waiting
+            for the current upload to finish.</span>
+        </div>
+        <div class="rule-box warn">
+          <span class="rule-box-icon">⚠</span>
+          <span>When <code>multiple=false</code>, disable the drop zone immediately on upload start. Re-enable it only
+            after success or error — never allow double-upload.</span>
+        </div>
+      </section>
+
+      <hr class="divider">
+
+      <!-- ════════════════════════════════════════════════════════════════════════
+     SECTION 2: INLINE VARIANT
+════════════════════════════════════════════════════════════════════════ -->
+      <section class="section" id="inline">
+        <div class="section-header">
+          <h2>Inline (Form Field Variant)</h2>
+          <p>Use when a file upload is one of several fields in a form row — same visual weight as a text input or date
+            picker. Does not show a drop zone; the entire field acts as a click trigger.</p>
+        </div>
+
+        <!-- Form row demo matching the screenshot pattern -->
+        <div class="demo-card">
+          <div class="demo-card-header">
+            <span class="demo-card-label">In-form context</span>
+            <span class="demo-card-badge">variant="inline"</span>
+          </div>
+          <div class="demo-card-body" style="padding:0">
+            <div class="form-row"
+              style="grid-template-columns:1.4fr 1.4fr 1fr 1fr 1fr 1.2fr; border:none; border-radius:0; box-shadow:none;">
+              <!-- Text field: From -->
+              <div class="form-cell">
+                <span class="form-cell-label">From <span class="req">*</span></span>
+                <input class="form-cell-input" type="text" placeholder="Select origin" value="Dalby South - MITO">
+              </div>
+              <!-- Text field: To -->
+              <div class="form-cell">
+                <span class="form-cell-label">To <span class="req">*</span></span>
+                <input class="form-cell-input" type="text" placeholder="Select destination" value="Adelaide - Gearhart">
+              </div>
+              <!-- Date field: ESD -->
+              <div class="form-cell">
+                <span class="form-cell-label">ESD</span>
+                <div style="display:flex;align-items:center;gap:6px">
+                  <input class="form-cell-input" type="text" placeholder="MM/DD/YYYY">
+                  <svg class="form-cell-icon" width="14" height="14" viewBox="0 0 16 16" fill="none"
+                    stroke="currentColor" stroke-width="1.5">
+                    <rect x="1" y="3" width="14" height="12" rx="2" />
+                    <path d="M1 7h14M5 1v4M11 1v4" stroke-linecap="round" />
+                  </svg>
+                </div>
+              </div>
+              <!-- Date field: ECD -->
+              <div class="form-cell">
+                <span class="form-cell-label">ECD</span>
+                <div style="display:flex;align-items:center;gap:6px">
+                  <input class="form-cell-input" type="text" placeholder="MM/DD/YYYY">
+                  <svg class="form-cell-icon" width="14" height="14" viewBox="0 0 16 16" fill="none"
+                    stroke="currentColor" stroke-width="1.5">
+                    <rect x="1" y="3" width="14" height="12" rx="2" />
+                    <path d="M1 7h14M5 1v4M11 1v4" stroke-linecap="round" />
+                  </svg>
+                </div>
+              </div>
+              <!-- Text field: Carrier -->
+              <div class="form-cell">
+                <span class="form-cell-label">Carrier <span class="req">*</span></span>
+                <input class="form-cell-input" type="text" placeholder="Value">
+              </div>
+              <!-- INLINE UPLOAD FIELD -->
+              <div class="form-cell" style="cursor:pointer" id="inline-upload-cell"
+                onclick="triggerInlineUpload('inline-main')">
+                <span class="form-cell-label">Attachment</span>
+                <div class="form-cell-upload" id="inline-main-trigger">
+                  <span class="form-cell-upload-text" id="inline-main-text">Choose file…</span>
+                  <svg id="inline-main-icon" width="14" height="14" viewBox="0 0 16 16" fill="none"
+                    stroke="currentColor" stroke-width="1.5" style="color:var(--gray-300);flex-shrink:0">
+                    <path d="M8 2v9M4 7l4 5 4-5" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M1 14h14" stroke-linecap="round" />
+                  </svg>
+                </div>
+                <input type="file" id="inline-main-input" style="display:none"
+                  onchange="handleInlineChange(event,'inline-main')">
+                <div class="fu-inline-errmsg" id="inline-main-err" style="display:none"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p style="font-size:13px;color:var(--gray-500);margin-top:12px">Click the "Attachment" field above to test file
+          selection.</p>
+
+        <div class="rule-box info" style="margin-top:16px">
+          <span class="rule-box-icon">ⓘ</span>
+          <span>The inline variant does <strong>not</strong> support drag-and-drop by design — the field is too narrow.
+            Drag-and-drop is only available on the Full Drop Zone variant.</span>
+        </div>
+        <div class="rule-box warn">
+          <span class="rule-box-icon">⚠</span>
+          <span>The inline variant accepts a <strong>single file only</strong>. For multiple files in a form context,
+            use a full drop zone placed below the form row.</span>
+        </div>
+      </section>
+
+
+      <hr class="divider">
+
+      <!-- ════════════════════════════════════════════════════════════════════════
+     SECTION 4: FULL ZONE — ALL STATES
+════════════════════════════════════════════════════════════════════════ -->
+      <section class="section" id="states-full">
+        <div class="section-header">
+          <h2>Full Zone — All States</h2>
+          <p>Every visual state the full drop zone can enter.</p>
+        </div>
+
+        <div class="states-grid">
+
+          <!-- 1. Idle -->
+          <div class="state-card">
+            <div class="state-card-header">
+              <span class="state-card-title">1 · Idle</span>
+              <span class="state-badge idle">Idle</span>
+            </div>
+            <div class="state-card-body">
+              <div class="fu-drop-zone" style="padding:24px 16px;gap:5px">
+                <div class="fu-dz-icon">
+                  <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                    <path d="M20 22H24a6 6 0 000-12h-.3A10 10 0 104 18.7" stroke="currentColor" stroke-width="2"
+                      stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M16 28V18M11 23l5-5 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                  </svg>
+                </div>
+                <p class="fu-dz-label" style="font-size:13px">Drag & drop files here</p>
+                <p class="fu-dz-or">or</p>
+                <button class="fu-browse-btn" style="padding:5px 14px;font-size:12px">Browse File</button>
+                <p class="fu-dz-limits">PDF, JPG, PNG, XLSX · Max 10 MB</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Drag Over -->
+          <div class="state-card">
+            <div class="state-card-header">
+              <span class="state-card-title">2 · Drag Over</span>
+              <span class="state-badge drag">Active</span>
+            </div>
+            <div class="state-card-body">
+              <div class="fu-drop-zone fu-dz-dragover" style="padding:24px 16px;gap:5px">
+                <div class="fu-dz-icon" style="color:var(--blue)">
+                  <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                    <path d="M6 20v4a2 2 0 002 2h16a2 2 0 002-2v-4" stroke="currentColor" stroke-width="2"
+                      stroke-linecap="round" />
+                    <path d="M16 4v16M10 10l6-6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                  </svg>
+                </div>
+                <p class="fu-dz-label" style="font-size:13px;color:var(--blue-dark)">Drop to attach</p>
+                <p class="fu-dz-or" style="color:var(--blue);opacity:.6">Border turns solid · background tints</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Uploading (single-file mode = zone disabled) -->
+          <div class="state-card">
+            <div class="state-card-header">
+              <span class="state-card-title">3 · Uploading (single file)</span>
+              <span class="state-badge uploading">Uploading</span>
+            </div>
+            <div class="state-card-body">
+              <div class="fu-drop-zone fu-dz-disabled" style="padding:18px 16px;gap:5px">
+                <p class="fu-dz-label" style="font-size:13px">Drag & drop files here</p>
+                <button class="fu-browse-btn" style="padding:5px 14px;font-size:12px" disabled>Browse File</button>
+                <p class="fu-dz-limits">Single file · zone locked during upload</p>
+              </div>
+              <div class="fu-file-list" style="margin-top:10px">
+                <div class="fu-list-header">Uploading (1)</div>
+                <div class="fu-file-row">
+                  <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+                    <rect x="2" y="2" width="16" height="16" rx="2" fill="#3B6D11" opacity=".12" />
+                    <rect x="2" y="2" width="16" height="16" rx="2" stroke="#3B6D11" stroke-width="1.2" />
+                    <line x1="7" y1="2" x2="7" y2="18" stroke="#3B6D11" stroke-width="1" opacity=".4" />
+                    <line x1="2" y1="7" x2="18" y2="7" stroke="#3B6D11" stroke-width="1" opacity=".4" />
+                    <line x1="2" y1="12" x2="18" y2="12" stroke="#3B6D11" stroke-width="1" opacity=".4" />
+                  </svg>
+                  <div class="fu-file-info">
+                    <div class="fu-file-name" style="opacity:.6">forecast_data.xlsx</div>
+                    <div class="fu-prog-track">
+                      <div class="fu-prog-fill" style="width:65%"></div>
+                    </div>
+                    <div class="fu-prog-label">Uploading… 65%</div>
+                  </div>
+                  <button class="fu-act-btn"
+                    style="font-size:10px;color:var(--red);border-color:var(--red-mid)">✕</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. Success -->
+          <div class="state-card">
+            <div class="state-card-header">
+              <span class="state-card-title">4 · Uploaded</span>
+              <span class="state-badge success">Success</span>
+            </div>
+            <div class="state-card-body">
+              <div class="fu-file-list">
+                <div class="fu-list-header">Attached Files (2)</div>
+                <div class="fu-file-row">
+                  <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+                    <rect x="3" y="1" width="11" height="14" rx="1.5" fill="#E24B4A" opacity=".15" />
+                    <rect x="3" y="1" width="11" height="14" rx="1.5" stroke="#E24B4A" stroke-width="1.2" />
+                    <rect x="1" y="11" width="12" height="8" rx="1" fill="#E24B4A" /><text x="7" y="17" font-size="5"
+                      font-weight="700" fill="white" text-anchor="middle" font-family="sans-serif">PDF</text>
+                  </svg>
+                  <div class="fu-file-info">
+                    <div class="fu-file-name fu-name-link">Inspection_Report.pdf</div>
+                    <div class="fu-file-meta">PDF · 2.4 MB · J. Smith · 14 Dec 2025, 09:22</div>
+                  </div>
+                  <div class="fu-file-actions">
+                    <button class="fu-act-btn" title="Preview"><svg width="13" height="13" viewBox="0 0 16 16"
+                        fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M1 8s3-5 7-5 7 5 7 5-3 5-7 5-7-5-7-5z" />
+                        <circle cx="8" cy="8" r="2" />
+                      </svg></button>
+                    <button class="fu-act-btn" title="Download"><svg width="13" height="13" viewBox="0 0 16 16"
+                        fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M8 2v9M4 8l4 4 4-4M2 14h12" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg></button>
+                    <button class="fu-act-btn danger" title="Remove"><svg width="13" height="13" viewBox="0 0 16 16"
+                        fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M2 4h12M5 4V2h6v2M6 7v5M10 7v5M3 4l1 9h8l1-9" stroke-linecap="round"
+                          stroke-linejoin="round" />
+                      </svg></button>
+                  </div>
+                </div>
+                <div class="fu-file-row">
+                  <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+                    <rect x="2" y="3" width="16" height="14" rx="2" fill="#378ADD" opacity=".15" />
+                    <rect x="2" y="3" width="16" height="14" rx="2" stroke="#378ADD" stroke-width="1.2" />
+                    <circle cx="6.5" cy="7.5" r="1.5" fill="#378ADD" />
+                    <path d="M2 14l5-5 3 3 2.5-2.5L18 14" stroke="#378ADD" stroke-width="1.2" stroke-linejoin="round" />
+                  </svg>
+                  <div class="fu-file-info">
+                    <div class="fu-file-name fu-name-link">evidence_photo.jpg</div>
+                    <div class="fu-file-meta">JPG · 890 KB · M. Tan · 14 Dec 2025, 09:25</div>
+                  </div>
+                  <div class="fu-file-actions">
+                    <button class="fu-act-btn" title="Preview"><svg width="13" height="13" viewBox="0 0 16 16"
+                        fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M1 8s3-5 7-5 7 5 7 5-3 5-7 5-7-5-7-5z" />
+                        <circle cx="8" cy="8" r="2" />
+                      </svg></button>
+                    <button class="fu-act-btn" title="Download"><svg width="13" height="13" viewBox="0 0 16 16"
+                        fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M8 2v9M4 8l4 4 4-4M2 14h12" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg></button>
+                    <button class="fu-act-btn danger" title="Remove"><svg width="13" height="13" viewBox="0 0 16 16"
+                        fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M2 4h12M5 4V2h6v2M6 7v5M10 7v5M3 4l1 9h8l1-9" stroke-linecap="round"
+                          stroke-linejoin="round" />
+                      </svg></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5. Upload Error -->
+          <div class="state-card">
+            <div class="state-card-header">
+              <span class="state-card-title">5 · Upload Error</span>
+              <span class="state-badge error">Error</span>
+            </div>
+            <div class="state-card-body">
+              <div class="fu-file-list">
+                <div class="fu-list-header">Files (1)</div>
+                <div class="fu-file-row fu-row-error">
+                  <svg width="18" height="18" viewBox="0 0 20 20" fill="none" style="opacity:.5">
+                    <rect x="3" y="1" width="11" height="14" rx="1.5" fill="#E24B4A" opacity=".15" />
+                    <rect x="3" y="1" width="11" height="14" rx="1.5" stroke="#E24B4A" stroke-width="1.2" />
+                  </svg>
+                  <div class="fu-file-info">
+                    <div class="fu-file-name fu-name-error">large_document.pdf</div>
+                    <div class="fu-file-errmsg">Upload failed — file exceeds 10 MB limit (14.2 MB)</div>
+                  </div>
+                  <div class="fu-file-actions">
+                    <button class="fu-act-btn retry">Retry</button>
+                    <button class="fu-act-btn" style="font-size:10px">✕</button>
+                  </div>
+                </div>
+              </div>
+              <div class="rule-box error" style="margin-top:10px;padding:8px 10px;font-size:11.5px">
+                <span class="rule-box-icon">!</span>
+                Error rows persist — never auto-dismiss. User must retry or remove.
+              </div>
+            </div>
+          </div>
+
+          <!-- 6. Invalid File -->
+          <div class="state-card">
+            <div class="state-card-header">
+              <span class="state-card-title">6 · Invalid File Type / Size</span>
+              <span class="state-badge invalid">Rejected</span>
+            </div>
+            <div class="state-card-body">
+              <div class="fu-drop-zone fu-dz-invalid" style="padding:24px 16px;gap:5px">
+                <div class="fu-dz-icon" style="color:var(--red);font-size:24px">⚠</div>
+                <p class="fu-dz-label" style="font-size:13px">Drag & drop files here</p>
+                <p class="fu-dz-or">or</p>
+                <button class="fu-browse-btn" style="padding:5px 14px;font-size:12px">Browse File</button>
+                <p class="fu-dz-limits">PDF, JPG, PNG, XLSX · Max 10 MB</p>
+                <div class="fu-zone-err visible" style="font-size:11.5px">
+                  <span>⚠</span> video_clip.mp4 — File type not supported. Accepted: .pdf .jpg .xlsx
+                </div>
+              </div>
+              <div class="rule-box warn" style="margin-top:10px;padding:8px 10px;font-size:11.5px">
+                <span class="rule-box-icon">⚠</span>
+                Reject before upload starts — client-side validation only. No server call.
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /states-grid -->
+      </section>
+
+      <hr class="divider">
+
+      <!-- ════════════════════════════════════════════════════════════════════════
+     SECTION 5: INLINE FIELD — ALL STATES
+════════════════════════════════════════════════════════════════════════ -->
+      <section class="section" id="states-inline">
+        <div class="section-header">
+          <h2>Inline Field — All States</h2>
+          <p>The inline variant behaves like a text input — same height, same border, same label pattern.</p>
+        </div>
+
+        <div class="demo-card">
+          <div class="demo-card-header">
+            <span class="demo-card-label">All inline states</span>
+          </div>
+          <div class="demo-card-body">
+            <div class="inline-states-grid">
+
+              <!-- Idle -->
+              <div>
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+                  <span style="font-size:12px;font-weight:500;color:var(--gray-600)">1 · Idle (empty)</span>
+                  <span class="state-badge idle">Idle</span>
+                </div>
+                <div class="fu-inline-field">
+                  <span class="fu-inline-label">Attachment</span>
+                  <div class="fu-inline-trigger">
+                    <svg class="fu-inline-icon" width="14" height="14" viewBox="0 0 16 16" fill="none"
+                      stroke="currentColor" stroke-width="1.5">
+                      <path d="M8 2v9M4 7l4 5 4-5" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M1 14h14" stroke-linecap="round" />
+                    </svg>
+                    <span class="fu-inline-placeholder">Choose file…</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Uploading -->
+              <div>
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+                  <span style="font-size:12px;font-weight:500;color:var(--gray-600)">2 · Uploading</span>
+                  <span class="state-badge uploading">Uploading</span>
+                </div>
+                <div class="fu-inline-field">
+                  <span class="fu-inline-label">Attachment</span>
+                  <div class="fu-inline-trigger fu-inline-active">
+                    <svg class="fu-inline-icon active" width="14" height="14" viewBox="0 0 16 16" fill="none"
+                      stroke="currentColor" stroke-width="1.5">
+                      <path d="M8 14V5M4 9l4-5 4 5" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M1 14h14" stroke-linecap="round" />
+                    </svg>
+                    <span class="fu-inline-placeholder" style="color:var(--blue)">forecast_data.xlsx</span>
+                    <span style="font-size:11px;color:var(--blue);flex-shrink:0">68%</span>
+                  </div>
+                  <div class="fu-inline-progress"
+                    style="width:68%;background:var(--blue);height:2px;border-radius:2px;margin-top:2px"></div>
+                </div>
+              </div>
+
+              <!-- Success / Filled -->
+              <div>
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+                  <span style="font-size:12px;font-weight:500;color:var(--gray-600)">3 · Filled (success)</span>
+                  <span class="state-badge success">Success</span>
+                </div>
+                <div class="fu-inline-field">
+                  <span class="fu-inline-label">Attachment</span>
+                  <div class="fu-inline-trigger fu-inline-filled">
+                    <svg width="14" height="14" viewBox="0 0 20 20" fill="none">
+                      <rect x="2" y="2" width="16" height="16" rx="2" fill="#3B6D11" opacity=".12" />
+                      <rect x="2" y="2" width="16" height="16" rx="2" stroke="#3B6D11" stroke-width="1.2" />
+                      <line x1="7" y1="2" x2="7" y2="18" stroke="#3B6D11" stroke-width="1" opacity=".4" />
+                      <line x1="2" y1="7" x2="18" y2="7" stroke="#3B6D11" stroke-width="1" opacity=".4" />
+                      <line x1="2" y1="12" x2="18" y2="12" stroke="#3B6D11" stroke-width="1" opacity=".4" />
+                    </svg>
+                    <span class="fu-inline-filename">forecast_data.xlsx</span>
+                    <span style="font-size:10px;color:var(--gray-400);flex-shrink:0">2.1 MB</span>
+                    <button class="fu-inline-clear">
+                      <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor"
+                        stroke-width="1.8">
+                        <path d="M1 1l8 8M9 1L1 9" stroke-linecap="round" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Error -->
+              <div>
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+                  <span style="font-size:12px;font-weight:500;color:var(--gray-600)">4 · Error</span>
+                  <span class="state-badge error">Error</span>
+                </div>
+                <div class="fu-inline-field">
+                  <span class="fu-inline-label">Attachment <span class="required">*</span></span>
+                  <div class="fu-inline-trigger fu-inline-error">
+                    <svg class="fu-inline-icon" style="color:var(--red)" width="14" height="14" viewBox="0 0 16 16"
+                      fill="none" stroke="currentColor" stroke-width="1.5">
+                      <circle cx="8" cy="8" r="7" />
+                      <path d="M8 5v4M8 11v.5" stroke-linecap="round" />
+                    </svg>
+                    <span class="fu-inline-placeholder" style="color:var(--red)">video_clip.mp4</span>
+                    <button class="fu-inline-clear">
+                      <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor"
+                        stroke-width="1.8">
+                        <path d="M1 1l8 8M9 1L1 9" stroke-linecap="round" />
+                      </svg>
+                    </button>
+                  </div>
+                  <div class="fu-inline-errmsg" style="display:block">File type not supported. Accepted: .pdf .xlsx .csv
+                  </div>
+                </div>
+              </div>
+
+              <!-- Required / Validation -->
+              <div>
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+                  <span style="font-size:12px;font-weight:500;color:var(--gray-600)">5 · Required field, empty on
+                    submit</span>
+                  <span class="state-badge error">Validation</span>
+                </div>
+                <div class="fu-inline-field">
+                  <span class="fu-inline-label">Attachment <span class="required">*</span></span>
+                  <div class="fu-inline-trigger fu-inline-error">
+                    <svg class="fu-inline-icon" style="color:var(--red)" width="14" height="14" viewBox="0 0 16 16"
+                      fill="none" stroke="currentColor" stroke-width="1.5">
+                      <path d="M8 2v9M4 7l4 5 4-5" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M1 14h14" stroke-linecap="round" />
+                    </svg>
+                    <span class="fu-inline-placeholder" style="color:var(--red)">Choose file…</span>
+                  </div>
+                  <div class="fu-inline-errmsg" style="display:block">This field is required</div>
+                </div>
+              </div>
+
+              <!-- Disabled -->
+              <div>
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+                  <span style="font-size:12px;font-weight:500;color:var(--gray-600)">6 · Disabled</span>
+                  <span class="state-badge idle">Disabled</span>
+                </div>
+                <div class="fu-inline-field" style="opacity:.45;pointer-events:none">
+                  <span class="fu-inline-label">Attachment</span>
+                  <div class="fu-inline-trigger" style="background:var(--gray-100);cursor:not-allowed">
+                    <svg class="fu-inline-icon" width="14" height="14" viewBox="0 0 16 16" fill="none"
+                      stroke="currentColor" stroke-width="1.5">
+                      <path d="M8 2v9M4 7l4 5 4-5" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M1 14h14" stroke-linecap="round" />
+                    </svg>
+                    <span class="fu-inline-placeholder">Not available</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="divider">
+
+      <!-- ════════════════════════════════════════════════════════════════════════
+     SECTION 6: PROPS API
+════════════════════════════════════════════════════════════════════════ -->
+      <section class="section" id="props">
+        <div class="section-header">
+          <h2>Props API</h2>
+          <p>All configurable props — applies to both the React component and the vanilla JS implementation.</p>
+        </div>
+
+        <div class="demo-card">
+          <div class="demo-card-body" style="padding:0">
+
+            <table class="props-table">
+              <thead>
+                <tr>
+                  <th style="width:160px">Prop</th>
+                  <th style="width:110px">Type</th>
+                  <th style="width:120px">Default</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                <tr>
+                  <td colspan="4"
+                    style="padding:8px 12px;background:var(--gray-50);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--gray-400)">
+                    File Constraints</td>
+                </tr>
+
+                <tr>
+                  <td><span class="prop-name">accept</span></td>
+                  <td><span class="prop-type">string[]</span></td>
+                  <td><span class="prop-default">see →</span></td>
+                  <td style="font-size:12.5px">Accepted file types. Mix of MIME types and extensions:<br><code
+                      style="font-size:11px;background:var(--gray-100);padding:1px 4px;border-radius:3px">['application/pdf','image/*','.xlsx','.csv']</code>.
+                    Extensions starting with <code style="font-size:11px">'.'</code> are matched against the filename;
+                    MIME types and wildcards against the browser's file type.</td>
+                </tr>
+                <tr>
+                  <td><span class="prop-name">maxSizeMB</span></td>
+                  <td><span class="prop-type">number</span></td>
+                  <td><span class="prop-default">10</span></td>
+                  <td style="font-size:12.5px">Maximum file size in megabytes. Files exceeding this are rejected
+                    client-side before any network call.</td>
+                </tr>
+                <tr>
+                  <td><span class="prop-name">multiple</span></td>
+                  <td><span class="prop-type">boolean</span></td>
+                  <td><span class="prop-default">true</span></td>
+                  <td style="font-size:12.5px">Allow multiple file selection. Set <code
+                      style="font-size:11px">false</code> for single-file contexts. When <code
+                      style="font-size:11px">false</code>, the drop zone disables during upload and re-enables on
+                    completion.</td>
+                </tr>
+                <tr>
+                  <td><span class="prop-name">maxFiles</span></td>
+                  <td><span class="prop-type">number</span></td>
+                  <td><span class="prop-default">10</span></td>
+                  <td style="font-size:12.5px">Maximum number of files per session. Only applies when <code
+                      style="font-size:11px">multiple=true</code>. Files beyond this limit are rejected with an inline
+                    message.</td>
+                </tr>
+
+                <tr>
+                  <td colspan="4"
+                    style="padding:8px 12px;background:var(--gray-50);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--gray-400)">
+                    Variant & Layout</td>
+                </tr>
+
+                <tr>
+                  <td><span class="prop-name">variant</span></td>
+                  <td><span class="prop-type">'full'<br>'inline'</span></td>
+                  <td><span class="prop-default">'full'</span></td>
+                  <td style="font-size:12.5px"><strong>'full'</strong> — large drop zone (default).
+                    <strong>'inline'</strong> — form-field height trigger, no drop zone, single file only.</td>
+                </tr>
+                <tr>
+                  <td><span class="prop-name">showFileList</span></td>
+                  <td><span class="prop-type">boolean</span></td>
+                  <td><span class="prop-default">true</span></td>
+                  <td style="font-size:12.5px">Show the attached files list below the drop zone. Set <code
+                      style="font-size:11px">false</code> if you manage the file list externally.</td>
+                </tr>
+
+                <tr>
+                  <td colspan="4"
+                    style="padding:8px 12px;background:var(--gray-50);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--gray-400)">
+                    Behavior</td>
+                </tr>
+
+                <tr>
+                  <td><span class="prop-name">autoAdvance</span></td>
+                  <td><span class="prop-type">boolean</span></td>
+                  <td><span class="prop-default">false</span></td>
+                  <td style="font-size:12.5px">If <code style="font-size:11px">true</code>, skip the success state
+                    entirely — call <code style="font-size:11px">onAllSuccess</code> immediately after upload completes.
+                    No "Next" button required. Used in wizard flows where the upload step auto-advances.</td>
+                </tr>
+                <tr>
+                  <td><span class="prop-name">disabled</span></td>
+                  <td><span class="prop-type">boolean</span></td>
+                  <td><span class="prop-default">false</span></td>
+                  <td style="font-size:12.5px">Disable the entire component — zone, button, and file interactions are
+                    all non-interactive.</td>
+                </tr>
+                <tr>
+                  <td><span class="prop-name">required</span></td>
+                  <td><span class="prop-type">boolean</span></td>
+                  <td><span class="prop-default">false</span></td>
+                  <td style="font-size:12.5px">Marks the field as required. Shows asterisk on label. Triggers error
+                    state when form is submitted without a file.</td>
+                </tr>
+
+                <tr>
+                  <td colspan="4"
+                    style="padding:8px 12px;background:var(--gray-50);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--gray-400)">
+                    Content</td>
+                </tr>
+
+                <tr>
+                  <td><span class="prop-name">label</span></td>
+                  <td><span class="prop-type">string</span></td>
+                  <td><span class="prop-default">'Drag & drop…'</span></td>
+                  <td style="font-size:12.5px">Main headline inside the drop zone. For inline variant, this is the field
+                    label above the trigger.</td>
+                </tr>
+                <tr>
+                  <td><span class="prop-name">placeholder</span></td>
+                  <td><span class="prop-type">string</span></td>
+                  <td><span class="prop-default">'Choose file…'</span></td>
+                  <td style="font-size:12.5px">Placeholder text inside the inline trigger when empty.</td>
+                </tr>
+                <tr>
+                  <td><span class="prop-name">hint</span></td>
+                  <td><span class="prop-type">string</span></td>
+                  <td><span class="prop-default">undefined</span></td>
+                  <td style="font-size:12.5px">Optional helper text shown below the limits line inside the drop zone.
+                    Shown in accent color. Use for contextual notes like "Selecting a saved template skips the next
+                    step."</td>
+                </tr>
+                <tr>
+                  <td><span class="prop-name">initialFiles</span></td>
+                  <td><span class="prop-type">FileEntry[]</span></td>
+                  <td><span class="prop-default">[]</span></td>
+                  <td style="font-size:12.5px">Pre-populate the file list from server data. Each entry: <code
+                      style="font-size:11px">{ id, name, size, type, uploadedBy?, uploadedAt?, url? }</code>. These
+                    render with full metadata (uploader, date) and action buttons.</td>
+                </tr>
+
+                <tr>
+                  <td colspan="4"
+                    style="padding:8px 12px;background:var(--gray-50);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--gray-400)">
+                    Callbacks</td>
+                </tr>
+
+                <tr>
+                  <td><span class="prop-name">uploadFn</span></td>
+                  <td><span class="prop-type">async function</span></td>
+                  <td><span class="prop-default">undefined</span></td>
+                  <td style="font-size:12.5px"><code style="font-size:11px">async (file, onProgress) => response</code>.
+                    Your upload implementation. Call <code style="font-size:11px">onProgress(0–100)</code> to update the
+                    progress bar. If omitted, the component simulates upload (demo mode).</td>
+                </tr>
+                <tr>
+                  <td><span class="prop-name">onSuccess</span></td>
+                  <td><span class="prop-type">function</span></td>
+                  <td><span class="prop-default">undefined</span></td>
+                  <td style="font-size:12.5px"><code style="font-size:11px">(file, response) => void</code>. Called
+                    after each individual file upload completes.</td>
+                </tr>
+                <tr>
+                  <td><span class="prop-name">onAllSuccess</span></td>
+                  <td><span class="prop-type">function</span></td>
+                  <td><span class="prop-default">undefined</span></td>
+                  <td style="font-size:12.5px"><code style="font-size:11px">(files) => void</code>. Called when all
+                    queued files finish uploading. Use with <code style="font-size:11px">autoAdvance=true</code> for
+                    wizard auto-progression.</td>
+                </tr>
+                <tr>
+                  <td><span class="prop-name">onError</span></td>
+                  <td><span class="prop-type">function</span></td>
+                  <td><span class="prop-default">undefined</span></td>
+                  <td style="font-size:12.5px"><code style="font-size:11px">(file, error) => void</code>. Called when an
+                    upload fails (network error, timeout, server error). Does not fire for client-side validation
+                    rejections.</td>
+                </tr>
+                <tr>
+                  <td><span class="prop-name">onCancel</span></td>
+                  <td><span class="prop-type">function</span></td>
+                  <td><span class="prop-default">undefined</span></td>
+                  <td style="font-size:12.5px"><code style="font-size:11px">(file) => void</code>. Called when user
+                    cancels an in-progress upload. The component resets to idle without confirmation.</td>
+                </tr>
+                <tr>
+                  <td><span class="prop-name">onRemove</span></td>
+                  <td><span class="prop-type">function</span></td>
+                  <td><span class="prop-default">undefined</span></td>
+                  <td style="font-size:12.5px"><code style="font-size:11px">(fileEntry) => void</code>. Called after the
+                    user confirms removal of an already-uploaded file. Requires confirmation dialog for persisted files;
+                    no confirmation needed for in-progress cancels.</td>
+                </tr>
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+      </section>
+
+      <hr class="divider">
+
+      <!-- ════════════════════════════════════════════════════════════════════════
+     SECTION 7: USAGE EXAMPLES
+════════════════════════════════════════════════════════════════════════ -->
+      <section class="section" id="usage">
+        <div class="section-header">
+          <h2>Usage Examples</h2>
+          <p>Common configurations. Copy, adjust props, done.</p>
+        </div>
+
+        <!-- Example 1 -->
+        <p style="font-size:13px;font-weight:500;color:var(--gray-600);margin-bottom:6px">Multi-file (general purpose)
+        </p>
+        <div class="code-block"><span class="cmt">// General multi-file drop zone — inspection reports, evidence photos,
+            documents</span>
+          &lt;FileUploadZone
+          <span class="kw">accept</span>={[<span class="str">'.pdf'</span>, <span class="str">'image/*'</span>, <span
+            class="str">'.xlsx'</span>, <span class="str">'.docx'</span>]}
+          <span class="kw">maxSizeMB</span>={10}
+          <span class="kw">multiple</span>={<span class="val">true</span>}
+          <span class="kw">maxFiles</span>={10}
+          <span class="kw">uploadFn</span>={<span class="fn">myUploadFn</span>}
+          <span class="kw">onSuccess</span>={(file, res) =&gt; <span class="fn">handleSuccess</span>(file, res)}
+          <span class="kw">onRemove</span>={(entry) =&gt; <span class="fn">handleRemove</span>(entry)}
+          /&gt;
+        </div>
+
+        <!-- Example 2 -->
+        <p style="font-size:13px;font-weight:500;color:var(--gray-600);margin-bottom:6px;margin-top:24px">Single-file,
+          wizard auto-advance</p>
+        <div class="code-block"><span class="cmt">// Wizard step — single file, auto-advances on upload success (no
+            "Next" button needed)</span>
+          &lt;FileUploadZone
+          <span class="kw">accept</span>={[<span class="str">'.xlsx'</span>, <span class="str">'.xls'</span>, <span
+            class="str">'.csv'</span>]}
+          <span class="kw">multiple</span>={<span class="val">false</span>}
+          <span class="kw">autoAdvance</span>={<span class="val">true</span>}
+          <span class="kw">label</span>=<span class="str">"Drag & Drop your spreadsheet here"</span>
+          <span class="kw">hint</span>=<span class="str">"Selecting a saved template skips the column mapping
+            step."</span>
+          <span class="kw">uploadFn</span>={<span class="fn">uploadSpreadsheet</span>}
+          <span class="kw">onAllSuccess</span>={() =&gt; <span class="fn">goToStep2</span>()}
+          /&gt;
+        </div>
+
+        <!-- Example 3 -->
+        <p style="font-size:13px;font-weight:500;color:var(--gray-600);margin-bottom:6px;margin-top:24px">Inline —
+          single field in a form row</p>
+        <div class="code-block"><span class="cmt">// Inline variant — lives inside a form row alongside text/date
+            fields</span>
+          &lt;FileUploadZone
+          <span class="kw">variant</span>=<span class="str">"inline"</span>
+          <span class="kw">accept</span>={[<span class="str">'.pdf'</span>, <span class="str">'.jpg'</span>, <span
+            class="str">'.png'</span>]}
+          <span class="kw">label</span>=<span class="str">"Attachment"</span>
+          <span class="kw">placeholder</span>=<span class="str">"Choose file…"</span>
+          <span class="kw">required</span>={<span class="val">false</span>}
+          <span class="kw">uploadFn</span>={<span class="fn">uploadAttachment</span>}
+          <span class="kw">onSuccess</span>={(file, res) =&gt; <span class="fn">setAttachmentId</span>(res.id)}
+          /&gt;
+        </div>
+
+
+        <!-- Example 5 -->
+        <p style="font-size:13px;font-weight:500;color:var(--gray-600);margin-bottom:6px;margin-top:24px">Pre-populated
+          from server</p>
+        <div class="code-block"><span class="cmt">// Load existing attachments from server + allow adding more</span>
+          &lt;FileUploadZone
+          <span class="kw">initialFiles</span>={serverFiles} <span class="cmt">// [{ id, name, size, type, uploadedBy,
+            uploadedAt, url }]</span>
+          <span class="kw">multiple</span>={<span class="val">true</span>}
+          <span class="kw">uploadFn</span>={<span class="fn">uploadFn</span>}
+          <span class="kw">onRemove</span>={async (entry) =&gt; {
+          await <span class="fn">api.deleteFile</span>(entry.id);
+          }}
+          /&gt;
+        </div>
+
+      </section>
+
+      <hr class="divider">
+
+      <!-- ════════════════════════════════════════════════════════════════════════
+     SECTION 8: RULES & GUIDELINES
+════════════════════════════════════════════════════════════════════════ -->
+      <section class="section" id="rules">
+        <div class="section-header">
+          <h2>Rules & Guidelines</h2>
+          <p>Behavior rules that apply across all variants.</p>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px">
+
+          <div class="rule-box info">
+            <span class="rule-box-icon">ⓘ</span>
+            <span><strong>Always show accepted types and size limits inside the zone</strong> — not only in a tooltip or
+              documentation. Users need this before searching for the file.</span>
+          </div>
+          <div class="rule-box info">
+            <span class="rule-box-icon">ⓘ</span>
+            <span><strong>Drag-over must give clear visual feedback</strong> — border turns solid accent color,
+              background tints. Without this, users cannot tell if the drop target is active.</span>
+          </div>
+          <div class="rule-box info">
+            <span class="rule-box-icon">ⓘ</span>
+            <span><strong>Error rows persist until the user resolves them.</strong> Never auto-dismiss failed uploads.
+              The user needs to decide whether to retry or remove.</span>
+          </div>
+          <div class="rule-box info">
+            <span class="rule-box-icon">ⓘ</span>
+            <span><strong>File name is always a link</strong> — clicking opens preview (PDF, image) or triggers download
+              (XLSX, DOCX). Use the same accent color as other navigation links.</span>
+          </div>
+          <div class="rule-box warn">
+            <span class="rule-box-icon">⚠</span>
+            <span><strong>Validate type and size client-side immediately</strong> — before any server call. Rejected
+              files never enter the uploading state.</span>
+          </div>
+          <div class="rule-box warn">
+            <span class="rule-box-icon">⚠</span>
+            <span><strong>Errors use inline messaging, never toasts.</strong> Toast notifications are easy to miss. File
+              errors must be persistent and adjacent to the trigger element.</span>
+          </div>
+          <div class="rule-box warn">
+            <span class="rule-box-icon">⚠</span>
+            <span><strong>Removing an already-saved file requires confirmation.</strong> Canceling an in-progress upload
+              does not — it hasn't been persisted yet.</span>
+          </div>
+          <div class="rule-box warn">
+            <span class="rule-box-icon">⚠</span>
+            <span><strong>The inline variant is single-file only.</strong> For multiple files in a form context, render
+              a full drop zone section below the form row rather than cramming multi-file into an inline trigger.</span>
+          </div>
+          <div class="rule-box error">
+            <span class="rule-box-icon">!</span>
+            <span><strong>Handle edge cases explicitly:</strong> multiple files dropped in single-file mode (accept
+              first, notice for rest), folder dropped (reject immediately), timeout (treat as error), network drop
+              mid-upload (show error, re-enable).</span>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- bottom padding -->
+      <div style="height:80px"></div>
+
+    </main>
+  </div>
+
+  <!-- ─── Interactive JS ──────────────────────────────────────────────────────── -->
+  <script>
+    /* ── Sidebar active state ────────────────────────────────────────────────── */
+    function setActive(el) {
+      document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    /* ── Full zone demo (default) ────────────────────────────────────────────── */
+    (function buildFullDemo() {
+      const container = document.getElementById('demo-full-default');
+      if (!container) return;
+
+      let files = {};
+      let aborts = {};
+
+      container.innerHTML = `
+    <input type="file" id="fu-main-input" multiple accept=".pdf,image/*,.xlsx,.xls,.csv,.docx" style="display:none" onchange="fuHandleInput(event)">
+    <div class="fu-drop-zone" id="fu-main-dz"
+      ondragover="fuDragOver(event)" ondragleave="fuDragLeave(event)" ondrop="fuDrop(event)"
+      onclick="document.getElementById('fu-main-input').click()">
+      <div class="fu-dz-icon">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M20 22H24a6 6 0 000-12h-.3A10 10 0 104 18.7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 28V18M11 23l5-5 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <p class="fu-dz-label">Drag & drop files here</p>
+      <p class="fu-dz-or">or</p>
+      <button class="fu-browse-btn" onclick="event.stopPropagation();document.getElementById('fu-main-input').click()">Browse File</button>
+      <p class="fu-dz-limits">Accepted: PDF, JPG, PNG, XLSX, DOCX · Max 10 MB · Max 10 files</p>
+      <div class="fu-zone-err" id="fu-main-zone-err"></div>
+    </div>
+    <div class="fu-file-list" id="fu-main-list" style="display:none;margin-top:12px">
+      <div class="fu-list-header" id="fu-main-list-hdr">Attached Files (0)</div>
+      <div id="fu-main-rows"></div>
+    </div>
+  `;
+
+      window.fuDragOver = function (e) {
+        e.preventDefault();
+        document.getElementById('fu-main-dz').classList.add('fu-dz-dragover');
+      };
+      window.fuDragLeave = function (e) {
+        e.preventDefault();
+        document.getElementById('fu-main-dz').classList.remove('fu-dz-dragover');
+      };
+      window.fuDrop = function (e) {
+        e.preventDefault();
+        document.getElementById('fu-main-dz').classList.remove('fu-dz-dragover');
+        for (const item of e.dataTransfer.items) {
+          const entry = item.webkitGetAsEntry?.();
+          if (entry?.isDirectory) { showZoneErr('Folders are not supported. Please select a file.'); return; }
+        }
+        processFiles(e.dataTransfer.files);
+      };
+      window.fuHandleInput = function (e) {
+        processFiles(e.target.files);
+        e.target.value = '';
+      };
+
+      function showZoneErr(msg) {
+        const el = document.getElementById('fu-main-zone-err');
+        el.textContent = '⚠  ' + msg;
+        el.classList.add('visible');
+        document.getElementById('fu-main-dz').classList.add('fu-dz-invalid');
+        setTimeout(() => { el.classList.remove('visible'); document.getElementById('fu-main-dz').classList.remove('fu-dz-invalid'); }, 4000);
+      }
+
+      function getFileIcon(name) {
+        const ext = (name || '').split('.').pop().toLowerCase();
+        if (['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext)) return `<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="3" width="16" height="14" rx="2" fill="#378ADD" opacity=".15"/><rect x="2" y="3" width="16" height="14" rx="2" stroke="#378ADD" stroke-width="1.2"/><circle cx="6.5" cy="7.5" r="1.5" fill="#378ADD"/><path d="M2 14l5-5 3 3 2.5-2.5L18 14" stroke="#378ADD" stroke-width="1.2" stroke-linejoin="round"/></svg>`;
+        if (ext === 'pdf') return `<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="1" width="11" height="14" rx="1.5" fill="#E24B4A" opacity=".15"/><rect x="3" y="1" width="11" height="14" rx="1.5" stroke="#E24B4A" stroke-width="1.2"/><rect x="1" y="11" width="12" height="8" rx="1" fill="#E24B4A"/><text x="7" y="17" font-size="5" font-weight="700" fill="white" text-anchor="middle" font-family="sans-serif">PDF</text></svg>`;
+        if (['xlsx', 'xls', 'csv'].includes(ext)) return `<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="16" height="16" rx="2" fill="#3B6D11" opacity=".12"/><rect x="2" y="2" width="16" height="16" rx="2" stroke="#3B6D11" stroke-width="1.2"/><line x1="7" y1="2" x2="7" y2="18" stroke="#3B6D11" stroke-width="1" opacity=".4"/><line x1="2" y1="7" x2="18" y2="7" stroke="#3B6D11" stroke-width="1" opacity=".4"/><line x1="2" y1="12" x2="18" y2="12" stroke="#3B6D11" stroke-width="1" opacity=".4"/></svg>`;
+        return `<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="1" width="11" height="14" rx="1.5" fill="#888780" opacity=".15"/><rect x="3" y="1" width="11" height="14" rx="1.5" stroke="#888780" stroke-width="1.2"/><path d="M10 1v4h4" stroke="#888780" stroke-width="1.2" stroke-linejoin="round"/></svg>`;
+      }
+
+      function fmtBytes(b) {
+        if (!b) return ''; if (b < 1024) return b + ' B';
+        if (b < 1048576) return (b / 1024).toFixed(1) + ' KB';
+        return (b / 1048576).toFixed(1) + ' MB';
+      }
+
+      function validate(file) {
+        const allowed = ['.pdf', '.jpg', '.jpeg', '.png', '.gif', '.xlsx', '.xls', '.csv', '.docx'];
+        const ext = '.' + file.name.split('.').pop().toLowerCase();
+        if (!allowed.includes(ext) && !file.type.startsWith('image/')) return `File type not supported. Accepted: PDF, JPG, PNG, XLSX, DOCX`;
+        if (file.size > 10 * 1024 * 1024) return `File exceeds 10 MB limit (${fmtBytes(file.size)})`;
+        return null;
+      }
+
+      function processFiles(fileList) {
+        const arr = Array.from(fileList);
+        for (const f of arr) {
+          const err = validate(f);
+          if (err) { showZoneErr(`${f.name} — ${err}`); return; }
+        }
+        if (Object.keys(files).length + arr.length > 10) {
+          showZoneErr('Maximum 10 files allowed.'); return;
+        }
+        arr.forEach(f => {
+          const id = f.name + '_' + Date.now() + Math.random();
+          files[id] = { id, name: f.name, size: f.size, status: 'uploading', progress: 0, error: null };
+          renderList();
+          simulateUpload(id);
+        });
+      }
+
+      function simulateUpload(id) {
+        aborts[id] = true;
+        let p = 0;
+        const iv = setInterval(() => {
+          if (!aborts[id] || !files[id]) { clearInterval(iv); return; }
+          p += Math.random() * 15;
+          if (p >= 100) {
+            clearInterval(iv);
+            if (files[id]) { files[id].status = 'success'; files[id].progress = 100; renderList(); }
+          } else {
+            if (files[id]) { files[id].progress = Math.round(p); renderList(); }
+          }
+        }, 160);
+      }
+
+      function renderList() {
+        const entries = Object.values(files);
+        const list = document.getElementById('fu-main-list');
+        const hdr = document.getElementById('fu-main-list-hdr');
+        const rows = document.getElementById('fu-main-rows');
+        if (!list) return;
+        if (!entries.length) { list.style.display = 'none'; return; }
+        list.style.display = 'block';
+        const up = entries.some(e => e.status === 'uploading');
+        hdr.textContent = `${up ? 'Uploading' : 'Attached'} Files (${entries.length})`;
+        rows.innerHTML = entries.map(e => `
+      <div class="fu-file-row ${e.status === 'error' ? 'fu-row-error' : ''}" id="frow-${e.id}">
+        <div style="opacity:${e.status === 'uploading' ? .5 : 1}">${getFileIcon(e.name)}</div>
+        <div class="fu-file-info">
+          <div class="fu-file-name ${e.status === 'success' ? 'fu-name-link' : ''} ${e.status === 'error' ? 'fu-name-error' : ''}">${e.name}</div>
+          ${e.status === 'success' ? `<div class="fu-file-meta">${fmtBytes(e.size)}</div>` : ''}
+          ${e.status === 'uploading' ? `<div class="fu-prog-track"><div class="fu-prog-fill" style="width:${e.progress}%"></div></div><div class="fu-prog-label">Uploading… ${e.progress}%</div>` : ''}
+          ${e.status === 'error' ? `<div class="fu-file-errmsg">${e.error}</div>` : ''}
+        </div>
+        <div class="fu-file-actions">
+          ${e.status === 'uploading' ? `<button class="fu-act-btn" onclick="cancelFile('${e.id}')" title="Cancel"><svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 1l10 10M11 1L1 11" stroke-linecap="round"/></svg></button>` : ''}
+          ${e.status === 'error' ? `<button class="fu-act-btn retry" onclick="retryFile('${e.id}')">Retry</button><button class="fu-act-btn" onclick="removeFile('${e.id}')"><svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 1l10 10M11 1L1 11" stroke-linecap="round"/></svg></button>` : ''}
+          ${e.status === 'success' ? `
+            <button class="fu-act-btn" title="Preview"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 8s3-5 7-5 7 5 7 5-3 5-7 5-7-5-7-5z"/><circle cx="8" cy="8" r="2"/></svg></button>
+            <button class="fu-act-btn" title="Download"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2v9M4 8l4 4 4-4M2 14h12" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <button class="fu-act-btn danger" onclick="removeFile('${e.id}')" title="Remove"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12M5 4V2h6v2M6 7v5M10 7v5M3 4l1 9h8l1-9" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          `: ''}
+        </div>
+      </div>
+    `).join('');
+      }
+
+      window.cancelFile = function (id) { aborts[id] = false; delete files[id]; renderList(); };
+      window.removeFile = function (id) {
+        if (confirm(`Remove "${files[id]?.name || 'file'}"?`)) { delete files[id]; renderList(); }
+      };
+      window.retryFile = function (id) {
+        if (!files[id]) return;
+        files[id].status = 'uploading'; files[id].progress = 0; files[id].error = null;
+        renderList(); simulateUpload(id);
+      };
+    })();
+
+    /* ── Inline field ─────────────────────────────────────────────────────────── */
+    window.triggerInlineUpload = function (id) {
+      document.getElementById(id + '-input').click();
+    };
+
+    window.handleInlineChange = function (e, id) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const errEl = document.getElementById(id + '-err');
+      const txt = document.getElementById(id + '-text');
+      const icon = document.getElementById(id + '-icon');
+      const cell = document.getElementById('inline-upload-cell');
+
+      // Validate
+      const allowed = ['.pdf', '.jpg', '.jpeg', '.png'];
+      const ext = '.' + file.name.split('.').pop().toLowerCase();
+      if (!allowed.includes(ext)) {
+        txt.textContent = file.name;
+        txt.classList.remove('has-file');
+        errEl.textContent = 'File type not supported. Accepted: .pdf .jpg .png';
+        errEl.style.display = 'block';
+        cell.style.borderColor = 'var(--red)';
+        e.target.value = '';
+        return;
+      }
+
+      errEl.style.display = 'none';
+      cell.style.borderColor = '';
+      txt.textContent = file.name;
+      txt.classList.add('has-file');
+      if (icon) icon.style.color = 'var(--blue)';
+      e.target.value = '';
+    };
+  </script>
+
+</body>
+
+</html>
