@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ticket Guidance — App Layout System · @cx/ui</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ts-navy: #0F2744;
+    --ts-green: #1E6B5E;
+    --ts-green-light: #e8f5f2;
+    --ts-gray-50: #F9FAFB;
+    --ts-gray-100: #F3F4F6;
+    --ts-gray-200: #E5E7EB;
+    --ts-gray-400: #9CA3AF;
+    --ts-gray-500: #6B7280;
+    --ts-gray-600: #4B5563;
+    --ts-gray-700: #374151;
+    --ts-gray-900: #111827;
+    --ts-amber: #D97706;
+    --ts-amber-light: #FEF3C7;
+    --ts-red: #DC2626;
+    --ts-red-light: #FEE2E2;
+    --radius: 6px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: var(--ts-gray-700);
+    background: white;
+    line-height: 1.6;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 48px 40px 80px;
+  }
+
+  .doc-header {
+    border-bottom: 2px solid var(--ts-navy);
+    padding-bottom: 20px;
+    margin-bottom: 40px;
+  }
+  .doc-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ts-green);
+    margin-bottom: 6px;
+  }
+  .doc-header h1 { font-size: 24px; font-weight: 600; color: var(--ts-navy); margin-bottom: 8px; }
+  .doc-header p { font-size: 13px; color: var(--ts-gray-500); }
+
+  .disclaimer {
+    background: var(--ts-amber-light);
+    border-left: 3px solid var(--ts-amber);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: #92400E;
+    margin-bottom: 36px;
+  }
+
+  .section { margin-bottom: 40px; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--ts-gray-200);
+  }
+  .section-number {
+    width: 26px; height: 26px;
+    background: var(--ts-navy);
+    color: white;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .section-header h2 { font-size: 16px; font-weight: 600; color: var(--ts-navy); }
+
+  p { margin-bottom: 12px; }
+
+  .comp-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 16px; }
+  .comp-table th {
+    background: var(--ts-gray-50);
+    padding: 8px 12px;
+    text-align: left;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--ts-gray-400);
+    border-bottom: 2px solid var(--ts-gray-200);
+  }
+  .comp-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--ts-gray-100);
+    vertical-align: top;
+  }
+  .comp-table tr:last-child td { border-bottom: none; }
+  .comp-table tr:hover td { background: var(--ts-gray-50); }
+
+  .badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+  .badge-atom     { background: #DBEAFE; color: #1D4ED8; }
+  .badge-molecule { background: #EDE9FE; color: #6D28D9; }
+  .badge-organism { background: var(--ts-green-light); color: var(--ts-green); }
+
+  code {
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    font-size: 12px;
+    background: var(--ts-gray-100);
+    color: var(--ts-gray-700);
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+
+  .comp-section {
+    border: 1px solid var(--ts-gray-200);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .comp-section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--ts-gray-50);
+    border-bottom: 1px solid var(--ts-gray-200);
+  }
+  .comp-section-header h3 { font-size: 14px; font-weight: 600; color: var(--ts-navy); }
+  .comp-section-header p { font-size: 12px; color: var(--ts-gray-500); margin: 0; }
+  .comp-section-body { padding: 14px 16px; }
+
+  .props-block {
+    background: var(--ts-gray-50);
+    border: 1px solid var(--ts-gray-200);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    margin-bottom: 10px;
+  }
+  .props-block h4 {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--ts-gray-400);
+    margin-bottom: 8px;
+  }
+  .prop-row {
+    display: grid;
+    grid-template-columns: 170px 1fr;
+    gap: 8px;
+    padding: 5px 0;
+    border-top: 1px solid var(--ts-gray-200);
+    font-size: 12.5px;
+  }
+  .prop-row:first-of-type { border-top: none; }
+  .prop-name { font-family: 'SFMono-Regular', Consolas, monospace; color: var(--ts-green); font-weight: 500; }
+  .prop-desc { color: var(--ts-gray-600); }
+  .prop-required { color: var(--ts-red); font-size: 10px; font-weight: 700; margin-left: 2px; }
+
+  .example-block {
+    background: var(--ts-navy);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    overflow-x: auto;
+  }
+  .example-block pre {
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    font-size: 12px;
+    color: #93C5FD;
+    line-height: 1.7;
+    white-space: pre;
+  }
+  .ex-tag { color: #86EFAC; }
+  .ex-prop { color: #FDE68A; }
+  .ex-val { color: #FCA5A5; }
+  .ex-cmt { color: #6B7280; }
+
+  .rule {
+    padding: 10px 14px;
+    border-radius: var(--radius);
+    font-size: 13px;
+    margin-bottom: 8px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .rule-icon { flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+  .rule-block { background: var(--ts-red-light); border-left: 3px solid var(--ts-red); color: #7F1D1D; }
+  .rule-warn  { background: var(--ts-amber-light); border-left: 3px solid var(--ts-amber); color: #78350F; }
+  .rule-note  { background: var(--ts-green-light); border-left: 3px solid var(--ts-green); color: #134E4A; }
+
+  .steps { display: flex; flex-direction: column; }
+  .step {
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--ts-gray-100);
+  }
+  .step:last-child { border-bottom: none; }
+  .step-num {
+    width: 26px; height: 26px;
+    background: var(--ts-green-light);
+    color: var(--ts-green);
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .step h4 { font-size: 13px; font-weight: 600; color: var(--ts-gray-900); margin-bottom: 2px; }
+  .step p { font-size: 12.5px; color: var(--ts-gray-500); margin: 0; }
+
+  .checklist { display: flex; flex-direction: column; gap: 6px; }
+  .check-item {
+    display: flex; gap: 10px; align-items: flex-start;
+    padding: 8px 12px;
+    border: 1px solid var(--ts-gray-200);
+    border-radius: var(--radius);
+    font-size: 13px;
+    color: var(--ts-gray-600);
+  }
+  .check-box {
+    width: 15px; height: 15px;
+    border: 1.5px solid var(--ts-gray-300);
+    border-radius: 3px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+</style>
+</head>
+<body>
+
+<div class="doc-header">
+  <div class="doc-eyebrow">Ticket Guidance · @cx/ui</div>
+  <h1>App Layout System</h1>
+  <p>Reusable shell components — <code>AppShell</code>, <code>AppHeader</code>, <code>SidePanel</code>, <code>Logo</code>, <code>UserAvatarMenu</code>, <code>NotificationButton</code>, <code>PageContainer</code> + Sidebar nav type structure</p>
+</div>
+
+<div class="disclaimer">
+  <strong>Note:</strong> This is a starting point only. Review, challenge, and improve based on real usage context. If something feels wrong — it might be. Use your judgment.
+</div>
+
+<!-- 1. Goal -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-number">1</div>
+    <h2>What We're Building & Why</h2>
+  </div>
+  <p>Each app currently has its own layout code — sidebar duplicated in <code>apps/ops</code>, no reusable header, no right panel pattern. This ticket builds pure display components in <code>@cx/ui</code> so every app can compose the same building blocks.</p>
+  <p>The result must match the reference screenshot. Key observations from the actual UI:</p>
+  <ul style="margin: 0 0 12px; padding-left: 20px; color: var(--ts-gray-600); font-size: 13px; line-height: 1.8;">
+    <li>Dark navy header spans full width — logo left, Ask AI button + bell icon + user avatar right. <strong>No center slot used in apps/cx.</strong></li>
+    <li>Sidebar collapsed (~40px wide), icon-only, teal icons on dark navy background. Sits flush left.</li>
+    <li>Content area has a light gray background (not white) — confirm the exact token with design.</li>
+    <li>Breadcrumb appears at the very top of the content area (white strip), above the gray content zone.</li>
+    <li>No visible page title (<code>h1</code>) in the default state — <code>title</code> prop on <code>PageContainer</code> should be optional.</li>
+    <li>Right panel (SidePanel) is closed by default — not visible unless Ask AI is clicked.</li>
+  </ul>
+  <div class="rule rule-note"><span class="rule-icon">→</span><span><strong>Only apps/cx MainLayout gets refactored here.</strong> apps/portal and apps/ops will be migrated in separate tickets.</span></div>
+
+  <!-- Layout anatomy diagram -->
+  <div style="margin-top: 20px;">
+    <p style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--ts-gray-400); margin-bottom: 10px;">Layout anatomy (from reference screenshot)</p>
+    <div style="border: 1px solid var(--ts-gray-200); border-radius: var(--radius); overflow: hidden; font-size: 11px;">
+      <!-- Header -->
+      <div style="background: #0F2744; color: white; padding: 8px 14px; display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-weight: 600;">AppHeader — dark navy, full width, sticky</span>
+        <span style="opacity: .7;">logo left · · · · · · · · Ask AI + bell + avatar right</span>
+      </div>
+      <!-- Body row -->
+      <div style="display: flex; min-height: 140px;">
+        <!-- Sidebar -->
+        <div style="width: 42px; background: #0F2744; display: flex; flex-direction: column; align-items: center; padding: 10px 0; gap: 6px; flex-shrink: 0; border-right: 1px solid #1A3A5C;">
+          <div style="width: 22px; height: 22px; background: #1E6B5E; border-radius: 3px; opacity: .7;"></div>
+          <div style="width: 22px; height: 22px; background: #1A3A5C; border-radius: 3px; opacity: .5;"></div>
+          <div style="width: 22px; height: 22px; background: #1A3A5C; border-radius: 3px; opacity: .5;"></div>
+          <div style="width: 22px; height: 22px; background: #1A3A5C; border-radius: 3px; opacity: .5;"></div>
+          <div style="width: 22px; height: 22px; background: #1A3A5C; border-radius: 3px; opacity: .5;"></div>
+          <div style="font-size: 9px; color: #4A6A8A; margin-top: auto; writing-mode: vertical-rl; letter-spacing: .05em;">Sidebar ~40px</div>
+        </div>
+        <!-- Content area -->
+        <div style="flex: 1; display: flex; flex-direction: column;">
+          <!-- Breadcrumb strip -->
+          <div style="background: white; padding: 7px 14px; border-bottom: 1px solid var(--ts-gray-200); display: flex; align-items: center; gap: 6px;">
+            <div style="width: 52px; height: 12px; background: var(--ts-gray-200); border-radius: 3px;"></div>
+            <span style="color: var(--ts-gray-400);">/</span>
+            <div style="width: 42px; height: 12px; background: var(--ts-gray-200); border-radius: 3px;"></div>
+            <span style="color: var(--ts-gray-400);">/</span>
+            <div style="width: 52px; height: 12px; background: var(--ts-gray-200); border-radius: 3px;"></div>
+            <span style="margin-left: auto; font-size: 10px; color: var(--ts-gray-400);">← breadcrumb (white bg strip)</span>
+          </div>
+          <!-- Gray content area -->
+          <div style="flex: 1; background: #EBEBEB; display: flex; align-items: center; justify-content: center; color: var(--ts-gray-400); font-size: 11px;">
+            main content area — light gray background (verify token with design)
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 2. Components overview -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-number">2</div>
+    <h2>New Components</h2>
+  </div>
+  <p>Seven components. The <strong>layer</strong> determines what each is allowed to import.</p>
+  <table class="comp-table">
+    <thead>
+      <tr>
+        <th>Component</th>
+        <th>Layer</th>
+        <th>Path</th>
+        <th>Purpose</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>Logo</code></td>
+        <td><span class="badge badge-atom">atom</span></td>
+        <td><code>atoms/Logo/</code></td>
+        <td>Brand mark + text. Per-app branding via props.</td>
+      </tr>
+      <tr>
+        <td><code>NotificationButton</code></td>
+        <td><span class="badge badge-molecule">molecule</span></td>
+        <td><code>molecules/NotificationButton/</code></td>
+        <td>MUI IconButton + Badge. State managed by caller.</td>
+      </tr>
+      <tr>
+        <td><code>UserAvatarMenu</code></td>
+        <td><span class="badge badge-molecule">molecule</span></td>
+        <td><code>molecules/UserAvatarMenu/</code></td>
+        <td>Avatar → dropdown. No auth, pure callbacks.</td>
+      </tr>
+      <tr>
+        <td><code>PageContainer</code></td>
+        <td><span class="badge badge-organism">organism</span></td>
+        <td><code>organisms/layouts/PageContainer/</code></td>
+        <td>Page wrapper with breadcrumb, title, actions slot.</td>
+      </tr>
+      <tr>
+        <td><code>AppHeader</code></td>
+        <td><span class="badge badge-organism">organism</span></td>
+        <td><code>organisms/layouts/AppHeader/</code></td>
+        <td>3-zone sticky header (logo | center | actions).</td>
+      </tr>
+      <tr>
+        <td><code>SidePanel</code></td>
+        <td><span class="badge badge-organism">organism</span></td>
+        <td><code>organisms/layouts/SidePanel/</code></td>
+        <td>MUI Drawer with header + scrollable body.</td>
+      </tr>
+      <tr>
+        <td><code>AppShell</code></td>
+        <td><span class="badge badge-organism">organism</span></td>
+        <td><code>organisms/layouts/AppShell/</code></td>
+        <td>Outer frame: sidebar + header + main + right panel. Sidebar slot accepts the existing <code>Sidebar</code> component (not new).</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="rule rule-warn"><span class="rule-icon">!</span><span><code>PageContainer</code> imports <code>Breadcrumb</code> (molecule) → it <strong>must</strong> live under <code>organisms/layouts/</code>. Putting it in molecules violates atomic hierarchy.</span></div>
+</div>
+
+<!-- 3. Sidebar nav structure -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-number">3</div>
+    <h2>Sidebar Nav Structure (Existing Component)</h2>
+  </div>
+
+  <p>The <code>Sidebar</code> component already exists — it is <strong>not new</strong>. This ticket only needs to wire it into <code>AppShell</code> via the <code>sidebar</code> prop. However the <code>menuItems</code> data structure needs to support the 3-level navigation seen in Figma. Clarify with the team whether the type already supports this or needs extending.</p>
+
+  <div class="rule rule-note"><span class="rule-icon">→</span><span><strong>Two states from Figma:</strong> Collapsed = icon only (64px wide). Expanded = icon + text label + chevron for accordion items. Hover or click toggles expansion.</span></div>
+
+  <div class="comp-section" style="margin-top: 16px;">
+    <div class="comp-section-header">
+      <h3>Nav item data structure — 3 levels</h3>
+      <p>Based on Figma. Verify against actual type in codebase before implementing.</p>
+    </div>
+    <div class="comp-section-body">
+      <div class="props-block">
+        <h4>NavItem type (proposed)</h4>
+        <div class="prop-row"><span class="prop-name">id</span><span class="prop-desc">string — unique key.</span></div>
+        <div class="prop-row"><span class="prop-name">label</span><span class="prop-desc">string — text shown when expanded. Also used as tooltip when collapsed.</span></div>
+        <div class="prop-row"><span class="prop-name">icon</span><span class="prop-desc">ReactNode — shown in both collapsed and expanded states.</span></div>
+        <div class="prop-row"><span class="prop-name">href</span><span class="prop-desc">string — navigation target. Omit if item is a parent accordion (has children).</span></div>
+        <div class="prop-row"><span class="prop-name">children</span><span class="prop-desc">NavGroup[] — if present, item becomes an accordion. Cannot have <code>href</code> at the same time.</span></div>
+      </div>
+      <div class="props-block" style="margin-top: 10px;">
+        <h4>NavGroup type (sub-menu, 2nd level)</h4>
+        <div class="prop-row"><span class="prop-name">groupLabel</span><span class="prop-desc">string — section header label (e.g. "Inspection", "NCR", "HSE"). Rendered as non-clickable divider text.</span></div>
+        <div class="prop-row"><span class="prop-name">items</span><span class="prop-desc">NavSubItem[] — list of leaf items under this group.</span></div>
+      </div>
+      <div class="props-block" style="margin-top: 10px;">
+        <h4>NavSubItem type (3rd level — leaf)</h4>
+        <div class="prop-row"><span class="prop-name">id</span><span class="prop-desc">string</span></div>
+        <div class="prop-row"><span class="prop-name">label</span><span class="prop-desc">string — e.g. "Request Record", "NCR", "Schedule"</span></div>
+        <div class="prop-row"><span class="prop-name">href</span><span class="prop-desc">string — navigation target.</span></div>
+      </div>
+      <div class="example-block" style="margin-top: 10px;"><pre><span class="ex-cmt">// Example menuItems structure</span>
+<span class="ex-val">const</span> navItems<span class="ex-tag">:</span> NavItem[] = [
+  &#123;
+    id: <span class="ex-val">'quality'</span>,
+    label: <span class="ex-val">'Quality &amp; HSE'</span>,
+    icon: <span class="ex-tag">&lt;QualityIcon /&gt;</span>,
+    children: [
+      &#123;
+        groupLabel: <span class="ex-val">'Inspection'</span>,
+        items: [
+          &#123; id: <span class="ex-val">'req-record'</span>, label: <span class="ex-val">'Request Record'</span>, href: <span class="ex-val">'/quality/inspection/request'</span> &#125;,
+          &#123; id: <span class="ex-val">'quarantine'</span>, label: <span class="ex-val">'Quarantine Batch'</span>, href: <span class="ex-val">'/quality/inspection/quarantine'</span> &#125;,
+        ],
+      &#125;,
+      &#123;
+        groupLabel: <span class="ex-val">'NCR'</span>,
+        items: [
+          &#123; id: <span class="ex-val">'ncr'</span>, label: <span class="ex-val">'NCR'</span>, href: <span class="ex-val">'/quality/ncr'</span> &#125;,
+        ],
+      &#125;,
+    ],
+  &#125;,
+  &#123;
+    id: <span class="ex-val">'dashboard'</span>,
+    label: <span class="ex-val">'Dashboard'</span>,
+    icon: <span class="ex-tag">&lt;DashboardIcon /&gt;</span>,
+    href: <span class="ex-val">'/'</span>,          <span class="ex-cmt">// leaf item — no children</span>
+  &#125;,
+];</pre></div>
+    </div>
+  </div>
+
+  <div class="comp-section" style="margin-top: 16px;">
+    <div class="comp-section-header">
+      <h3>Sidebar behavior summary</h3>
+    </div>
+    <div class="comp-section-body">
+      <table class="comp-table" style="margin-bottom: 0;">
+        <thead>
+          <tr>
+            <th>State</th>
+            <th>Width</th>
+            <th>What's visible</th>
+            <th>Interaction</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Collapsed</strong> (default)</td>
+            <td>64px</td>
+            <td>Icon only. No label, no chevron.</td>
+            <td>Hover/click icon → tooltip shows label. Click → expands sidebar.</td>
+          </tr>
+          <tr>
+            <td><strong>Expanded</strong></td>
+            <td>280px</td>
+            <td>Icon + label. Accordion items show chevron (▼/▲).</td>
+            <td>Click accordion item → reveals sub-menu with group labels + leaf items.</td>
+          </tr>
+          <tr>
+            <td><strong>Sub-menu open</strong></td>
+            <td>280px</td>
+            <td>Group labels (non-clickable) + leaf items indented below.</td>
+            <td>Click leaf → navigate. Active leaf gets teal left border + highlight.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="rule rule-warn" style="margin-top: 12px;"><span class="rule-icon">!</span><span><strong>Check the existing <code>Sidebar</code> type before adding new fields.</strong> If <code>NavItem</code> already supports <code>children</code> in some form, extend it — don't create a parallel structure.</span></div>
+</div>
+
+<!-- 4. Props -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-number">4</div>
+    <h2>Props & Usage Examples</h2>
+  </div>
+
+  <div class="comp-section">
+    <div class="comp-section-header">
+      <span class="badge badge-atom">atom</span>
+      <h3>Logo</h3>
+      <p>No deps on other @cx/ui components.</p>
+    </div>
+    <div class="comp-section-body">
+      <div class="props-block">
+        <h4>Props</h4>
+        <div class="prop-row"><span class="prop-name">text</span><span class="prop-desc">string — brand text. Hidden when variant = 'mark-only'.</span></div>
+        <div class="prop-row"><span class="prop-name">mark</span><span class="prop-desc">ReactNode — SVG logo mark.</span></div>
+        <div class="prop-row"><span class="prop-name">variant</span><span class="prop-desc">'full' | 'mark-only' — default: 'full'</span></div>
+        <div class="prop-row"><span class="prop-name">size</span><span class="prop-desc">'sm' | 'md' | 'lg' — 24/32/40px height. Default: 'md'</span></div>
+        <div class="prop-row"><span class="prop-name">href</span><span class="prop-desc">string — wraps in anchor if provided.</span></div>
+      </div>
+      <div class="example-block"><pre><span class="ex-tag">&lt;Logo</span> <span class="ex-prop">mark</span>=<span class="ex-val">{&lt;TubestreamMark /&gt;}</span> <span class="ex-prop">text</span>=<span class="ex-val">"tubestream CX"</span> <span class="ex-prop">href</span>=<span class="ex-val">"/"</span> <span class="ex-tag">/&gt;</span></pre></div>
+    </div>
+  </div>
+
+  <div class="comp-section">
+    <div class="comp-section-header">
+      <span class="badge badge-molecule">molecule</span>
+      <h3>NotificationButton</h3>
+      <p>Badge hidden at count=0 by default. All state lives in the caller.</p>
+    </div>
+    <div class="comp-section-body">
+      <div class="props-block">
+        <h4>Props</h4>
+        <div class="prop-row"><span class="prop-name">count</span><span class="prop-desc">number — notification count.</span></div>
+        <div class="prop-row"><span class="prop-name">max</span><span class="prop-desc">number — cap before "99+". Default: 99</span></div>
+        <div class="prop-row"><span class="prop-name">onClick</span><span class="prop-desc">() =&gt; void</span></div>
+        <div class="prop-row"><span class="prop-name">icon</span><span class="prop-desc">ReactNode — defaults to lucide &lt;Bell /&gt;</span></div>
+        <div class="prop-row"><span class="prop-name">ariaLabel</span><span class="prop-desc">string — default: "Notifications"</span></div>
+        <div class="prop-row"><span class="prop-name">showBadgeOnZero</span><span class="prop-desc">boolean — default: false</span></div>
+      </div>
+      <div class="example-block"><pre><span class="ex-tag">&lt;NotificationButton</span> <span class="ex-prop">count</span>=<span class="ex-val">{unreadCount}</span> <span class="ex-prop">onClick</span>=<span class="ex-val">{() =&gt; setOpen(true)}</span> <span class="ex-tag">/&gt;</span></pre></div>
+    </div>
+  </div>
+
+  <div class="comp-section">
+    <div class="comp-section-header">
+      <span class="badge badge-molecule">molecule</span>
+      <h3>UserAvatarMenu</h3>
+      <p>Click avatar → MUI Menu. Header shows name/email. Destructive items styled differently.</p>
+    </div>
+    <div class="comp-section-body">
+      <div class="props-block">
+        <h4>Props</h4>
+        <div class="prop-row"><span class="prop-name">user<span class="prop-required">*</span></span><span class="prop-desc">&#123; name?: string; email: string; avatarUrl?: string &#125;</span></div>
+        <div class="prop-row"><span class="prop-name">items<span class="prop-required">*</span></span><span class="prop-desc">&#123; id: string; label: string; icon?: ReactNode; divider?: boolean; destructive?: boolean &#125;[]</span></div>
+        <div class="prop-row"><span class="prop-name">onItemClick<span class="prop-required">*</span></span><span class="prop-desc">(id: string) =&gt; void — no auth logic inside. Caller handles it.</span></div>
+        <div class="prop-row"><span class="prop-name">ariaLabel</span><span class="prop-desc">string</span></div>
+      </div>
+      <div class="example-block"><pre><span class="ex-tag">&lt;UserAvatarMenu</span>
+  <span class="ex-prop">user</span>=<span class="ex-val">&#123;&#123; email: user.email, name: user.name &#125;&#125;</span>
+  <span class="ex-prop">items</span>=<span class="ex-val">&#123;[&#123; id: 'logout', label: 'Logout', destructive: true &#125;]&#125;</span>
+  <span class="ex-prop">onItemClick</span>=<span class="ex-val">&#123;(id) =&gt; id === 'logout' &amp;&amp; logout()&#125;</span>
+<span class="ex-tag">/&gt;</span></pre></div>
+    </div>
+  </div>
+
+  <div class="comp-section">
+    <div class="comp-section-header">
+      <span class="badge badge-organism">organism</span>
+      <h3>PageContainer</h3>
+      <p>Breadcrumb renders at the top of the white strip above the gray content area. <code>title</code> is optional — not visible in default screenshot state.</p>
+    </div>
+    <div class="comp-section-body">
+      <div class="props-block">
+        <h4>Props</h4>
+        <div class="prop-row"><span class="prop-name">children<span class="prop-required">*</span></span><span class="prop-desc">ReactNode</span></div>
+        <div class="prop-row"><span class="prop-name">breadcrumbs</span><span class="prop-desc">BreadcrumbItem[] — renders in white strip at top. Omit to hide.</span></div>
+        <div class="prop-row"><span class="prop-name">title</span><span class="prop-desc">string — optional. Not visible in reference screenshot; may be page-specific.</span></div>
+        <div class="prop-row"><span class="prop-name">description</span><span class="prop-desc">string — optional subtitle below title.</span></div>
+        <div class="prop-row"><span class="prop-name">actions</span><span class="prop-desc">ReactNode — slot for primary CTAs, top-right. Aligned with title row.</span></div>
+        <div class="prop-row"><span class="prop-name">maxWidth</span><span class="prop-desc">'sm' | 'md' | 'lg' | 'xl' | false</span></div>
+      </div>
+      <div class="example-block"><pre><span class="ex-tag">&lt;PageContainer</span>
+  <span class="ex-prop">title</span>=<span class="ex-val">"NCR / SPR"</span>
+  <span class="ex-prop">breadcrumbs</span>=<span class="ex-val">&#123;[&#123; label: 'Quality &amp; HSE', href: '/...' &#125;, &#123; label: 'NCR / SPR' &#125;]&#125;</span>
+  <span class="ex-prop">actions</span>=<span class="ex-val">&#123;&lt;Button variant="contained"&gt;+ New NCR&lt;/Button&gt;&#125;</span>
+<span class="ex-tag">&gt;</span>
+  <span class="ex-tag">&lt;DataTable ... /&gt;</span>
+<span class="ex-tag">&lt;/PageContainer&gt;</span></pre></div>
+    </div>
+  </div>
+
+  <div class="comp-section">
+    <div class="comp-section-header">
+      <span class="badge badge-organism">organism</span>
+      <h3>AppHeader</h3>
+      <p>2-zone layout in apps/cx: logo left, actions right. <code>center</code> slot exists for flexibility but is unused in apps/cx per reference screenshot.</p>
+    </div>
+    <div class="comp-section-body">
+      <div class="props-block">
+        <h4>Props</h4>
+        <div class="prop-row"><span class="prop-name">logo</span><span class="prop-desc">ReactNode — left slot.</span></div>
+        <div class="prop-row"><span class="prop-name">center</span><span class="prop-desc">ReactNode — center slot. Optional, not used in apps/cx. Reserved for other apps.</span></div>
+        <div class="prop-row"><span class="prop-name">actions</span><span class="prop-desc">ReactNode — right slot. In apps/cx: Ask AI button + NotificationButton + UserAvatarMenu.</span></div>
+        <div class="prop-row"><span class="prop-name">sticky</span><span class="prop-desc">boolean — default: true. Use MUI position="sticky", NOT "fixed".</span></div>
+        <div class="prop-row"><span class="prop-name">divider</span><span class="prop-desc">boolean — border-bottom. Default: true</span></div>
+        <div class="prop-row"><span class="prop-name">height</span><span class="prop-desc">number — px. Default: 56. Verify against Figma.</span></div>
+      </div>
+      <div class="example-block"><pre><span class="ex-tag">&lt;AppHeader</span>
+  <span class="ex-prop">logo</span>=<span class="ex-val">&#123;&lt;Logo mark=&#123;&lt;TubestreamMark /&gt;&#125; text="tubestream CX" /&gt;&#125;</span>
+  <span class="ex-prop">actions</span>=<span class="ex-val">&#123;
+    &lt;&gt;
+      &lt;Button onClick=&#123;() =&gt; setAskOpen(true)&#125;&gt;Ask AI&lt;/Button&gt;
+      &lt;NotificationButton count=&#123;0&#125; /&gt;
+      &lt;UserAvatarMenu user=&#123;...&#125; items=&#123;...&#125; onItemClick=&#123;...&#125; /&gt;
+    &lt;/&gt;
+  &#125;</span>
+<span class="ex-tag">/&gt;</span></pre></div>
+    </div>
+  </div>
+
+  <div class="comp-section">
+    <div class="comp-section-header">
+      <span class="badge badge-organism">organism</span>
+      <h3>SidePanel</h3>
+      <p>MUI Drawer. <code>persistent</code> variant must push main content width — not overlay it.</p>
+    </div>
+    <div class="comp-section-body">
+      <div class="props-block">
+        <h4>Props</h4>
+        <div class="prop-row"><span class="prop-name">open<span class="prop-required">*</span></span><span class="prop-desc">boolean</span></div>
+        <div class="prop-row"><span class="prop-name">onClose<span class="prop-required">*</span></span><span class="prop-desc">() =&gt; void</span></div>
+        <div class="prop-row"><span class="prop-name">children<span class="prop-required">*</span></span><span class="prop-desc">ReactNode — scrollable body.</span></div>
+        <div class="prop-row"><span class="prop-name">title</span><span class="prop-desc">string</span></div>
+        <div class="prop-row"><span class="prop-name">anchor</span><span class="prop-desc">'right' | 'left' — default: 'right'</span></div>
+        <div class="prop-row"><span class="prop-name">width</span><span class="prop-desc">number | string — default: 360</span></div>
+        <div class="prop-row"><span class="prop-name">variant</span><span class="prop-desc">'temporary' | 'persistent' — temporary = overlay, persistent = pushes content.</span></div>
+        <div class="prop-row"><span class="prop-name">headerLeading</span><span class="prop-desc">ReactNode — left of title.</span></div>
+        <div class="prop-row"><span class="prop-name">headerActions</span><span class="prop-desc">ReactNode — right of title, before close button.</span></div>
+        <div class="prop-row"><span class="prop-name">disableBackdropClose</span><span class="prop-desc">boolean — default: false</span></div>
+      </div>
+      <div class="example-block"><pre><span class="ex-tag">&lt;SidePanel</span>
+  <span class="ex-prop">open</span>=<span class="ex-val">&#123;askOpen&#125;</span>
+  <span class="ex-prop">onClose</span>=<span class="ex-val">&#123;() =&gt; setAskOpen(false)&#125;</span>
+  <span class="ex-prop">title</span>=<span class="ex-val">"Ask AI"</span>
+  <span class="ex-prop">variant</span>=<span class="ex-val">"temporary"</span>
+<span class="ex-tag">&gt;</span>
+  <span class="ex-cmt">&#123;/* placeholder — real AI feature is out of scope */&#125;</span>
+  <span class="ex-tag">&lt;Box p=&#123;2&#125;&gt;</span>AI assistant goes here.<span class="ex-tag">&lt;/Box&gt;</span>
+<span class="ex-tag">&lt;/SidePanel&gt;</span></pre></div>
+    </div>
+  </div>
+
+  <div class="comp-section">
+    <div class="comp-section-header">
+      <span class="badge badge-organism">organism</span>
+      <h3>AppShell</h3>
+      <p>Outermost frame. Build this last. Uses semantic &lt;main&gt; for the content area.</p>
+    </div>
+    <div class="comp-section-body">
+      <div class="props-block">
+        <h4>Props</h4>
+        <div class="prop-row"><span class="prop-name">children<span class="prop-required">*</span></span><span class="prop-desc">ReactNode — main content area.</span></div>
+        <div class="prop-row"><span class="prop-name">sidebar</span><span class="prop-desc">ReactNode — left slot. Usually &lt;Sidebar /&gt;.</span></div>
+        <div class="prop-row"><span class="prop-name">header</span><span class="prop-desc">ReactNode — top slot. Usually &lt;AppHeader /&gt;.</span></div>
+        <div class="prop-row"><span class="prop-name">rightPanel</span><span class="prop-desc">ReactNode — right panel slot. Usually &lt;SidePanel /&gt;.</span></div>
+        <div class="prop-row"><span class="prop-name">mainBackground</span><span class="prop-desc">string — MUI theme token. Reference screenshot shows light gray content area — verify the correct token with design (likely <code>background.default</code> or a custom gray token).</span></div>
+      </div>
+      <div class="example-block"><pre><span class="ex-tag">&lt;AppShell</span>
+  <span class="ex-prop">sidebar</span>=<span class="ex-val">&#123;&lt;Sidebar menuItems=&#123;navItems&#125; onLogout=&#123;logout&#125; defaultCollapsed /&gt;&#125;</span>
+  <span class="ex-prop">header</span>=<span class="ex-val">&#123;&lt;AppHeader logo=&#123;...&#125; actions=&#123;...&#125; /&gt;&#125;</span>
+  <span class="ex-prop">rightPanel</span>=<span class="ex-val">&#123;&lt;SidePanel open=&#123;askOpen&#125; onClose=&#123;...&#125; title="Ask AI"&gt;...&lt;/SidePanel&gt;&#125;</span>
+<span class="ex-tag">&gt;</span>
+  <span class="ex-tag">&lt;PageContainer</span> <span class="ex-prop">title</span>=<span class="ex-val">"NCR / SPR"</span> <span class="ex-prop">breadcrumbs</span>=<span class="ex-val">&#123;...&#125;</span><span class="ex-tag">&gt;</span>
+    <span class="ex-tag">&lt;DataTable ... /&gt;</span>
+  <span class="ex-tag">&lt;/PageContainer&gt;</span>
+<span class="ex-tag">&lt;/AppShell&gt;</span></pre></div>
+    </div>
+  </div>
+</div>
+
+<!-- 5. Hard constraints -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-number">5</div>
+    <h2>Hard Constraints</h2>
+  </div>
+  <div class="rule rule-block"><span class="rule-icon">✗</span><span><strong>No <code>@cx/auth</code> or <code>@cx/api</code> imports in @cx/ui.</strong> Pass user info + handlers via props. Same pattern as the existing <code>Sidebar</code>.</span></div>
+  <div class="rule rule-block"><span class="rule-icon">✗</span><span><strong>Atomic hierarchy is strict.</strong> Atoms → no molecule/organism imports. Molecules → no other molecule/organism imports. Only organisms may import molecules.</span></div>
+  <div class="rule rule-block"><span class="rule-icon">✗</span><span><strong>No hardcoded colors or spacing.</strong> Theme tokens only. No hex values, no magic px numbers.</span></div>
+  <div class="rule rule-warn"><span class="rule-icon">!</span><span><strong>Max 150 lines per file.</strong> Split early at ~120 lines — e.g. extract <code>SidePanelHeader.tsx</code>.</span></div>
+  <div class="rule rule-warn"><span class="rule-icon">!</span><span><strong>No <code>any</code>, no <code>console.log</code>.</strong> Explicit return types on all exports. JSDoc + <code>@example</code> on all public components.</span></div>
+  <div class="rule rule-note"><span class="rule-icon">→</span><span><strong>AppHeader: <code>position="sticky"</code> not <code>"fixed"</code>.</strong> Fixed removes the header from document flow — content renders underneath it.</span></div>
+  <div class="rule rule-note"><span class="rule-icon">→</span><span><strong>SidePanel persistent: must push main area.</strong> When open, <code>AppShell</code> must reduce the <code>main</code> flex width — not let SidePanel overlap content.</span></div>
+</div>
+
+<!-- 6. Build order -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-number">6</div>
+    <h2>Build Order</h2>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div><h4>Logo (atom)</h4><p>No deps. Start here to learn the folder convention: <code>Logo/Logo.tsx</code>, <code>Logo/index.ts</code>, <code>Logo/Logo.test.tsx</code>.</p></div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div><h4>NotificationButton + UserAvatarMenu</h4><p>Only import atoms + MUI. Write component → write test → export from folder <code>index.ts</code> before moving on.</p></div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div><h4>AppHeader + SidePanel + PageContainer</h4><p>Can build AppHeader and SidePanel in parallel. Confirm <code>Breadcrumb</code> molecule exists in <code>@cx/ui</code> before starting PageContainer.</p></div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div><h4>AppShell</h4><p>Only after all other organisms are done. AppShell composes via props/slots — no direct sub-component imports.</p></div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div><h4>Update barrel exports</h4><p>Add all new components + types to <code>packages/ui/src/index.ts</code>. Run <code>npm run biome:check</code> immediately after.</p></div>
+    </div>
+    <div class="step">
+      <div class="step-num">6</div>
+      <div><h4>Refactor apps/cx MainLayout</h4><p>Replace hardcoded layout with composed shell. Visual smoke test against screenshot. Then open apps/portal + apps/ops and confirm no regressions.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- 7. DoD -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-number">7</div>
+    <h2>Definition of Done</h2>
+  </div>
+  <div class="checklist">
+    <div class="check-item"><div class="check-box"></div><span>No <code>any</code> in new code</span></div>
+    <div class="check-item"><div class="check-box"></div><span>Every public component has JSDoc + <code>@example</code></span></div>
+    <div class="check-item"><div class="check-box"></div><span>Every exported function has explicit return type</span></div>
+    <div class="check-item"><div class="check-box"></div><span>No hardcoded colors or spacing — theme tokens only</span></div>
+    <div class="check-item"><div class="check-box"></div><span>Every component exported from its own folder <code>index.ts</code></span></div>
+    <div class="check-item"><div class="check-box"></div><span>All exported from <code>packages/ui/src/index.ts</code> — types before values (Biome rule)</span></div>
+    <div class="check-item"><div class="check-box"></div><span>No <code>console.log</code>, no file over 150 lines</span></div>
+    <div class="check-item"><div class="check-box"></div><span><code>npm run type-check</code> — zero errors</span></div>
+    <div class="check-item"><div class="check-box"></div><span><code>npm run biome:check</code> — clean</span></div>
+    <div class="check-item"><div class="check-box"></div><span><code>npm run test -- --filter=ui</code> — all new tests pass</span></div>
+    <div class="check-item"><div class="check-box"></div><span>Atomic design rules followed — no upward imports</span></div>
+    <div class="check-item"><div class="check-box"></div><span><code>@cx/ui</code> does NOT import <code>@cx/auth</code> or <code>@cx/api</code></span></div>
+    <div class="check-item"><div class="check-box"></div><span>Visual smoke test: layout matches reference screenshot in apps/cx</span></div>
+    <div class="check-item"><div class="check-box"></div><span>apps/portal and apps/ops — no regressions after barrel changes</span></div>
+  </div>
+</div>
+
+</body>
+</html>
