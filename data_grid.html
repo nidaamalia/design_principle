@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ticket Guidance — DataGrid · @cx/ui</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ts-navy: #0F2744;
+    --ts-green: #00796B;
+    --ts-green-light: #E0F2F1;
+    --ts-gray-50: #F9FAFB;
+    --ts-gray-100: #F3F4F6;
+    --ts-gray-200: #E5E7EB;
+    --ts-gray-400: #9CA3AF;
+    --ts-gray-500: #6B7280;
+    --ts-gray-600: #4B5563;
+    --ts-gray-700: #374151;
+    --ts-gray-900: #111827;
+    --ts-amber: #D97706;
+    --ts-amber-light: #FEF3C7;
+    --ts-red: #DC2626;
+    --ts-red-light: #FEE2E2;
+    --ts-blue: #1F5EFF;
+    --ts-blue-light: #DBE7FF;
+    --radius: 6px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: var(--ts-gray-700);
+    background: white;
+    line-height: 1.6;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 48px 40px 80px;
+  }
+
+  .doc-header {
+    border-bottom: 2px solid var(--ts-navy);
+    padding-bottom: 20px;
+    margin-bottom: 40px;
+  }
+  .doc-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ts-green);
+    margin-bottom: 6px;
+  }
+  .doc-header h1 { font-size: 24px; font-weight: 600; color: var(--ts-navy); margin-bottom: 8px; }
+  .doc-header p { font-size: 13px; color: var(--ts-gray-500); }
+
+  .disclaimer {
+    background: var(--ts-amber-light);
+    border-left: 3px solid var(--ts-amber);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: #92400E;
+    margin-bottom: 36px;
+  }
+
+  .section { margin-bottom: 40px; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--ts-gray-200);
+  }
+  .section-number {
+    width: 26px; height: 26px;
+    background: var(--ts-navy);
+    color: white;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .section-header h2 { font-size: 16px; font-weight: 600; color: var(--ts-navy); }
+
+  p { margin-bottom: 12px; }
+  ul { margin: 0 0 12px; padding-left: 20px; color: var(--ts-gray-600); font-size: 13px; line-height: 1.8; }
+
+  .comp-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 16px; }
+  .comp-table th {
+    background: var(--ts-gray-50);
+    padding: 8px 12px;
+    text-align: left;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--ts-gray-400);
+    border-bottom: 2px solid var(--ts-gray-200);
+  }
+  .comp-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--ts-gray-100);
+    vertical-align: top;
+    font-size: 13px;
+  }
+  .comp-table tr:last-child td { border-bottom: none; }
+  .comp-table tr:hover td { background: var(--ts-gray-50); }
+
+  .badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+  .badge-organism { background: var(--ts-green-light); color: var(--ts-green); }
+
+  code {
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    font-size: 12px;
+    background: var(--ts-gray-100);
+    color: var(--ts-gray-700);
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+
+  .comp-section {
+    border: 1px solid var(--ts-gray-200);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .comp-section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--ts-gray-50);
+    border-bottom: 1px solid var(--ts-gray-200);
+  }
+  .comp-section-header h3 { font-size: 14px; font-weight: 600; color: var(--ts-navy); }
+  .comp-section-header p { font-size: 12px; color: var(--ts-gray-500); margin: 0; }
+  .comp-section-body { padding: 14px 16px; }
+
+  .props-block {
+    background: var(--ts-gray-50);
+    border: 1px solid var(--ts-gray-200);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    margin-bottom: 10px;
+  }
+  .props-block h4 {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--ts-gray-400);
+    margin-bottom: 8px;
+  }
+  .prop-row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 8px;
+    padding: 5px 0;
+    border-top: 1px solid var(--ts-gray-200);
+    font-size: 12.5px;
+  }
+  .prop-row:first-of-type { border-top: none; }
+  .prop-name { font-family: 'SFMono-Regular', Consolas, monospace; color: var(--ts-green); font-weight: 500; }
+  .prop-desc { color: var(--ts-gray-600); }
+  .prop-required { color: var(--ts-red); font-size: 10px; font-weight: 700; margin-left: 2px; }
+
+  .example-block {
+    background: var(--ts-navy);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    overflow-x: auto;
+    margin-top: 10px;
+  }
+  .example-block pre {
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    font-size: 12px;
+    color: #93C5FD;
+    line-height: 1.7;
+    white-space: pre;
+  }
+  .ex-tag { color: #86EFAC; }
+  .ex-prop { color: #FDE68A; }
+  .ex-val { color: #FCA5A5; }
+  .ex-cmt { color: #6B7280; }
+  .ex-kw  { color: #C084FC; }
+
+  .rule {
+    padding: 10px 14px;
+    border-radius: var(--radius);
+    font-size: 13px;
+    margin-bottom: 8px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .rule-icon { flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+  .rule-block { background: var(--ts-red-light); border-left: 3px solid var(--ts-red); color: #7F1D1D; }
+  .rule-warn  { background: var(--ts-amber-light); border-left: 3px solid var(--ts-amber); color: #78350F; }
+  .rule-note  { background: var(--ts-green-light); border-left: 3px solid var(--ts-green); color: #134E4A; }
+  .rule-info  { background: var(--ts-blue-light); border-left: 3px solid var(--ts-blue); color: #1E3A8A; }
+
+  .steps { display: flex; flex-direction: column; }
+  .step {
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--ts-gray-100);
+  }
+  .step:last-child { border-bottom: none; }
+  .step-num {
+    width: 26px; height: 26px;
+    background: var(--ts-green-light);
+    color: var(--ts-green);
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .step h4 { font-size: 13px; font-weight: 600; color: var(--ts-gray-900); margin-bottom: 2px; }
+  .step p { font-size: 12.5px; color: var(--ts-gray-500); margin: 0; }
+
+  .checklist { display: flex; flex-direction: column; gap: 6px; }
+  .check-item {
+    display: flex; gap: 10px; align-items: flex-start;
+    padding: 8px 12px;
+    border: 1px solid var(--ts-gray-200);
+    border-radius: var(--radius);
+    font-size: 13px;
+    color: var(--ts-gray-600);
+  }
+  .check-box {
+    width: 15px; height: 15px;
+    border: 1.5px solid var(--ts-gray-300);
+    border-radius: 3px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+</style>
+</head>
+<body>
+
+<div class="doc-header">
+  <div class="doc-eyebrow">Ticket Guidance · @cx/ui</div>
+  <h1>DataGrid Component</h1>
+  <p>A wrapper around MUI X DataGrid (Community) with app-wide defaults — sorting, filtering, column visibility, custom toolbar, expandable rows, and row grouping.</p>
+</div>
+
+<div class="disclaimer">
+  <strong>Note:</strong> This is a starting point only. Review, challenge, and improve based on real usage context. If something feels wrong — it might be. Use your judgment.
+</div>
+
+
+<!-- 1. Goal -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-number">1</div>
+    <h2>What We're Building & Why</h2>
+  </div>
+  <p>Several screens need a data table with capabilities beyond basic sorting: <strong>column visibility toggle</strong> (show/hide columns per user preference), <strong>quick search</strong>, <strong>expandable rows</strong> with arbitrary content, and <strong>grouped rows</strong> (e.g. Rig → Well → Items). <code>DataGrid</code> is the shared component that covers all of these cases in a consistent, maintainable way.</p>
+  <p>It is a thin wrapper over <strong>MUI X DataGrid (Community, MIT licensed)</strong>. The wrapper adds three app-specific concerns — styling defaults, localStorage persistence for column visibility, and a built-in toolbar slot — and passes everything else straight through to DataGrid.</p>
+
+  <!-- Anatomy -->
+  <div style="margin-top:20px">
+    <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-400);margin-bottom:10px">Component anatomy</p>
+    <div style="border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden;font-size:12px">
+      <!-- Toolbar -->
+      <div style="background:var(--ts-gray-50);padding:8px 14px;border-bottom:1px solid var(--ts-gray-200);display:flex;align-items:center;gap:8px">
+        <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:4px;padding:4px 10px;font-size:11px;color:var(--ts-gray-500);flex:1;max-width:200px">Search…</div>
+        <div style="margin-left:auto;display:flex;gap:6px">
+          <div style="background:white;border:1px solid var(--ts-gray-200);border-radius:4px;padding:4px 10px;font-size:11px;color:var(--ts-gray-600)">⊞ Columns</div>
+          <div style="background:var(--ts-green);border-radius:4px;padding:4px 10px;font-size:11px;color:white">+ New</div>
+        </div>
+        <span style="font-size:10px;color:var(--ts-gray-400);margin-left:8px">← GridToolbar (renders only when searchable or toolbarActions set)</span>
+      </div>
+      <!-- Column headers -->
+      <div style="background:#F1F5F9;padding:6px 14px;border-bottom:1px solid var(--ts-gray-200);display:grid;grid-template-columns:50px 130px 1fr 1fr 100px;gap:4px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-500)">
+        <div></div>
+        <div>No. / ID</div>
+        <div>Name / Title</div>
+        <div>Other cols…</div>
+        <div>Status</div>
+      </div>
+      <!-- Group header row -->
+      <div style="padding:7px 14px;border-bottom:1px solid var(--ts-gray-100);display:flex;align-items:center;gap:8px;background:var(--ts-gray-50)">
+        <span style="font-size:12px;color:var(--ts-gray-400)">▶</span>
+        <span style="font-size:13px;font-weight:600;color:var(--ts-gray-700)">Savanna Rig 183</span>
+        <span style="font-size:10px;color:var(--ts-gray-400);margin-left:auto">← group header row (rowGroupingModel)</span>
+      </div>
+      <!-- Leaf row with expand -->
+      <div style="padding:7px 14px;border-bottom:1px solid var(--ts-gray-100);display:grid;grid-template-columns:50px 130px 1fr 1fr 100px;align-items:center;gap:4px">
+        <div style="display:flex;justify-content:center"><span style="font-size:12px;color:var(--ts-gray-400)">▼</span></div>
+        <div style="font-size:13px;color:var(--ts-blue);font-weight:500">NCR-2025-001</div>
+        <div style="font-size:13px;color:var(--ts-gray-600);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Pipe Dimension Defect…</div>
+        <div style="font-size:13px;color:var(--ts-gray-600)">John Smith</div>
+        <div><span style="background:#FEE2E2;color:#991B1B;font-size:11px;font-weight:600;padding:2px 8px;border-radius:100px">Open</span></div>
+      </div>
+      <!-- Detail panel -->
+      <div style="padding:10px 14px 10px 50px;border-bottom:1px solid var(--ts-gray-200);background:#FAFAFA;border-left:3px solid var(--ts-green-light)">
+        <span style="font-size:12px;color:var(--ts-gray-500)">Expandable detail panel — any ReactNode passed via <code style="font-size:11px">renderDetailPanel</code></span>
+      </div>
+      <!-- More rows -->
+      <div style="padding:7px 14px;display:flex;align-items:center;color:var(--ts-gray-400);font-size:12px">
+        <span>…more rows</span>
+        <span style="margin-left:auto;font-size:10px">← virtualized by DataGrid</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- 2. Install -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-number">2</div>
+    <h2>Dependency — MUI X DataGrid (Community)</h2>
+  </div>
+  <p>MUI X DataGrid is <strong>not yet installed</strong> in the monorepo. Install it before starting:</p>
+
+  <div class="example-block"><pre><span class="ex-cmt"># from monorepo root</span>
+npm install @mui/x-data-grid --workspace=packages/ui</pre></div>
+</div>
+
+
+<!-- 3. New files -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-number">3</div>
+    <h2>New Files</h2>
+  </div>
+
+  <table class="comp-table">
+    <thead>
+      <tr><th>File</th><th>Purpose</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>organisms/data-display/DataGrid/DataGrid.tsx</code></td>
+        <td>Main wrapper component. Extends <code>DataGridProps</code> with app-specific props. Target: ≤ 120 lines.</td>
+      </tr>
+      <tr>
+        <td><code>organisms/data-display/DataGrid/GridToolbar.tsx</code></td>
+        <td>Custom toolbar — search input on the left, <code>toolbarActions</code> slot on the right. Only rendered when either prop is set.</td>
+      </tr>
+      <tr>
+        <td><code>organisms/data-display/DataGrid/index.ts</code></td>
+        <td>Barrel export for the folder.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="rule rule-warn"><span class="rule-icon">!</span><span><strong>Max 150 lines per file.</strong> If <code>DataGrid.tsx</code> grows past ~120 lines, extract the localStorage logic into <code>useColumnVisibilityPersist.ts</code>.</span></div>
+</div>
+
+
+<!-- 4. Props -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-number">4</div>
+    <h2>Props</h2>
+  </div>
+
+  <p><code>DataGrid</code> <strong>extends</strong> <code>DataGridProps</code> — every standard DataGrid prop is available. We only add three app-specific props on top.</p>
+
+  <div class="comp-section">
+    <div class="comp-section-header">
+      <span class="badge badge-organism">organism</span>
+      <h3>DataGrid</h3>
+      <p>Path: <code>organisms/data-display/DataGrid/DataGrid.tsx</code></p>
+    </div>
+    <div class="comp-section-body">
+      <div class="props-block">
+        <h4>App-specific props (added on top of DataGridProps)</h4>
+        <div class="prop-row">
+          <span class="prop-name">storageKey</span>
+          <span class="prop-desc">string — persists column visibility to <code>localStorage</code> under <code>dg:{storageKey}:cols</code>. Restored on mount. Use a unique key per page, e.g. <code>"ncr-list"</code>. Omit if the screen doesn't need persistence.</span>
+        </div>
+        <div class="prop-row">
+          <span class="prop-name">searchable</span>
+          <span class="prop-desc">boolean — shows a search input in the toolbar. Uses DataGrid's built-in <code>filterModel.quickFilterValues</code>. Searches all visible columns.</span>
+        </div>
+        <div class="prop-row">
+          <span class="prop-name">toolbarActions</span>
+          <span class="prop-desc">ReactNode — right side of the toolbar. Used for primary CTAs (e.g. "+ New NCR", filter buttons). Toolbar is rendered only when this or <code>searchable</code> is set — no empty toolbar bar.</span>
+        </div>
+      </div>
+
+      <div class="props-block" style="margin-top:10px">
+        <h4>Key DataGrid props — commonly used in this project</h4>
+        <div class="prop-row">
+          <span class="prop-name">rows<span class="prop-required">*</span></span>
+          <span class="prop-desc">R[] — flat array of row objects. Each row must have a stable <code>id</code> field (or use <code>getRowId</code>).</span>
+        </div>
+        <div class="prop-row">
+          <span class="prop-name">columns<span class="prop-required">*</span></span>
+          <span class="prop-desc">GridColDef[] — column definitions. Import type from <code>@mui/x-data-grid</code>.</span>
+        </div>
+        <div class="prop-row">
+          <span class="prop-name">loading</span>
+          <span class="prop-desc">boolean — shows a loading overlay. Pass directly from your query's <code>isLoading</code> state.</span>
+        </div>
+        <div class="prop-row">
+          <span class="prop-name">onRowsScrollEnd</span>
+          <span class="prop-desc"><code>() =&gt; void</code> — fires when the user scrolls to the last visible row. Use for infinite scroll (trigger <code>fetchNextPage</code> here).</span>
+        </div>
+        <div class="prop-row">
+          <span class="prop-name">initialState.columns<br/>.columnVisibilityModel</span>
+          <span class="prop-desc">Record&lt;string, boolean&gt; — default column visibility on first load. Only effective when <code>storageKey</code> is not set (storageKey overrides this).</span>
+        </div>
+        <div class="prop-row">
+          <span class="prop-name">getDetailPanelContent</span>
+          <span class="prop-desc"><code>({ row }) =&gt; ReactNode</code> — renders an expandable panel below a row. Content can be anything: a form, a nested table, a key-value block. Must also set <code>getDetailPanelHeight</code>. <em>Requires DataGridPro if used — see note below.</em></span>
+        </div>
+        <div class="prop-row">
+          <span class="prop-name">rowGroupingModel</span>
+          <span class="prop-desc">string[] — groups rows by the given field(s), e.g. <code>['rig', 'well']</code>. Shows collapsible group headers. <em>Requires DataGridPremium if used — see note below.</em></span>
+        </div>
+      </div>
+
+      <div class="rule rule-info" style="margin-top:4px"><span class="rule-icon">ℹ</span><span><strong>getDetailPanelContent and rowGroupingModel are DataGridPro/Premium features.</strong> They are listed here because they are the desired patterns for screens like the open-order list (Rig → Well → Items). If those screens are confirmed in scope, the package must be upgraded. Do not implement a manual workaround — escalate the decision first.</span></div>
+    </div>
+  </div>
+
+  <div class="comp-section">
+    <div class="comp-section-header">
+      <h3>GridToolbar</h3>
+      <p>Path: <code>organisms/data-display/DataGrid/GridToolbar.tsx</code> — internal, not exported from <code>@cx/ui</code></p>
+    </div>
+    <div class="comp-section-body">
+      <div class="props-block">
+        <h4>Props</h4>
+        <div class="prop-row">
+          <span class="prop-name">searchable</span>
+          <span class="prop-desc">boolean — show search input.</span>
+        </div>
+        <div class="prop-row">
+          <span class="prop-name">onSearch<span class="prop-required">*</span></span>
+          <span class="prop-desc"><code>(value: string) =&gt; void</code> — called on every keystroke.</span>
+        </div>
+        <div class="prop-row">
+          <span class="prop-name">actions</span>
+          <span class="prop-desc">ReactNode — right slot.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- 5. Usage examples -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-number">5</div>
+    <h2>Usage Examples</h2>
+  </div>
+
+  <!-- Simple -->
+  <div class="comp-section">
+    <div class="comp-section-header">
+      <h3>Case 1 — Simple flat table</h3>
+      <p>Minimal — no toolbar, no custom column visibility, just render data.</p>
+    </div>
+    <div class="comp-section-body">
+      <div class="example-block"><pre><span class="ex-kw">import</span> { DataGrid } <span class="ex-kw">from</span> <span class="ex-val">'@cx/ui'</span>;
+<span class="ex-kw">import type</span> { GridColDef } <span class="ex-kw">from</span> <span class="ex-val">'@mui/x-data-grid'</span>;
+
+<span class="ex-kw">const</span> columns: GridColDef[] = [
+  { field: <span class="ex-val">'no'</span>,        headerName: <span class="ex-val">'No.'</span>,        width: 60 },
+  { field: <span class="ex-val">'itemCode'</span>,  headerName: <span class="ex-val">'Item Code'</span>,  width: 130 },
+  { field: <span class="ex-val">'qty'</span>,       headerName: <span class="ex-val">'Qty'</span>,        width: 80,  type: <span class="ex-val">'number'</span> },
+  { field: <span class="ex-val">'date'</span>,      headerName: <span class="ex-val">'Date'</span>,       width: 120, type: <span class="ex-val">'date'</span> },
+  { field: <span class="ex-val">'rig'</span>,       headerName: <span class="ex-val">'Rig'</span>,        flex: 1 },
+  { field: <span class="ex-val">'well'</span>,      headerName: <span class="ex-val">'Well'</span>,       flex: 1 },
+  { field: <span class="ex-val">'uom'</span>,       headerName: <span class="ex-val">'UOM'</span>,        width: 80 },
+  { field: <span class="ex-val">'unitPrice'</span>, headerName: <span class="ex-val">'Unit Price'</span>, width: 110, type: <span class="ex-val">'number'</span> },
+];
+
+<span class="ex-tag">&lt;DataGrid</span> <span class="ex-prop">columns</span>=<span class="ex-val">{columns}</span> <span class="ex-prop">rows</span>=<span class="ex-val">{rows}</span> <span class="ex-prop">loading</span>=<span class="ex-val">{isLoading}</span> <span class="ex-tag">/&gt;</span></pre></div>
+    </div>
+  </div>
+
+  <!-- Toolbar + column visibility -->
+  <div class="comp-section">
+    <div class="comp-section-header">
+      <h3>Case 2 — Toolbar with search, column visibility, and action button</h3>
+      <p>Most common pattern. Column selection is persisted to localStorage via storageKey.</p>
+    </div>
+    <div class="comp-section-body">
+      <div class="example-block"><pre><span class="ex-kw">const</span> columns: GridColDef[] = [
+  { field: <span class="ex-val">'ncrNo'</span>,     headerName: <span class="ex-val">'NCR No.'</span>,          width: 140 },
+  { field: <span class="ex-val">'title'</span>,     headerName: <span class="ex-val">'Title'</span>,            flex: 1 },
+  { field: <span class="ex-val">'status'</span>,    headerName: <span class="ex-val">'Status'</span>,           width: 120,
+    renderCell: ({ value }) => <span class="ex-tag">&lt;StatusChip</span> <span class="ex-prop">status</span>=<span class="ex-val">{value}</span> <span class="ex-tag">/&gt;</span> },
+  { field: <span class="ex-val">'assignee'</span>,  headerName: <span class="ex-val">'Lead Investigator'</span>, width: 160 },
+  { field: <span class="ex-val">'category'</span>,  headerName: <span class="ex-val">'Category'</span>,          width: 130 },
+  { field: <span class="ex-val">'rootCause'</span>, headerName: <span class="ex-val">'Root Cause'</span>,        width: 160 },
+];
+
+<span class="ex-tag">&lt;DataGrid</span>
+  <span class="ex-prop">columns</span>=<span class="ex-val">{columns}</span>
+  <span class="ex-prop">rows</span>=<span class="ex-val">{rows}</span>
+  <span class="ex-prop">loading</span>=<span class="ex-val">{isLoading}</span>
+  <span class="ex-prop">storageKey</span>=<span class="ex-val">"ncr-list"</span>
+  <span class="ex-prop">searchable</span>
+  <span class="ex-prop">toolbarActions</span>=<span class="ex-val">{&lt;Button variant="contained" onClick={onNew}&gt;+ New NCR&lt;/Button&gt;}</span>
+  <span class="ex-prop">initialState</span>=<span class="ex-val">{{</span>
+    columns: {
+      <span class="ex-cmt">// default — show only these 4; user can toggle the rest via Columns button</span>
+      columnVisibilityModel: { category: <span class="ex-kw">false</span>, rootCause: <span class="ex-kw">false</span> },
+    },
+  <span class="ex-val">}}</span>
+<span class="ex-tag">/&gt;</span></pre></div>
+      <div class="rule rule-note" style="margin-top:10px"><span class="rule-icon">→</span><span><strong>Default to hiding secondary columns</strong> via <code>columnVisibilityModel</code>. What "secondary" means must come from actual users — not from showing everything and hoping people hide it. When <code>storageKey</code> is set, the user's own selection overrides this default after their first visit.</span></div>
+    </div>
+  </div>
+
+  <!-- Truncated cells with tooltip -->
+  <div class="comp-section">
+    <div class="comp-section-header">
+      <h3>Case 3 — Truncated text column with tooltip</h3>
+      <p>For columns with long text values (title, description, root cause). Fix maxWidth to prevent one long value from pushing other columns.</p>
+    </div>
+    <div class="comp-section-body">
+      <div class="example-block"><pre><span class="ex-kw">import</span> { Tooltip } <span class="ex-kw">from</span> <span class="ex-val">'@mui/material'</span>;
+
+<span class="ex-kw">const</span> columns: GridColDef[] = [
+  { field: <span class="ex-val">'ncrNo'</span>, headerName: <span class="ex-val">'NCR No.'</span>, width: 140 },
+  {
+    field: <span class="ex-val">'title'</span>,
+    headerName: <span class="ex-val">'Title'</span>,
+    maxWidth: 240,
+    flex: 1,
+    renderCell: ({ value }) => (
+      <span class="ex-tag">&lt;Tooltip</span> <span class="ex-prop">title</span>=<span class="ex-val">{value}</span> <span class="ex-prop">placement</span>=<span class="ex-val">"top-start"</span><span class="ex-tag">&gt;</span>
+        <span class="ex-tag">&lt;span</span> <span class="ex-prop">style</span>=<span class="ex-val">{{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}</span><span class="ex-tag">&gt;</span>
+          {value}
+        <span class="ex-tag">&lt;/span&gt;</span>
+      <span class="ex-tag">&lt;/Tooltip&gt;</span>
+    ),
+  },
+  { field: <span class="ex-val">'status'</span>, headerName: <span class="ex-val">'Status'</span>, width: 120 },
+];
+
+<span class="ex-tag">&lt;DataGrid</span> <span class="ex-prop">columns</span>=<span class="ex-val">{columns}</span> <span class="ex-prop">rows</span>=<span class="ex-val">{rows}</span> <span class="ex-tag">/&gt;</span></pre></div>
+      <div class="rule rule-warn" style="margin-top:10px"><span class="rule-icon">!</span><span><strong>Never truncate ID or reference columns</strong> (NCR No., Transfer No., Lot No.). These are scannable identifiers — users need to read them in full at a glance.</span></div>
+    </div>
+  </div>
+
+  <!-- Infinite scroll -->
+  <div class="comp-section">
+    <div class="comp-section-header">
+      <h3>Case 4 — Infinite scroll (load more on scroll)</h3>
+      <p>Use onRowsScrollEnd instead of a "Load More" button. Works with TanStack Query's useInfiniteQuery.</p>
+    </div>
+    <div class="comp-section-body">
+      <div class="example-block"><pre><span class="ex-kw">const</span> { data, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage }
+  = useInfiniteNcrList(params);
+
+<span class="ex-kw">const</span> rows = data?.pages.flatMap(p => p.data) ?? [];
+
+<span class="ex-tag">&lt;DataGrid</span>
+  <span class="ex-prop">columns</span>=<span class="ex-val">{columns}</span>
+  <span class="ex-prop">rows</span>=<span class="ex-val">{rows}</span>
+  <span class="ex-prop">loading</span>=<span class="ex-val">{isLoading || isFetchingNextPage}</span>
+  <span class="ex-prop">onRowsScrollEnd</span>=<span class="ex-val">{() => { if (hasNextPage) fetchNextPage(); }}</span>
+  <span class="ex-prop">scrollEndThreshold</span>=<span class="ex-val">{200}</span>   <span class="ex-cmt">// px before bottom to trigger — tune per screen</span>
+<span class="ex-tag">/&gt;</span></pre></div>
+    </div>
+  </div>
+
+  <!-- Row with action buttons -->
+  <div class="comp-section">
+    <div class="comp-section-header">
+      <h3>Case 5 — Row action buttons</h3>
+      <p>For tables that need Accept / Edit / More actions on each row. Use renderCell on a dedicated actions column.</p>
+    </div>
+    <div class="comp-section-body">
+      <div class="example-block"><pre><span class="ex-kw">const</span> columns: GridColDef[] = [
+  <span class="ex-cmt">// ...other columns</span>
+  {
+    field: <span class="ex-val">'__actions'</span>,
+    headerName: <span class="ex-val">''</span>,
+    width: 120,
+    sortable: <span class="ex-kw">false</span>,
+    align: <span class="ex-val">'right'</span>,
+    headerAlign: <span class="ex-val">'right'</span>,
+    renderCell: ({ row }) => (
+      <span class="ex-tag">&lt;Box</span> <span class="ex-prop">sx</span>=<span class="ex-val">{{ display: 'flex', gap: 0.5 }}</span><span class="ex-tag">&gt;</span>
+        <span class="ex-tag">&lt;Button</span> <span class="ex-prop">size</span>=<span class="ex-val">"small"</span> <span class="ex-prop">variant</span>=<span class="ex-val">"contained"</span> <span class="ex-prop">onClick</span>=<span class="ex-val">{() => onAccept(row.id)}</span><span class="ex-tag">&gt;</span>
+          Accept
+        <span class="ex-tag">&lt;/Button&gt;</span>
+        <span class="ex-tag">&lt;OverflowMenu</span> <span class="ex-prop">items</span>=<span class="ex-val">{rowMenuItems(row)}</span> <span class="ex-tag">/&gt;</span>
+      <span class="ex-tag">&lt;/Box&gt;</span>
+    ),
+  },
+];
+
+<span class="ex-tag">&lt;DataGrid</span>
+  <span class="ex-prop">columns</span>=<span class="ex-val">{columns}</span>
+  <span class="ex-prop">rows</span>=<span class="ex-val">{rows}</span>
+  <span class="ex-prop">disableRowSelectionOnClick</span>   <span class="ex-cmt">// prevent accidental selection when clicking buttons</span>
+<span class="ex-tag">/&gt;</span></pre></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- 6. Visual preview -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-number">6</div>
+    <h2>Visual Preview</h2>
+  </div>
+  <p>Annotated mockups showing what each prop controls in the rendered output.</p>
+
+  <!-- Preview 1: Full toolbar -->
+  <h3 style="font-size:14px;font-weight:600;color:var(--ts-navy);margin-bottom:12px">Variant A — With toolbar (<code>searchable</code> + <code>toolbarActions</code> + <code>storageKey</code>)</h3>
+
+  <div style="position:relative;margin-bottom:48px">
+    <!-- The mock DataGrid -->
+    <div style="border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden;background:white;font-size:13px">
+
+      <!-- Toolbar -->
+      <div style="display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--ts-gray-200);background:white">
+        <div style="display:flex;align-items:center;gap:6px;border:1px solid var(--ts-gray-200);border-radius:var(--radius);padding:6px 10px;flex:1;max-width:260px">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <span style="color:var(--ts-gray-400);font-size:13px">Search…</span>
+        </div>
+        <div style="margin-left:auto;display:flex;gap:6px;align-items:center">
+          <button style="display:inline-flex;align-items:center;gap:6px;border:1px solid var(--ts-gray-200);border-radius:var(--radius);padding:6px 12px;background:white;font-size:13px;cursor:pointer;font-family:inherit;color:var(--ts-gray-700)">
+            ⊞ Columns
+            <span style="background:var(--ts-blue);color:white;font-size:10px;font-weight:700;border-radius:10px;padding:0 5px;line-height:16px">4/6</span>
+          </button>
+          <button style="border:none;border-radius:var(--radius);padding:7px 14px;background:var(--ts-green);color:white;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit">+ New NCR</button>
+        </div>
+      </div>
+
+      <!-- Column headers -->
+      <div style="display:grid;grid-template-columns:140px 1fr 130px 150px 110px 90px;background:#F8FAFC;border-bottom:2px solid var(--ts-gray-200)">
+        <div style="padding:8px 12px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-500)">NCR No.</div>
+        <div style="padding:8px 12px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-500)">Title</div>
+        <div style="padding:8px 12px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-500)">Status</div>
+        <div style="padding:8px 12px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-500)">Lead Investigator</div>
+        <div style="padding:8px 12px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-500)">Date</div>
+        <div style="padding:8px 12px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-500);text-align:right"></div>
+      </div>
+
+      <!-- Row 1 -->
+      <div style="display:grid;grid-template-columns:140px 1fr 130px 150px 110px 90px;border-bottom:1px solid var(--ts-gray-100);align-items:center">
+        <div style="padding:10px 12px;color:var(--ts-blue);font-weight:500">NCR-2025-001</div>
+        <div style="padding:10px 12px;color:var(--ts-gray-700);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Pipe Dimension Defect — OD out of spec…</div>
+        <div style="padding:10px 12px"><span style="background:#FEE2E2;color:#991B1B;font-size:11px;font-weight:600;padding:2px 8px;border-radius:100px">Open</span></div>
+        <div style="padding:10px 12px;color:var(--ts-gray-700)">John Smith</div>
+        <div style="padding:10px 12px;color:var(--ts-gray-600);font-size:12px">12 Apr 2025</div>
+        <div style="padding:10px 12px;display:flex;gap:4px;justify-content:flex-end">
+          <button style="font-size:11px;padding:3px 8px;border:1px solid var(--ts-gray-200);border-radius:4px;background:white;cursor:pointer;font-family:inherit;color:var(--ts-gray-700)">⋯</button>
+        </div>
+      </div>
+
+      <!-- Row 2 -->
+      <div style="display:grid;grid-template-columns:140px 1fr 130px 150px 110px 90px;border-bottom:1px solid var(--ts-gray-100);align-items:center">
+        <div style="padding:10px 12px;color:var(--ts-blue);font-weight:500">NCR-2025-002</div>
+        <div style="padding:10px 12px;color:var(--ts-gray-700);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Weld Inspection Failure — Joint 3B</div>
+        <div style="padding:10px 12px"><span style="background:#D1FAE5;color:#065F46;font-size:11px;font-weight:600;padding:2px 8px;border-radius:100px">Closed</span></div>
+        <div style="padding:10px 12px;color:var(--ts-gray-700)">Sarah Lee</div>
+        <div style="padding:10px 12px;color:var(--ts-gray-600);font-size:12px">09 Apr 2025</div>
+        <div style="padding:10px 12px;display:flex;gap:4px;justify-content:flex-end">
+          <button style="font-size:11px;padding:3px 8px;border:1px solid var(--ts-gray-200);border-radius:4px;background:white;cursor:pointer;font-family:inherit;color:var(--ts-gray-700)">⋯</button>
+        </div>
+      </div>
+
+      <!-- Row 3 -->
+      <div style="display:grid;grid-template-columns:140px 1fr 130px 150px 110px 90px;align-items:center">
+        <div style="padding:10px 12px;color:var(--ts-blue);font-weight:500">NCR-2025-003</div>
+        <div style="padding:10px 12px;color:var(--ts-gray-700);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Material Cert Missing — Lot B7</div>
+        <div style="padding:10px 12px"><span style="background:#FEF3C7;color:#92400E;font-size:11px;font-weight:600;padding:2px 8px;border-radius:100px">In Review</span></div>
+        <div style="padding:10px 12px;color:var(--ts-gray-700)">Ahmad Rifai</div>
+        <div style="padding:10px 12px;color:var(--ts-gray-600);font-size:12px">07 Apr 2025</div>
+        <div style="padding:10px 12px;display:flex;gap:4px;justify-content:flex-end">
+          <button style="font-size:11px;padding:3px 8px;border:1px solid var(--ts-gray-200);border-radius:4px;background:white;cursor:pointer;font-family:inherit;color:var(--ts-gray-700)">⋯</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Callout legend -->
+    <div style="margin-top:16px;display:flex;flex-direction:column;gap:6px">
+      <div style="display:grid;grid-template-columns:22px 1fr;gap:10px;align-items:start;font-size:12.5px">
+        <div style="width:20px;height:20px;background:var(--ts-navy);color:white;border-radius:50%;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">A</div>
+        <div><span style="font-family:monospace;color:var(--ts-green);font-size:12px">searchable</span> — renders the search input on the left side of the toolbar. Uses DataGrid's built-in <code>quickFilterValues</code> to filter all visible columns.</div>
+      </div>
+      <div style="display:grid;grid-template-columns:22px 1fr;gap:10px;align-items:start;font-size:12.5px">
+        <div style="width:20px;height:20px;background:var(--ts-navy);color:white;border-radius:50%;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">B</div>
+        <div><span style="font-family:monospace;color:var(--ts-green);font-size:12px">storageKey="ncr-list"</span> — the badge on the "⊞ Columns" button (4/6) reflects how many columns are currently visible. The user's selection is saved to <code>localStorage</code> and restored on the next visit.</div>
+      </div>
+      <div style="display:grid;grid-template-columns:22px 1fr;gap:10px;align-items:start;font-size:12.5px">
+        <div style="width:20px;height:20px;background:var(--ts-navy);color:white;border-radius:50%;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">C</div>
+        <div><span style="font-family:monospace;color:var(--ts-green);font-size:12px">toolbarActions</span> — the "+ New NCR" button slot. Anything passed here appears right of the Columns button.</div>
+      </div>
+      <div style="display:grid;grid-template-columns:22px 1fr;gap:10px;align-items:start;font-size:12.5px">
+        <div style="width:20px;height:20px;background:var(--ts-navy);color:white;border-radius:50%;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">D</div>
+        <div><span style="font-family:monospace;color:var(--ts-green);font-size:12px">density="compact"</span> (default) — baked in. Column headers are 11px uppercase, row height is reduced vs. MUI's default. Matches the design system.</div>
+      </div>
+      <div style="display:grid;grid-template-columns:22px 1fr;gap:10px;align-items:start;font-size:12.5px">
+        <div style="width:20px;height:20px;background:var(--ts-navy);color:white;border-radius:50%;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">E</div>
+        <div><span style="font-family:monospace;color:var(--ts-green);font-size:12px">columns[].renderCell</span> — the Status chips and the ⋯ overflow menu are custom cell renderers. DataGrid calls <code>renderCell</code> on each cell of that column.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Preview 2: Column visibility open -->
+  <h3 style="font-size:14px;font-weight:600;color:var(--ts-navy);margin-bottom:12px">Variant B — Column visibility popover open</h3>
+  <div style="margin-bottom:48px">
+    <div style="border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:visible;background:white;font-size:13px;position:relative">
+      <!-- Toolbar -->
+      <div style="display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--ts-gray-200)">
+        <div style="display:flex;align-items:center;gap:6px;border:1px solid var(--ts-gray-200);border-radius:var(--radius);padding:6px 10px;flex:1;max-width:260px">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <span style="color:var(--ts-gray-400);font-size:13px">Search…</span>
+        </div>
+        <div style="margin-left:auto;display:flex;gap:6px;align-items:center;position:relative">
+          <!-- Columns button (active) -->
+          <div style="position:relative">
+            <button style="display:inline-flex;align-items:center;gap:6px;border:1px solid var(--ts-blue);border-radius:var(--radius);padding:6px 12px;background:var(--ts-blue-light);font-size:13px;cursor:pointer;font-family:inherit;color:var(--ts-blue);font-weight:500">
+              ⊞ Columns
+              <span style="background:var(--ts-blue);color:white;font-size:10px;font-weight:700;border-radius:10px;padding:0 5px;line-height:16px">4/6</span>
+            </button>
+            <!-- Popover -->
+            <div style="position:absolute;top:calc(100% + 6px);right:0;background:white;border:1px solid var(--ts-gray-200);border-radius:var(--radius);box-shadow:0 4px 16px rgba(0,0,0,.12);min-width:210px;z-index:10;padding:4px 0">
+              <div style="padding:6px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-400);border-bottom:1px solid var(--ts-gray-100);margin-bottom:2px">Show / hide columns</div>
+              <label style="display:flex;align-items:center;gap:8px;padding:6px 14px;font-size:13px;cursor:pointer;color:var(--ts-gray-700)"><input type="checkbox" checked style="accent-color:var(--ts-green)"> NCR No.</label>
+              <label style="display:flex;align-items:center;gap:8px;padding:6px 14px;font-size:13px;cursor:pointer;color:var(--ts-gray-700)"><input type="checkbox" checked style="accent-color:var(--ts-green)"> Title</label>
+              <label style="display:flex;align-items:center;gap:8px;padding:6px 14px;font-size:13px;cursor:pointer;color:var(--ts-gray-700)"><input type="checkbox" checked style="accent-color:var(--ts-green)"> Status</label>
+              <label style="display:flex;align-items:center;gap:8px;padding:6px 14px;font-size:13px;cursor:pointer;color:var(--ts-gray-700)"><input type="checkbox" checked style="accent-color:var(--ts-green)"> Lead Investigator</label>
+              <label style="display:flex;align-items:center;gap:8px;padding:6px 14px;font-size:13px;cursor:pointer;color:var(--ts-gray-400)"><input type="checkbox" style="accent-color:var(--ts-green)"> Category</label>
+              <label style="display:flex;align-items:center;gap:8px;padding:6px 14px;font-size:13px;cursor:pointer;color:var(--ts-gray-400)"><input type="checkbox" style="accent-color:var(--ts-green)"> Root Cause</label>
+            </div>
+          </div>
+          <button style="border:none;border-radius:var(--radius);padding:7px 14px;background:var(--ts-green);color:white;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit">+ New NCR</button>
+        </div>
+      </div>
+      <!-- Dimmed table body -->
+      <div style="opacity:.35;pointer-events:none">
+        <div style="display:grid;grid-template-columns:140px 1fr 130px 150px;background:#F8FAFC;border-bottom:2px solid var(--ts-gray-200)">
+          <div style="padding:8px 12px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-500)">NCR No.</div>
+          <div style="padding:8px 12px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-500)">Title</div>
+          <div style="padding:8px 12px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-500)">Status</div>
+          <div style="padding:8px 12px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-500)">Lead Investigator</div>
+        </div>
+        <div style="padding:10px 12px;color:var(--ts-gray-400);font-size:13px">NCR-2025-001 · Pipe Dimension Defect…</div>
+        <div style="padding:10px 12px;color:var(--ts-gray-400);font-size:13px;border-top:1px solid var(--ts-gray-100)">NCR-2025-002 · Weld Inspection Failure…</div>
+      </div>
+    </div>
+    <div style="margin-top:12px;font-size:12.5px;color:var(--ts-gray-600)">
+      Checked columns = visible in the table. Unchecked = hidden. Badge updates in real time (4/6). Selection saved to <code>localStorage['dg:ncr-list:cols']</code> — restored on next load.
+    </div>
+  </div>
+
+  <!-- Preview 3: No toolbar -->
+  <h3 style="font-size:14px;font-weight:600;color:var(--ts-navy);margin-bottom:12px">Variant C — No toolbar (neither <code>searchable</code> nor <code>toolbarActions</code>)</h3>
+  <div style="margin-bottom:8px">
+    <div style="border:1px solid var(--ts-gray-200);border-radius:var(--radius);overflow:hidden;background:white;font-size:13px">
+      <!-- Column headers — directly, no toolbar strip -->
+      <div style="display:grid;grid-template-columns:60px 130px 1fr 100px 120px 80px;background:#F8FAFC;border-bottom:2px solid var(--ts-gray-200)">
+        <div style="padding:8px 12px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-500)">No.</div>
+        <div style="padding:8px 12px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-500)">Item Code</div>
+        <div style="padding:8px 12px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-500)">Rig</div>
+        <div style="padding:8px 12px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-500)">Qty</div>
+        <div style="padding:8px 12px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-500)">Date</div>
+        <div style="padding:8px 12px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ts-gray-500)">UOM</div>
+      </div>
+      <div style="display:grid;grid-template-columns:60px 130px 1fr 100px 120px 80px;border-bottom:1px solid var(--ts-gray-100);align-items:center">
+        <div style="padding:10px 12px;color:var(--ts-gray-700)">1</div>
+        <div style="padding:10px 12px;color:var(--ts-gray-700);font-weight:500">ACCS-0254</div>
+        <div style="padding:10px 12px;color:var(--ts-gray-600)">Savanna Rig 183</div>
+        <div style="padding:10px 12px;color:var(--ts-gray-700)">24</div>
+        <div style="padding:10px 12px;color:var(--ts-gray-600);font-size:12px">12 Apr 2026</div>
+        <div style="padding:10px 12px;color:var(--ts-gray-600)">EA</div>
+      </div>
+      <div style="display:grid;grid-template-columns:60px 130px 1fr 100px 120px 80px;align-items:center">
+        <div style="padding:10px 12px;color:var(--ts-gray-700)">2</div>
+        <div style="padding:10px 12px;color:var(--ts-gray-700);font-weight:500">ACCS-0367</div>
+        <div style="padding:10px 12px;color:var(--ts-gray-600)">Sierra Drill 203</div>
+        <div style="padding:10px 12px;color:var(--ts-gray-700)">30</div>
+        <div style="padding:10px 12px;color:var(--ts-gray-600);font-size:12px">15 May 2026</div>
+        <div style="padding:10px 12px;color:var(--ts-gray-600)">EA</div>
+      </div>
+    </div>
+    <div style="margin-top:8px;font-size:12.5px;color:var(--ts-gray-500)">Toolbar strip is absent entirely — grid starts directly at the column headers. No empty gray bar.</div>
+  </div>
+</div>
+
+<!-- 7. Implementation notes -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-number">7</div>
+    <h2>Implementation Notes</h2>
+  </div>
+
+  <div class="comp-section">
+    <div class="comp-section-header">
+      <h3>Default config baked into DataGrid</h3>
+      <p>Applied unconditionally — every screen gets these without having to pass them.</p>
+    </div>
+    <div class="comp-section-body">
+      <div class="props-block">
+        <h4>Hardcoded defaults</h4>
+        <div class="prop-row">
+          <span class="prop-name">density</span>
+          <span class="prop-desc"><code>"compact"</code> — matches design system table density.</span>
+        </div>
+        <div class="prop-row">
+          <span class="prop-name">disableRowSelectionOnClick</span>
+          <span class="prop-desc"><code>true</code> — rows are not "selected" by a click unless the screen explicitly needs <code>checkboxSelection</code>. Pass <code>disableRowSelectionOnClick={false}</code> to override per screen.</span>
+        </div>
+        <div class="prop-row">
+          <span class="prop-name">sx — column header</span>
+          <span class="prop-desc">Font size 11px, uppercase, letter-spacing 0.06em, <code>grey.50</code> background. Matches the rest of the design system table headers.</span>
+        </div>
+        <div class="prop-row">
+          <span class="prop-name">sx — cell</span>
+          <span class="prop-desc">Font size 13px, row border <code>divider</code> color.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="comp-section">
+    <div class="comp-section-header">
+      <h3>storageKey — column visibility persistence</h3>
+    </div>
+    <div class="comp-section-body">
+      <p>On mount, read <code>localStorage.getItem('dg:{storageKey}:cols')</code> and merge into <code>initialState.columns.columnVisibilityModel</code>. On every <code>onColumnVisibilityModelChange</code>, write the updated model back. Wrap the localStorage read in a try/catch — corrupted JSON must not crash the page.</p>
+      <div class="example-block"><pre><span class="ex-cmt">// Pattern inside DataGrid.tsx</span>
+<span class="ex-kw">const</span> savedVisibility = storageKey
+  ? (() => {
+      <span class="ex-kw">try</span> {
+        <span class="ex-kw">return</span> JSON.parse(localStorage.getItem(<span class="ex-val">`dg:</span><span class="ex-tag">${storageKey}</span><span class="ex-val">:cols`</span>) ?? <span class="ex-val">'null'</span>);
+      } <span class="ex-kw">catch</span> { <span class="ex-kw">return null</span>; }
+    })()
+  : <span class="ex-kw">null</span>;
+
+<span class="ex-cmt">// Merge: saved overrides initialState default</span>
+initialState={{
+  ...props.initialState,
+  columns: {
+    ...props.initialState?.columns,
+    columnVisibilityModel:
+      savedVisibility ?? props.initialState?.columns?.columnVisibilityModel,
+  },
+}}</pre></div>
+      <div class="rule rule-warn" style="margin-top:8px"><span class="rule-icon">!</span><span><code>initialState</code> is read only once on mount — it is intentionally uncontrolled. Do not use a controlled <code>columnVisibilityModel</code> prop here; that would fight the user's stored selection on every re-render.</span></div>
+    </div>
+  </div>
+
+  <div class="comp-section">
+    <div class="comp-section-header">
+      <h3>sx prop — merging with defaults</h3>
+    </div>
+    <div class="comp-section-body">
+      <p>MUI's <code>sx</code> prop accepts an array. Use this pattern so a caller can pass their own <code>sx</code> without overriding the component's defaults:</p>
+      <div class="example-block"><pre><span class="ex-tag">&lt;DataGrid</span>
+  <span class="ex-prop">sx</span>=<span class="ex-val">{[</span>
+    defaultSx,                               <span class="ex-cmt">// component defaults</span>
+    ...(Array.isArray(sx) ? sx : [sx]),      <span class="ex-cmt">// caller overrides</span>
+  <span class="ex-val">]}</span>
+<span class="ex-tag">/&gt;</span></pre></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- 7. Hard constraints -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-number">8</div>
+    <h2>Hard Constraints</h2>
+  </div>
+  <div class="rule rule-block"><span class="rule-icon">✗</span><span><strong>Do not re-export DataGrid types through <code>@cx/ui</code>.</strong> Callers import <code>GridColDef</code>, <code>GridRowParams</code>, etc. directly from <code>@mui/x-data-grid</code>. Only <code>DataGridProps</code> is exported from <code>@cx/ui</code>.</span></div>
+  <div class="rule rule-block"><span class="rule-icon">✗</span><span><strong>No hardcoded colors or magic numbers.</strong> MUI theme tokens only in <code>sx</code> blocks: <code>grey.50</code>, <code>divider</code>, <code>text.secondary</code>, etc.</span></div>
+  <div class="rule rule-block"><span class="rule-icon">✗</span><span><strong>No <code>any</code>, no <code>console.log</code>.</strong> Component must be properly generic: <code>DataGrid&lt;R extends GridValidRowModel&gt;</code>. Explicit return type on all exports.</span></div>
+  <div class="rule rule-block"><span class="rule-icon">✗</span><span><strong>No <code>@cx/api</code> or <code>@cx/auth</code> imports.</strong> This is a UI component — it receives data via props, never fetches.</span></div>
+  <div class="rule rule-warn"><span class="rule-icon">!</span><span><strong>Don't rebuild what DataGrid already provides.</strong> No custom sort logic, no custom pagination, no custom column menu implementation. Pass standard DataGrid props. The wrapper's job is defaults + three app-specific props only.</span></div>
+  <div class="rule rule-warn"><span class="rule-icon">!</span><span><strong>Max 150 lines per file.</strong> <code>DataGrid.tsx</code> should sit near 100 lines. Split early.</span></div>
+  <div class="rule rule-note"><span class="rule-icon">→</span><span><strong>Atomic design: organism layer.</strong> May import from <code>@mui/x-data-grid</code>, <code>@mui/material</code>, and atoms/molecules from <code>@cx/ui</code>. No upward imports.</span></div>
+  <div class="rule rule-note"><span class="rule-icon">→</span><span><strong>Every public component must have JSDoc + <code>@example</code></strong> with explicit return type.</span></div>
+</div>
+
+
+<!-- 8. Build order -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-number">9</div>
+    <h2>Build Order</h2>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div>
+        <h4>Install dependency</h4>
+        <p>Run <code>npm install @mui/x-data-grid --workspace=packages/ui</code>. Confirm <code>npm run type-check</code> still passes with zero errors.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div>
+        <h4>GridToolbar.tsx</h4>
+        <p>Build the toolbar in isolation — it has no dependency on DataGrid. Takes <code>searchable</code>, <code>onSearch</code>, <code>actions</code> props. Write test at the same time.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div>
+        <h4>DataGrid.tsx</h4>
+        <p>Implement the wrapper. Apply default <code>sx</code>, wire <code>storageKey</code> → localStorage, wire toolbar slot using <code>slots.toolbar</code>. Handle the <code>sx</code> array-merge pattern.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div>
+        <h4>DataGrid/index.ts + barrel exports</h4>
+        <p>Export <code>DataGrid</code> dan <code>DataGridProps</code> dari folder <code>index.ts</code>. Tambahkan ke barrel <code>organisms/data-display/index.ts</code> dan <code>packages/ui/src/index.ts</code> — types sebelum values (Biome rule). Run <code>npm run biome:check</code>.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div>
+        <h4>Integrate on the first target screen</h4>
+        <p>Pick one screen to test with. Verify: column visibility persists on refresh, search filters rows, loading state shows correctly, scroll-end triggers load-more.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- 9. DoD -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-number">10</div>
+    <h2>Definition of Done</h2>
+  </div>
+  <div class="checklist">
+    <div class="check-item"><div class="check-box"></div><span><code>@mui/x-data-grid</code> installed</span></div>
+    <div class="check-item"><div class="check-box"></div><span><code>DataGrid</code> and <code>GridToolbar</code> created, each under 150 lines</span></div>
+    <div class="check-item"><div class="check-box"></div><span>No <code>any</code> — component is properly generic over <code>GridValidRowModel</code></span></div>
+    <div class="check-item"><div class="check-box"></div><span>Every public export has JSDoc + <code>@example</code> with explicit return type</span></div>
+    <div class="check-item"><div class="check-box"></div><span>No hardcoded colors — MUI theme tokens only</span></div>
+    <div class="check-item"><div class="check-box"></div><span>No <code>@cx/api</code> or <code>@cx/auth</code> imports inside the component</span></div>
+    <div class="check-item"><div class="check-box"></div><span>Toolbar only renders when <code>searchable</code> or <code>toolbarActions</code> is set</span></div>
+    <div class="check-item"><div class="check-box"></div><span><code>storageKey</code> — column visibility survives page refresh</span></div>
+    <div class="check-item"><div class="check-box"></div><span>localStorage read wrapped in try/catch — corrupted JSON does not throw</span></div>
+    <div class="check-item"><div class="check-box"></div><span>DataGrid types (<code>GridColDef</code>, etc.) are NOT re-exported through <code>@cx/ui</code></span></div>
+    <div class="check-item"><div class="check-box"></div><span>Exported correctly through all three barrel files</span></div>
+    <div class="check-item"><div class="check-box"></div><span><code>npm run type-check</code> — zero errors in <code>packages/ui</code></span></div>
+    <div class="check-item"><div class="check-box"></div><span><code>npm run biome:check</code> — clean</span></div>
+    <div class="check-item"><div class="check-box"></div><span><code>npm run test -- --filter=ui</code> — all new tests pass</span></div>
+    <div class="check-item"><div class="check-box"></div><span>First target screen visually tested — loading, search, column toggle, scroll-end all work</span></div>
+  </div>
+</div>
+
+</body>
+</html>
